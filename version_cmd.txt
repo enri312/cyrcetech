@@ -1,0 +1,2 @@
+"\"C:\Gradle\gradle-9.2.1\bin\gradle.bat\"" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.

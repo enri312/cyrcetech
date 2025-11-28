@@ -1,0 +1,24 @@
+Starting build... 
+Starting a Gradle Daemon, 1 busy and 2 incompatible and 1 stopped Daemons could not be reused, use --status for details
+> Task :compileJava
+> Task :processResources
+> Task :classes
+
+> Task :run
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.glass.utils.NativeLibLoader in module javafx.graphics (file:/C:/Users/enri3/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/21.0.1/f92cc4656711f2ce8b1928d3b063fd4746ea23e4/javafx-graphics-21.0.1-win.jar)
+WARNING: Use --enable-native-access=javafx.graphics to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Starting application...
+Showing stage...
+Stage shown!
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::allocateMemory has been called by com.sun.marlin.OffHeapArray (file:/C:/Users/enri3/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/21.0.1/f92cc4656711f2ce8b1928d3b063fd4746ea23e4/javafx-graphics-21.0.1-win.jar)
+WARNING: Please consider reporting this to the maintainers of class com.sun.marlin.OffHeapArray
+WARNING: sun.misc.Unsafe::allocateMemory will be removed in a future release
+
+BUILD SUCCESSFUL in 5m 26s
+3 actionable tasks: 3 executed
+Build success 
+Done. 
