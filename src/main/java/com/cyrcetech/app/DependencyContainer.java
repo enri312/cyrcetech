@@ -13,6 +13,8 @@ public class DependencyContainer {
 
     private static final TicketService ticketService = new TicketServiceImpl();
     private static final AIService aiService = new OllamaAIService();
+    private static final com.cyrcetech.usecase.CustomerService customerService = new com.cyrcetech.usecase.impl.CustomerServiceImpl();
+    private static final com.cyrcetech.usecase.EquipmentService equipmentService = new com.cyrcetech.usecase.impl.EquipmentServiceImpl();
 
     public static TicketService getTicketService() {
         return ticketService;
@@ -20,5 +22,13 @@ public class DependencyContainer {
 
     public static AIService getAiService() {
         return aiService;
+    }
+
+    public static com.cyrcetech.usecase.CustomerService getCustomerService() {
+        return customerService;
+    }
+
+    public static com.cyrcetech.usecase.EquipmentService getEquipmentService() {
+        return equipmentService;
     }
 }

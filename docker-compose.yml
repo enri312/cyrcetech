@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:18-alpine # Using 18-alpine as 18.1 specific tag might vary, alpine is lighter
+    container_name: cyrcetech_db
+    environment:
+      POSTGRES_DB: cyrcetech
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

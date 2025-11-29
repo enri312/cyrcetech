@@ -6,6 +6,7 @@ module com.cyrcetech {
 
     // Java modules
     requires java.net.http;
+    requires java.sql;
     requires com.google.gson;
 
     // Open packages for JavaFX reflection (FXML loading)

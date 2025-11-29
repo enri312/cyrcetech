@@ -22,7 +22,7 @@ public class CyrcetechApp extends Application {
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
 
-        System.out.println("Starting Cyrcetech application...");
+        // System.out.println("Starting Cyrcetech application...");
 
         // Load initial view
         Parent root = loadFXML("view/LoginView");
@@ -32,7 +32,7 @@ public class CyrcetechApp extends Application {
         URL cssResource = getClass().getResource("styles.css");
         if (cssResource != null) {
             scene.getStylesheets().add(cssResource.toExternalForm());
-            System.out.println("CSS loaded successfully");
+            // System.out.println("CSS loaded successfully");
         } else {
             System.err.println("Warning: styles.css not found");
         }
@@ -44,9 +44,9 @@ public class CyrcetechApp extends Application {
         stage.setMinWidth(800);
         stage.setMinHeight(600);
 
-        System.out.println("Showing stage...");
+        // System.out.println("Showing stage...");
         stage.show();
-        System.out.println("Application started successfully!");
+        // System.out.println("Application started successfully!");
     }
 
     /**
@@ -74,12 +74,12 @@ public class CyrcetechApp extends Application {
             throw new IOException("FXML file not found: " + fxmlPath);
         }
 
-        System.out.println("Loading FXML: " + fxmlPath);
+        // System.out.println("Loading FXML: " + fxmlPath);
         FXMLLoader fxmlLoader = new FXMLLoader(fxmlResource, I18nUtil.getBundle());
 
         try {
             Parent root = fxmlLoader.load();
-            System.out.println("FXML loaded successfully: " + fxmlPath);
+            // System.out.println("FXML loaded successfully: " + fxmlPath);
             return root;
         } catch (IOException e) {
             System.err.println("Error loading FXML: " + fxmlPath);

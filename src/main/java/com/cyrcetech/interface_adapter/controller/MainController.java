@@ -14,6 +14,16 @@ public class MainController {
     }
 
     @FXML
+    private void handleClients(ActionEvent event) throws IOException {
+        CyrcetechApp.setRoot("view/ClientView");
+    }
+
+    @FXML
+    private void handleEquipment(ActionEvent event) throws IOException {
+        CyrcetechApp.setRoot("view/EquipmentView");
+    }
+
+    @FXML
     private void handleLogout(ActionEvent event) throws IOException {
         CyrcetechApp.setRoot("view/LoginView");
     }

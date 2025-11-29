@@ -35,6 +35,10 @@
                 maxWidth="Infinity" />
             <Button text="➕  Registrar Orden" onAction="#handleNewTicket"
                 styleClass="sidebar-button" maxWidth="Infinity" />
+            <Button text="👥  Clientes" onAction="#handleClients" styleClass="sidebar-button"
+                maxWidth="Infinity" />
+            <Button text="💻  Equipos" onAction="#handleEquipment" styleClass="sidebar-button"
+                maxWidth="Infinity" />
             <Button text="📋  Órdenes Activas" styleClass="sidebar-button" maxWidth="Infinity" />
             <Button text="📦  Repuestos" styleClass="sidebar-button" maxWidth="Infinity" />
             <Button text="🕒  Historial Técnico" styleClass="sidebar-button" maxWidth="Infinity" />

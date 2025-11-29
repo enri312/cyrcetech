@@ -11,11 +11,7 @@ import java.util.Objects;
 public class Ticket {
     private String id;
     private Customer customer;
-    private DeviceType deviceType;
-    private String brand;
-    private String model;
-    private String serialNumber;
-    private String physicalCondition;
+    private Equipment equipment; // Replaces individual device fields
     private String problemDescription;
     private String observations;
     private TicketStatus status;
@@ -47,44 +43,13 @@ public class Ticket {
         this.customer = customer;
     }
 
-    public DeviceType getDeviceType() {
-        return deviceType;
+    public Equipment getEquipment() {
+        return equipment;
     }
 
-    public void setDeviceType(DeviceType deviceType) {
-        this.deviceType = deviceType;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getSerialNumber() {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
-    public String getPhysicalCondition() {
-        return physicalCondition;
-    }
-
-    public void setPhysicalCondition(String physicalCondition) {
-        this.physicalCondition = physicalCondition;
+    public void setEquipment(Equipment equipment) {
+        Objects.requireNonNull(equipment, "Equipment cannot be null");
+        this.equipment = equipment;
     }
 
     public String getProblemDescription() {
@@ -180,16 +145,9 @@ public class Ticket {
      * Returns a summary of the device
      */
     public String getDeviceSummary() {
-        StringBuilder sb = new StringBuilder();
-        if (deviceType != null) {
-            sb.append(deviceType.getDisplayName());
+        if (equipment != null) {
+            return equipment.getSummary();
         }
-        if (brand != null && !brand.isBlank()) {
-            sb.append(" ").append(brand);
-        }
-        if (model != null && !model.isBlank()) {
-            sb.append(" ").append(model);
-        }
-        return sb.toString();
+        return "No Device";
     }
 }
