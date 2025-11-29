@@ -70,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set MODULE_PATH=%APP_HOME%\lib\cyrcetech.jar;%APP_HOME%\lib\controlsfx-11.2.1.jar;%APP_HOME%\lib\formsfx-core-11.6.0.jar;%APP_HOME%\lib\validatorfx-0.5.0.jar;%APP_HOME%\lib\ikonli-javafx-12.3.1.jar;%APP_HOME%\lib\gson-2.10.1.jar;%APP_HOME%\lib\javafx-fxml-23.0.1-win.jar;%APP_HOME%\lib\javafx-controls-23.0.1-win.jar;%APP_HOME%\lib\ikonli-core-12.3.1.jar;%APP_HOME%\lib\javafx-graphics-23.0.1-win.jar;%APP_HOME%\lib\javafx-base-23.0.1-win.jar
+set MODULE_PATH=%APP_HOME%\lib\cyrcetech.jar;%APP_HOME%\lib\controlsfx-11.2.1.jar;%APP_HOME%\lib\formsfx-core-11.6.0.jar;%APP_HOME%\lib\validatorfx-0.5.0.jar;%APP_HOME%\lib\ikonli-javafx-12.3.1.jar;%APP_HOME%\lib\gson-2.10.1.jar;%APP_HOME%\lib\javafx-fxml-25.0.1-win.jar;%APP_HOME%\lib\javafx-controls-25.0.1-win.jar;%APP_HOME%\lib\ikonli-core-12.3.1.jar;%APP_HOME%\lib\javafx-graphics-25.0.1-win.jar;%APP_HOME%\lib\javafx-base-25.0.1-win.jar
 
 @rem Execute cyrcetech
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %CYRCETECH_OPTS%  --module-path "%MODULE_PATH%" --module com.cyrcetech/com.cyrcetech.app.CyrcetechApp %*

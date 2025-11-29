@@ -29,7 +29,11 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo [3/3] Iniciando aplicacion...
 echo.
-call "%~dp0gradlew.bat" run --console=plain --quiet
+
+REM Configurar opciones de JVM para silenciar advertencias
+set JAVA_OPTS=--add-opens javafx.graphics/com.sun.glass.utils=ALL-UNNAMED --add-opens javafx.graphics/com.sun.marlin=ALL-UNNAMED --enable-native-access=javafx.graphics
+
+call "%~dp0gradlew.bat" run --console=plain --quiet -Dorg.gradle.jvmargs="%JAVA_OPTS%"
 
 echo.
 echo ========================================
