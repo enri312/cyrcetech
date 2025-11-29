@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Java/Gradle
+.gradle/
+build/
+bin/
+*.class
+
+# Temporary output files
+build_output.txt
+dir_check.txt
+version_cmd.txt
+

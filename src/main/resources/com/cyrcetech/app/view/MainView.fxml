@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cyrcetech.interface_adapter.controller.MainController" styleClass="root">
+    <!-- Sidebar -->
+    <left>
+        <VBox spacing="0" styleClass="sidebar" prefWidth="220">
+            <padding>
+                <Insets top="20.0" bottom="20.0" />
+            </padding>
+
+            <!-- Logo/Brand -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <padding>
+                    <Insets left="20" right="20" bottom="30" />
+                </padding>
+                <Label text="🔧" style="-fx-font-size: 24px;" />
+                <Label text="CyrceTech"
+                    style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+            </HBox>
+
+            <!-- Navigation Buttons -->
+            <Button text="📊  Inicio" styleClass="sidebar-button, sidebar-button-active"
+                maxWidth="Infinity" />
+            <Button text="➕  Registrar Orden" onAction="#handleNewTicket"
+                styleClass="sidebar-button" maxWidth="Infinity" />
+            <Button text="📋  Órdenes Activas" styleClass="sidebar-button" maxWidth="Infinity" />
+            <Button text="📦  Repuestos" styleClass="sidebar-button" maxWidth="Infinity" />
+            <Button text="🕒  Historial Técnico" styleClass="sidebar-button" maxWidth="Infinity" />
+
+            <!-- Spacer -->
+            <VBox VBox.vgrow="ALWAYS" />
+
+            <!-- User Info & Logout -->
+            <VBox spacing="10">
+                <padding>
+                    <Insets left="20" right="20" top="20" />
+                </padding>
+                <Label text="👤  Técnico Admin" style="-fx-text-fill: #808090; -fx-font-size: 12px;" />
+                <Button text="🚪  Salir" onAction="#handleLogout" styleClass="button-danger"
+                    maxWidth="Infinity" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox spacing="30" style="-fx-background-color: #0f0f1a;">
+            <padding>
+                <Insets top="30.0" left="30.0" right="30.0" bottom="30.0" />
+            </padding>
+
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Panel Principal" styleClass="title-label">
+                    <font>
+                        <Font size="32.0" />
+                    </font>
+                </Label>
+            </HBox>
+
+            <!-- Stats Cards -->
+            <GridPane hgap="20" vgap="20">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.33" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.33" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.33" />
+                </columnConstraints>
+
+                <!-- Card 1: Pending -->
+                <VBox spacing="10" styleClass="stat-card, stat-card-yellow" GridPane.columnIndex="0">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Pendientes / Diagnóstico" styleClass="stat-label" />
+                            <Label text="1" styleClass="stat-number" />
+                        </VBox>
+                        <Label text="🔧" styleClass="icon-box, icon-box-yellow"
+                            style="-fx-font-size: 24px;" />
+                    </HBox>
+                </VBox>
+
+                <!-- Card 2: Ready -->
+                <VBox spacing="10" styleClass="stat-card, stat-card-green" GridPane.columnIndex="1">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Listos para Entregar" styleClass="stat-label" />
+                            <Label text="1" styleClass="stat-number" />
+                        </VBox>
+                        <Label text="✅" styleClass="icon-box, icon-box-green"
+                            style="-fx-font-size: 24px;" />
+                    </HBox>
+                </VBox>
+
+                <!-- Card 3: Delivered -->
+                <VBox spacing="10" styleClass="stat-card, stat-card-blue" GridPane.columnIndex="2">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Entregados" styleClass="stat-label" />
+                            <Label text="0" styleClass="stat-number" />
+                        </VBox>
+                        <Label text="🔄" styleClass="icon-box, icon-box-blue"
+                            style="-fx-font-size: 24px;" />
+                    </HBox>
+                </VBox>
+            </GridPane>
+
+            <!-- Lists Section -->
+            <GridPane hgap="20" vgap="20">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
+                </columnConstraints>
+
+                <!-- En Taller -->
+                <VBox spacing="15" GridPane.columnIndex="0">
+                    <Label text="🔧 En Taller"
+                        style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffcc00;" />
+                    <VBox spacing="10" styleClass="glass-pane" style="-fx-padding: 15;">
+                        <!-- Sample Ticket -->
+                        <HBox alignment="CENTER_LEFT" spacing="15"
+                            style="-fx-background-color: rgba(255,255,255,0.03); -fx-background-radius: 8; -fx-padding: 12;">
+                            <Label text="💻" styleClass="icon-box, icon-box-yellow"
+                                style="-fx-font-size: 18px;" />
+                            <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                <Label text="Juan Perez"
+                                    style="-fx-font-weight: bold; -fx-text-fill: white;" />
+                                <Label text="Dell Xps 15" styleClass="subtitle-label"
+                                    style="-fx-font-size: 11px;" />
+                            </VBox>
+                            <VBox alignment="CENTER_RIGHT" spacing="3">
+                                <Label text="2023-10-25"
+                                    style="-fx-font-size: 10px; -fx-text-fill: #606070;" />
+                                <Label text="En Diagnóstico"
+                                    style="-fx-font-size: 10px; -fx-background-color: rgba(255,204,0,0.2); -fx-text-fill: #ffcc00; -fx-padding: 3 8; -fx-background-radius: 4;" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Para Retirar -->
+                <VBox spacing="15" GridPane.columnIndex="1">
+                    <Label text="✅ Para Retirar"
+                        style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #00ff00;" />
+                    <VBox spacing="10" styleClass="glass-pane" style="-fx-padding: 15;">
+                        <!-- Sample Ticket -->
+                        <HBox alignment="CENTER_LEFT" spacing="15"
+                            style="-fx-background-color: rgba(255,255,255,0.03); -fx-background-radius: 8; -fx-padding: 12;">
+                            <Label text="📱" styleClass="icon-box, icon-box-green"
+                                style="-fx-font-size: 18px;" />
+                            <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                <Label text="Maria Gomez"
+                                    style="-fx-font-weight: bold; -fx-text-fill: white;" />
+                                <Label text="Apple iPhone 13" styleClass="subtitle-label"
+                                    style="-fx-font-size: 11px;" />
+                            </VBox>
+                            <VBox alignment="CENTER_RIGHT" spacing="3">
+                                <Label text="2023-10-26"
+                                    style="-fx-font-size: 10px; -fx-text-fill: #606070;" />
+                                <Label text="Listo"
+                                    style="-fx-font-size: 10px; -fx-background-color: rgba(0,255,0,0.2); -fx-text-fill: #00ff00; -fx-padding: 3 8; -fx-background-radius: 4;" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

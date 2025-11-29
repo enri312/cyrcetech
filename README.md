@@ -1,20 +1,49 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Cyrcetech - Sistema de Gestión de Tickets
 
-# Run and deploy your AI Studio app
+Sistema de gestión de tickets para reparación de dispositivos electrónicos, desarrollado con JavaFX.
 
-This contains everything you need to run your app locally.
+## Características
 
-View your app in AI Studio: https://ai.studio/apps/drive/1M9-mJJceS7g6DsJn6QnUE0XJgjP96fYA
+- 🎫 Gestión de tickets de reparación
+- 👥 Administración de clientes
+- 🔧 Registro de repuestos
+- 🤖 Diagnóstico asistido por IA
+- 💾 Persistencia de datos
 
-## Run Locally
+## Inicio Rápido
 
-**Prerequisites:**  Node.js
+### Requisitos
+- Java JDK 17 o superior
+- Gradle 9.2.1 (incluido via wrapper)
 
+### Ejecutar la Aplicación
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+# Opción 1: Script principal (limpia, compila e inicia)
+scripts\iniciar.bat
+
+# Opción 2: Solo ejecutar (si ya está compilado)
+scripts\run.bat
+```
+
+Para más información, consulta [COMO_INICIAR.md](COMO_INICIAR.md)
+
+## Estructura del Proyecto
+
+```
+cyrcetech/
+├── scripts/              # Scripts de utilidad
+├── frontend-web/         # Frontend web React (histórico/referencia)
+├── src/main/
+│   ├── java/            # Código fuente Java
+│   └── resources/       # Recursos (FXML, CSS, imágenes)
+├── build.gradle         # Configuración de Gradle
+└── gradlew.bat          # Gradle wrapper
+```
+
+## Tecnologías
+
+- **JavaFX** - Framework de interfaz gráfica
+- **Gradle** - Sistema de construcción
+- **Java Records** - Modelos de datos inmutables
+

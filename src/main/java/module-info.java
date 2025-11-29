@@ -2,19 +2,21 @@ module com.cyrcetech {
     // JavaFX modules
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.graphics;
-    
+    requires transitive javafx.graphics;
+
     // Java base module
     requires java.base;
 
     // Open packages for JavaFX reflection (FXML loading)
-    opens com.cyrcetech to javafx.fxml;
-    opens com.cyrcetech.controller to javafx.fxml;
-    opens com.cyrcetech.model to javafx.base;
-    
+    opens com.cyrcetech.app to javafx.fxml;
+    opens com.cyrcetech.interface_adapter.controller to javafx.fxml;
+    opens com.cyrcetech.entity to javafx.base;
+
     // Export packages for public API
-    exports com.cyrcetech;
-    exports com.cyrcetech.controller;
-    exports com.cyrcetech.model;
-    exports com.cyrcetech.service;
+    exports com.cyrcetech.app;
+    exports com.cyrcetech.interface_adapter.controller;
+    exports com.cyrcetech.entity;
+    exports com.cyrcetech.usecase;
+    exports com.cyrcetech.usecase.impl;
+    exports com.cyrcetech.infrastructure.ai;
 }

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="25.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cyrcetech.interface_adapter.controller.NewTicketController" styleClass="root">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Label text="Nueva Orden de Reparación" styleClass="title-label">
+            <font>
+                <Font size="28.0" />
+            </font>
+        </Label>
+    </HBox>
+
+    <!-- ScrollPane for Form Content -->
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+        style="-fx-background-color: transparent; -fx-background: transparent;">
+        <VBox spacing="25" styleClass="glass-pane" style="-fx-padding: 30;">
+
+            <!-- Customer Data Section -->
+            <VBox spacing="15">
+                <Label text="👤 Datos del Cliente"
+                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;" />
+
+                <GridPane hgap="15.0" vgap="12.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50" />
+                    </columnConstraints>
+
+                    <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="Nombre Completo" styleClass="subtitle-label" />
+                        <TextField fx:id="nameField" promptText="Ej: Juan Pérez" />
+                    </VBox>
+
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="Cédula / RUC" styleClass="subtitle-label" />
+                        <TextField fx:id="taxIdField" promptText="Ej: 4.555.666" />
+                    </VBox>
+
+                    <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label text="Dirección" styleClass="subtitle-label" />
+                        <TextField fx:id="addressField" promptText="Ej: Av. Siempre Viva 123" />
+                    </VBox>
+
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label text="Teléfono" styleClass="subtitle-label" />
+                        <TextField fx:id="phoneField" promptText="Ej: 0981-555-0101" />
+                    </VBox>
+                </GridPane>
+            </VBox>
+
+            <!-- Device Data Section -->
+            <VBox spacing="15">
+                <Label text="💻 Datos del Equipo"
+                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;" />
+
+                <GridPane hgap="15.0" vgap="12.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50" />
+                    </columnConstraints>
+
+                    <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="Tipo de Equipo" styleClass="subtitle-label" />
+                        <ComboBox fx:id="deviceTypeCombo" promptText="Seleccione..."
+                            maxWidth="Infinity" />
+                    </VBox>
+
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="Marca" styleClass="subtitle-label" />
+                        <TextField fx:id="brandField" promptText="Ej: Dell" />
+                    </VBox>
+
+                    <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label text="Modelo" styleClass="subtitle-label" />
+                        <TextField fx:id="modelField" promptText="Ej: XPS 15" />
+                    </VBox>
+
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label text="Nº Serie" styleClass="subtitle-label" />
+                        <TextField fx:id="serialField" promptText="Ej: JX-2292" />
+                    </VBox>
+                </GridPane>
+            </VBox>
+
+            <!-- Problem Description -->
+            <VBox spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="🔧 Motivo de Ingreso / Problema"
+                        style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;"
+                        HBox.hgrow="ALWAYS" />
+                    <Button text="🤖 Diagnóstico IA" onAction="#handleConsultAI"
+                        styleClass="button-secondary" />
+                </HBox>
+                <TextArea fx:id="problemArea" prefHeight="100.0"
+                    promptText="Describa el problema que presenta el equipo..." />
+            </VBox>
+
+            <!-- Observations / Diagnosis -->
+            <VBox spacing="10">
+                <Label text="📝 Observaciones / Diagnóstico"
+                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;" />
+                <TextArea fx:id="observationsArea" prefHeight="80.0"
+                    promptText="Observaciones técnicas y diagnóstico..." />
+            </VBox>
+
+            <!-- AI Diagnosis (Read-only suggestion) -->
+            <VBox spacing="10">
+                <Label text="✨ Sugerencia IA (Deepseek)"
+                    style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #d500f9;" />
+                <TextArea fx:id="aiDiagnosisArea" prefHeight="60.0" editable="false"
+                    style="-fx-background-color: rgba(213, 0, 249, 0.1); -fx-border-color: rgba(213, 0, 249, 0.3); -fx-text-fill: #e0e0e0;"
+                    promptText="La sugerencia de IA aparecerá aquí..." />
+            </VBox>
+
+            <!-- Action Buttons -->
+            <HBox spacing="15.0" alignment="CENTER_RIGHT">
+                <padding>
+                    <Insets top="10" />
+                </padding>
+                <Button text="Cancelar" onAction="#handleCancel" styleClass="button-secondary"
+                    prefWidth="120" />
+                <Button text="Crear Orden" onAction="#handleSave" prefWidth="120" />
+            </HBox>
+        </VBox>
+    </ScrollPane>
+</VBox>
