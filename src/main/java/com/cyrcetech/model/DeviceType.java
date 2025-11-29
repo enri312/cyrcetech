@@ -1,11 +1,48 @@
 package com.cyrcetech.model;
 
+/**
+ * Represents the type of device being serviced.
+ */
 public enum DeviceType {
-    NOTEBOOK,
-    SMARTPHONE,
-    MONITOR,
-    TABLET,
-    CONSOLE,
-    PRINTER,
-    OTHER
+    NOTEBOOK("Notebook", "💻"),
+    SMARTPHONE("Smartphone", "📱"),
+    MONITOR("Monitor", "🖥️"),
+    TABLET("Tablet", "📲"),
+    CONSOLE("Consola", "🎮"),
+    PRINTER("Impresora", "🖨️"),
+    OTHER("Otro", "🔧");
+    
+    private final String displayName;
+    private final String icon;
+    
+    DeviceType(String displayName, String icon) {
+        this.displayName = displayName;
+        this.icon = icon;
+    }
+    
+    /**
+     * Returns the display name in Spanish
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
+    
+    /**
+     * Returns the icon emoji for this device type
+     */
+    public String getIcon() {
+        return icon;
+    }
+    
+    /**
+     * Returns formatted string with icon and name
+     */
+    public String getFormattedName() {
+        return icon + " " + displayName;
+    }
+    
+    @Override
+    public String toString() {
+        return displayName;
+    }
 }

@@ -1,60 +1,61 @@
 package com.cyrcetech.model;
 
-public class SparePart {
-    private String id;
-    private String name;
-    private double price;
-    private int stock;
-    private String provider;
+import java.util.Objects;
 
-    public SparePart(String id, String name, double price, int stock, String provider) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.stock = stock;
-        this.provider = provider;
+/**
+ * Represents a spare part in the inventory.
+ * Immutable record with validation.
+ */
+public record SparePart(
+    String id,
+    String name,
+    double price,
+    int stock,
+    String provider
+) {
+    /**
+     * Compact constructor with validation
+     */
+    public SparePart {
+        Objects.requireNonNull(name, "Spare part name cannot be null");
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Spare part name cannot be blank");
+        }
+        
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+        
+        if (stock < 0) {
+            throw new IllegalArgumentException("Stock cannot be negative");
+        }
     }
-
-    public SparePart() {
+    
+    /**
+     * Creates an empty spare part (for form initialization)
+     */
+    public static SparePart empty() {
+        return new SparePart("", "", 0.0, 0, "");
     }
-
-    public String getId() {
-        return id;
+    
+    /**
+     * Checks if the spare part is in stock
+     */
+    public boolean isInStock() {
+        return stock > 0;
     }
-
-    public void setId(String id) {
-        this.id = id;
+    
+    /**
+     * Checks if stock is low (less than 5 units)
+     */
+    public boolean isLowStock() {
+        return stock > 0 && stock < 5;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
+    
+    /**
+     * Returns formatted price with currency
+     */
+    public String getFormattedPrice() {
+        return String.format("$%.2f", price);
     }
 }

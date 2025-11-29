@@ -1,60 +1,54 @@
 package com.cyrcetech.model;
 
-public class Customer {
-    private String id;
-    private String name;
-    private String taxId;
-    private String address;
-    private String phone;
+import java.util.Objects;
 
-    public Customer(String id, String name, String taxId, String address, String phone) {
-        this.id = id;
-        this.name = name;
-        this.taxId = taxId;
-        this.address = address;
-        this.phone = phone;
+/**
+ * Represents a customer in the system.
+ * Immutable record with validation.
+ */
+public record Customer(
+    String id,
+    String name,
+    String taxId,
+    String address,
+    String phone
+) {
+    /**
+     * Compact constructor with validation
+     */
+    public Customer {
+        Objects.requireNonNull(name, "Customer name cannot be null");
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Customer name cannot be blank");
+        }
+        
+        // Normalize phone (remove spaces and dashes for consistency)
+        if (phone != null) {
+            phone = phone.replaceAll("[\\s-]", "");
+        }
     }
-
-    public Customer() {
+    
+    /**
+     * Creates an empty customer (for form initialization)
+     */
+    public static Customer empty() {
+        return new Customer("", "", "", "", "");
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTaxId() {
-        return taxId;
-    }
-
-    public void setTaxId(String taxId) {
-        this.taxId = taxId;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
+    
+    /**
+     * Returns formatted phone number for display
+     */
+    public String getFormattedPhone() {
+        if (phone == null || phone.isEmpty()) {
+            return "";
+        }
+        // Simple formatting: (XXX) XXX-XXXX for 10 digits
+        if (phone.length() == 10) {
+            return String.format("(%s) %s-%s", 
+                phone.substring(0, 3),
+                phone.substring(3, 6),
+                phone.substring(6));
+        }
         return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 }

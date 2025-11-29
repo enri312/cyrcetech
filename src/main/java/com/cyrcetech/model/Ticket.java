@@ -1,7 +1,13 @@
 package com.cyrcetech.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
+/**
+ * Represents a service ticket for a customer's device.
+ * Mutable class to allow status updates throughout the service lifecycle.
+ */
 public class Ticket {
     private String id;
     private Customer customer;
@@ -23,7 +29,7 @@ public class Ticket {
         this.status = TicketStatus.PENDING;
     }
 
-    // Getters and Setters
+    // Getters and Setters with validation
     public String getId() {
         return id;
     }
@@ -37,6 +43,7 @@ public class Ticket {
     }
 
     public void setCustomer(Customer customer) {
+        Objects.requireNonNull(customer, "Customer cannot be null");
         this.customer = customer;
     }
 
@@ -101,6 +108,7 @@ public class Ticket {
     }
 
     public void setStatus(TicketStatus status) {
+        Objects.requireNonNull(status, "Status cannot be null");
         this.status = status;
     }
 
@@ -109,6 +117,9 @@ public class Ticket {
     }
 
     public void setAmountPaid(double amountPaid) {
+        if (amountPaid < 0) {
+            throw new IllegalArgumentException("Amount paid cannot be negative");
+        }
         this.amountPaid = amountPaid;
     }
 
@@ -117,6 +128,9 @@ public class Ticket {
     }
 
     public void setEstimatedCost(double estimatedCost) {
+        if (estimatedCost < 0) {
+            throw new IllegalArgumentException("Estimated cost cannot be negative");
+        }
         this.estimatedCost = estimatedCost;
     }
 
@@ -134,5 +148,48 @@ public class Ticket {
 
     public void setAiDiagnosis(String aiDiagnosis) {
         this.aiDiagnosis = aiDiagnosis;
+    }
+    
+    // Utility methods
+    
+    /**
+     * Returns the remaining balance to be paid
+     */
+    public double getRemainingBalance() {
+        return Math.max(0, estimatedCost - amountPaid);
+    }
+    
+    /**
+     * Checks if the ticket is fully paid
+     */
+    public boolean isFullyPaid() {
+        return amountPaid >= estimatedCost;
+    }
+    
+    /**
+     * Returns formatted date
+     */
+    public String getFormattedDate() {
+        if (dateCreated == null) {
+            return "";
+        }
+        return dateCreated.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+    
+    /**
+     * Returns a summary of the device
+     */
+    public String getDeviceSummary() {
+        StringBuilder sb = new StringBuilder();
+        if (deviceType != null) {
+            sb.append(deviceType.getDisplayName());
+        }
+        if (brand != null && !brand.isBlank()) {
+            sb.append(" ").append(brand);
+        }
+        if (model != null && !model.isBlank()) {
+            sb.append(" ").append(model);
+        }
+        return sb.toString();
     }
 }
