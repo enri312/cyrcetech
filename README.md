@@ -16,34 +16,43 @@ Sistema de gestión de tickets para reparación de dispositivos electrónicos, d
 - Java JDK 17 o superior
 - Gradle 9.2.1 (incluido via wrapper)
 
-### Ejecutar la Aplicación
+### Cyrcetech - Sistema de Gestión de Reparaciones
+
+Sistema de gestión para taller de reparación de computadoras con diagnóstico de IA local usando Ollama.
+
+## 🚀 Inicio Rápido
 
 ```bash
-# Opción 1: Script principal (limpia, compila e inicia)
-scripts\iniciar.bat
-
-# Opción 2: Solo ejecutar (si ya está compilado)
-scripts\run.bat
+INICIAR.bat
 ```
 
-Para más información, consulta [COMO_INICIAR.md](COMO_INICIAR.md)
+**Eso es todo.** Este comando compila y ejecuta la aplicación automáticamente.
 
-## Estructura del Proyecto
+## 🤖 Diagnóstico con IA Local
 
-```
-cyrcetech/
-├── scripts/              # Scripts de utilidad
-├── frontend-web/         # Frontend web React (histórico/referencia)
-├── src/main/
-│   ├── java/            # Código fuente Java
-│   └── resources/       # Recursos (FXML, CSS, imágenes)
-├── build.gradle         # Configuración de Gradle
+1. Inicia Ollama (en otra terminal):
+   ```bash
+   ollama serve
+   ```
+
+2. Asegúrate de tener el modelo:
+   ```bash
+   ollama pull deepseek-r1:8b
+   ```
+
+## 📖 Documentación
+
+Ver [COMO_INICIAR.md](COMO_INICIAR.md) para instrucciones detalladas.
+
+## 🛠️ Tecnologías
+
+- Java 25 + JavaFX
+- Gradle 9.2.1
+- Ollama (IA local)
+- Clean Architecture
 └── gradlew.bat          # Gradle wrapper
-```
 
 ## Tecnologías
 
-- **JavaFX** - Framework de interfaz gráfica
-- **Gradle** - Sistema de construcción
 - **Java Records** - Modelos de datos inmutables
 

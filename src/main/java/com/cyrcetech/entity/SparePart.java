@@ -55,6 +55,6 @@ public record SparePart(
      * Returns formatted price with currency
      */
     public String getFormattedPrice() {
-        return String.format("$%.2f", price);
+        return String.format("₲%.2f", price);
     }
 }

@@ -96,6 +96,6 @@ public class NewTicketController {
 
     @FXML
     private void handleCancel(ActionEvent event) throws IOException {
-        CyrcetechApp.setRoot("view/LoginView");
+        CyrcetechApp.setRoot("view/MainView");
     }
 }

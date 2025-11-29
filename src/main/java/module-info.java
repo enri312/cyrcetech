@@ -4,8 +4,9 @@ module com.cyrcetech {
     requires javafx.fxml;
     requires transitive javafx.graphics;
 
-    // Java base module
-    requires java.base;
+    // Java modules
+    requires java.net.http;
+    requires com.google.gson;
 
     // Open packages for JavaFX reflection (FXML loading)
     opens com.cyrcetech.app to javafx.fxml;

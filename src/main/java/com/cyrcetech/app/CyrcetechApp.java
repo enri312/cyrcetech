@@ -75,7 +75,7 @@ public class CyrcetechApp extends Application {
         }
 
         System.out.println("Loading FXML: " + fxmlPath);
-        FXMLLoader fxmlLoader = new FXMLLoader(fxmlResource);
+        FXMLLoader fxmlLoader = new FXMLLoader(fxmlResource, I18nUtil.getBundle());
 
         try {
             Parent root = fxmlLoader.load();
