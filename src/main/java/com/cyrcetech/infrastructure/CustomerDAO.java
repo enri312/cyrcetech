@@ -28,6 +28,28 @@ public class CustomerDAO {
         }
     }
 
+    public void update(Customer customer) throws SQLException {
+        String sql = "UPDATE customers SET name = ?, tax_id = ?, address = ?, phone = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, customer.name());
+            stmt.setString(2, customer.taxId());
+            stmt.setString(3, customer.address());
+            stmt.setString(4, customer.phone());
+            stmt.setString(5, customer.id());
+            stmt.executeUpdate();
+        }
+    }
+
+    public void delete(String id) throws SQLException {
+        String sql = "DELETE FROM customers WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
     public Optional<Customer> findById(String id) throws SQLException {
         String sql = "SELECT * FROM customers WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();

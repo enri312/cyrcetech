@@ -28,6 +28,10 @@
                     </font>
                 </Label>
                 <HBox HBox.hgrow="ALWAYS" />
+                <Button text="%clients.edit" onAction="#handleEditClient"
+                    styleClass="button-secondary" />
+                <Button text="%clients.delete" onAction="#handleDeleteClient"
+                    styleClass="button-danger" />
                 <Button text="%clients.newClient" onAction="#handleNewClient"
                     styleClass="button-primary" />
             </HBox>

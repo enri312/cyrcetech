@@ -39,4 +39,24 @@ public class CustomerServiceImpl implements CustomerService {
             return null;
         }
     }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        try {
+            customerDAO.update(customer);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating customer", e);
+        }
+    }
+
+    @Override
+    public void deleteCustomer(String id) {
+        try {
+            customerDAO.delete(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error deleting customer", e);
+        }
+    }
 }
