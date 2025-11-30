@@ -11,9 +11,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     private final EquipmentDAO equipmentDAO = new EquipmentDAO();
 
     @Override
-    public void createEquipment(Equipment equipment) {
+    public Equipment createEquipment(Equipment equipment) {
         try {
-            equipmentDAO.save(equipment);
+            return equipmentDAO.save(equipment);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error creating equipment", e);
