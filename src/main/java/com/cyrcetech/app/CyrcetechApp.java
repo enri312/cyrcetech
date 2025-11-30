@@ -22,6 +22,10 @@ public class CyrcetechApp extends Application {
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
 
+        // Initialize database
+        System.out.println("Initializing database...");
+        com.cyrcetech.infrastructure.DatabaseInitializer.initialize();
+
         // System.out.println("Starting Cyrcetech application...");
 
         // Load initial view

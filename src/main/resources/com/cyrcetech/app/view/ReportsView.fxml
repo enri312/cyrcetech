@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cyrcetech.interface_adapter.controller.ReportsController" styleClass="root">
+
+    <center>
+        <VBox spacing="20" style="-fx-background-color: #0f0f1a;">
+            <padding>
+                <Insets top="30.0" left="30.0" right="30.0" bottom="30.0" />
+            </padding>
+
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Button text="⬅ Volver" onAction="#handleBack" styleClass="button-secondary" />
+                <Label text="Reportes" styleClass="title-label">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+            </HBox>
+
+            <!-- Report Cards -->
+            <GridPane hgap="20" vgap="20">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
+                </columnConstraints>
+
+                <!-- Report Card 1 -->
+                <VBox spacing="15" styleClass="glass-pane" style="-fx-padding: 20;"
+                    GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="📊 Resumen de Órdenes"
+                        style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                    <Label text="Total de órdenes procesadas, pendientes y completadas."
+                        styleClass="subtitle-label" />
+                    <Button text="Generar Reporte" onAction="#handleOrdersReport"
+                        styleClass="button-primary" />
+                </VBox>
+
+                <!-- Report Card 2 -->
+                <VBox spacing="15" styleClass="glass-pane" style="-fx-padding: 20;"
+                    GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="💰 Ingresos"
+                        style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                    <Label text="Reporte de ingresos por período." styleClass="subtitle-label" />
+                    <Button text="Generar Reporte" onAction="#handleIncomeReport"
+                        styleClass="button-primary" />
+                </VBox>
+
+                <!-- Report Card 3 -->
+                <VBox spacing="15" styleClass="glass-pane" style="-fx-padding: 20;"
+                    GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="👥 Clientes"
+                        style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                    <Label text="Listado completo de clientes registrados."
+                        styleClass="subtitle-label" />
+                    <Button text="Generar Reporte" onAction="#handleCustomersReport"
+                        styleClass="button-primary" />
+                </VBox>
+
+                <!-- Report Card 4 -->
+                <VBox spacing="15" styleClass="glass-pane" style="-fx-padding: 20;"
+                    GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label text="📦 Inventario"
+                        style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                    <Label text="Estado actual del inventario de repuestos."
+                        styleClass="subtitle-label" />
+                    <Button text="Generar Reporte" onAction="#handleInventoryReport"
+                        styleClass="button-primary" />
+                </VBox>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

@@ -24,6 +24,16 @@ public class MainController {
     }
 
     @FXML
+    private void handleOrders(ActionEvent event) throws IOException {
+        CyrcetechApp.setRoot("view/OrdersView");
+    }
+
+    @FXML
+    private void handleSpareParts(ActionEvent event) throws IOException {
+        CyrcetechApp.setRoot("view/SparePartsView");
+    }
+
+    @FXML
     private void handleLogout(ActionEvent event) throws IOException {
         CyrcetechApp.setRoot("view/LoginView");
     }

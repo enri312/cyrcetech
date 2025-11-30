@@ -1,58 +1,155 @@
-# Cyrcetech - Sistema de Gestión de Tickets
+# 🔧 CyrceTech - Sistema de Gestión para Taller de Reparación
 
-Sistema de gestión de tickets para reparación de dispositivos electrónicos, desarrollado con JavaFX.
+Sistema completo de gestión para talleres de reparación de computadoras y notebooks, con diagnóstico asistido por IA local.
 
-## Características
+## ✨ Características
 
-- 🎫 Gestión de tickets de reparación
-- 👥 Administración de clientes
-- 🔧 Registro de repuestos
-- 🤖 Diagnóstico asistido por IA
-- 💾 Persistencia de datos
-
-## Inicio Rápido
-
-### Requisitos
-- Java JDK 17 o superior
-- Gradle 9.2.1 (incluido via wrapper)
-
-### Cyrcetech - Sistema de Gestión de Reparaciones
-
-Sistema de gestión para taller de reparación de computadoras con diagnóstico de IA local usando Ollama.
+- 👥 **Gestión de Clientes** - Registro completo de clientes con datos de contacto
+- 💻 **Gestión de Equipos** - Control de dispositivos por cliente
+- 📋 **Órdenes de Reparación** - Seguimiento completo del ciclo de reparación
+- 📦 **Control de Repuestos** - Inventario de piezas y componentes
+- 🤖 **Diagnóstico con IA** - Asistencia inteligente usando Ollama (local)
+- 📊 **Reportes** - Generación de informes del taller
+- 💾 **Base de Datos PostgreSQL** - Persistencia robusta con Docker
 
 ## 🚀 Inicio Rápido
 
-```bash
-INICIAR.bat
-```
+### Requisitos Previos
 
-**Eso es todo.** Este comando compila y ejecuta la aplicación automáticamente.
+- **Java JDK 25** o superior
+- **Docker Desktop** (para PostgreSQL)
+- **Ollama** (opcional, para diagnóstico IA)
 
-## 🤖 Diagnóstico con IA Local
+### Instalación y Ejecución
 
-1. Inicia Ollama (en otra terminal):
+1. **Iniciar Base de Datos**:
+   ```bash
+   docker-compose up -d
+   ```
+
+2. **Ejecutar Aplicación**:
+   ```bash
+   INICIAR.bat
+   ```
+   O manualmente:
+   ```bash
+   ./gradlew run
+   ```
+
+La base de datos se inicializa automáticamente al arrancar la aplicación.
+
+## 🤖 Configuración de IA (Opcional)
+
+Para usar el diagnóstico asistido por IA:
+
+1. **Instalar Ollama**: [ollama.ai](https://ollama.ai)
+
+2. **Iniciar servicio**:
    ```bash
    ollama serve
    ```
 
-2. Asegúrate de tener el modelo:
+3. **Descargar modelo**:
    ```bash
    ollama pull deepseek-r1:8b
    ```
 
-## 📖 Documentación
+## 📁 Estructura del Proyecto
 
-Ver [COMO_INICIAR.md](COMO_INICIAR.md) para instrucciones detalladas.
+```
+cyrcetech/
+├── src/main/java/com/cyrcetech/
+│   ├── app/                    # Aplicación principal
+│   ├── entity/                 # Entidades de dominio
+│   ├── infrastructure/         # DAOs y DB
+│   ├── usecase/               # Servicios de negocio
+│   └── interface_adapter/     # Controladores UI
+├── src/main/resources/
+│   ├── com/cyrcetech/app/view/ # Vistas FXML
+│   └── schema.sql             # Esquema de base de datos
+├── docker-compose.yml         # Configuración PostgreSQL
+└── INICIAR.bat               # Script de inicio rápido
+```
 
 ## 🛠️ Tecnologías
 
-- Java 25 + JavaFX
-- Gradle 9.2.1
-- Ollama (IA local)
-- Clean Architecture
-└── gradlew.bat          # Gradle wrapper
+- **Java 25** - Lenguaje principal
+- **JavaFX** - Interfaz gráfica moderna
+- **PostgreSQL 18.1** - Base de datos (via Docker)
+- **Gradle 9.2.1** - Gestión de dependencias
+- **Ollama** - IA local para diagnósticos
+- **Clean Architecture** - Arquitectura por capas
 
-## Tecnologías
+## 📖 Módulos del Sistema
 
-- **Java Records** - Modelos de datos inmutables
+### 1. Gestión de Clientes
+- Registro de clientes con RUC/CI
+- Datos de contacto completos
+- Historial de equipos por cliente
 
+### 2. Gestión de Equipos
+- Registro de dispositivos (PC, Notebooks, etc.)
+- Asociación con clientes
+- Información técnica (marca, modelo, serie)
+
+### 3. Órdenes de Reparación
+- Estados: Pendiente → Diagnóstico → En Reparación → Listo → Entregado
+- Descripción de problemas
+- Diagnóstico técnico y de IA
+- Control de costos
+
+### 4. Repuestos
+- Control de inventario
+- Precios y proveedores
+- Stock disponible
+
+### 5. Reportes
+- Resumen de órdenes
+- Ingresos por período
+- Listado de clientes
+- Estado de inventario
+
+## 🔐 Credenciales por Defecto
+
+- **Usuario**: `admin`
+- **Contraseña**: `admin`
+
+## 📚 Documentación Adicional
+
+- [COMO_INICIAR.md](COMO_INICIAR.md) - Guía detallada de inicio
+- [Walkthrough](https://github.com/user/cyrcetech/wiki) - Documentación técnica
+
+## 🐛 Solución de Problemas
+
+### La aplicación no inicia
+- Verifica que Docker Desktop esté ejecutándose
+- Asegúrate de que el puerto 5432 no esté en uso
+
+### Error de conexión a base de datos
+```bash
+docker-compose down
+docker-compose up -d
+```
+
+### Problemas con Gradle
+```bash
+./gradlew clean build
+```
+
+## 🤝 Contribución
+
+Este es un proyecto en desarrollo activo. Próximas funcionalidades:
+- [ ] CRUD completo para todas las entidades
+- [ ] Generación de reportes PDF
+- [ ] Módulo de facturación
+- [ ] Búsqueda y filtros avanzados
+- [ ] Copias de seguridad automáticas
+
+## 📄 Licencia
+
+Proyecto privado - Todos los derechos reservados
+
+---
+
+**Versión**: 2.0.0  
+**Última actualización**: Noviembre 2025

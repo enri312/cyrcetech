@@ -39,8 +39,10 @@
                 maxWidth="Infinity" />
             <Button text="💻  Equipos" onAction="#handleEquipment" styleClass="sidebar-button"
                 maxWidth="Infinity" />
-            <Button text="📋  Órdenes Activas" styleClass="sidebar-button" maxWidth="Infinity" />
-            <Button text="📦  Repuestos" styleClass="sidebar-button" maxWidth="Infinity" />
+            <Button text="📋  Órdenes Activas" onAction="#handleOrders" styleClass="sidebar-button"
+                maxWidth="Infinity" />
+            <Button text="📦  Repuestos" onAction="#handleSpareParts" styleClass="sidebar-button"
+                maxWidth="Infinity" />
             <Button text="🕒  Historial Técnico" styleClass="sidebar-button" maxWidth="Infinity" />
 
             <!-- Spacer -->
