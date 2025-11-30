@@ -52,9 +52,10 @@ public class CyrcetechApp extends Application {
         // Load application icon
         URL iconResource = getClass().getResource("/app_icon.png");
         if (iconResource != null) {
+            System.out.println("Loading icon from: " + iconResource.toExternalForm());
             stage.getIcons().add(new Image(iconResource.toExternalForm()));
         } else {
-            System.err.println("Warning: app_icon.png not found");
+            System.err.println("ERROR: app_icon.png not found in resources!");
         }
 
         // System.out.println("Showing stage...");
