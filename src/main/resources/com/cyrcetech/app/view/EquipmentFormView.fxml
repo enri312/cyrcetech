@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cyrcetech.interface_adapter.controller.EquipmentFormController"
+    style="-fx-background-color: #0f0f1a; -fx-padding: 20;">
+
+    <Label fx:id="titleLabel" text="%equipment.form.title.new" textFill="WHITE">
+        <font>
+            <Font size="20.0" />
+        </font>
+    </Label>
+
+    <GridPane vgap="15" hgap="10">
+        <Label text="%equipment.customer" textFill="#a0a0b0" GridPane.rowIndex="0"
+            GridPane.columnIndex="0" />
+        <ComboBox fx:id="customerComboBox" prefWidth="250" GridPane.rowIndex="0"
+            GridPane.columnIndex="1" />
+
+        <Label text="%equipment.type" textFill="#a0a0b0" GridPane.rowIndex="1"
+            GridPane.columnIndex="0" />
+        <ComboBox fx:id="typeComboBox" prefWidth="250" GridPane.rowIndex="1"
+            GridPane.columnIndex="1" />
+
+        <Label text="%equipment.brand" textFill="#a0a0b0" GridPane.rowIndex="2"
+            GridPane.columnIndex="0" />
+        <TextField fx:id="brandField" styleClass="text-field" GridPane.rowIndex="2"
+            GridPane.columnIndex="1" />
+
+        <Label text="%equipment.model" textFill="#a0a0b0" GridPane.rowIndex="3"
+            GridPane.columnIndex="0" />
+        <TextField fx:id="modelField" styleClass="text-field" GridPane.rowIndex="3"
+            GridPane.columnIndex="1" />
+
+        <Label text="%equipment.serial" textFill="#a0a0b0" GridPane.rowIndex="4"
+            GridPane.columnIndex="0" />
+        <TextField fx:id="serialField" styleClass="text-field" GridPane.rowIndex="4"
+            GridPane.columnIndex="1" />
+
+        <Label text="%equipment.condition" textFill="#a0a0b0" GridPane.rowIndex="5"
+            GridPane.columnIndex="0" />
+        <TextField fx:id="conditionField" styleClass="text-field" GridPane.rowIndex="5"
+            GridPane.columnIndex="1" />
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="%equipment.form.cancel" onAction="#handleCancel" styleClass="button-secondary" />
+        <Button text="%equipment.form.save" onAction="#handleSave" styleClass="button-primary" />
+    </HBox>
+
+</VBox>

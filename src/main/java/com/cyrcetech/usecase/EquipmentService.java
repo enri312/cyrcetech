@@ -9,4 +9,10 @@ public interface EquipmentService {
     List<Equipment> getEquipmentByCustomerId(String customerId);
 
     Equipment getEquipmentById(String id);
+
+    void updateEquipment(Equipment equipment);
+
+    void deleteEquipment(String id);
+
+    List<Equipment> getAllEquipment();
 }

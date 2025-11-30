@@ -91,12 +91,16 @@ cyrcetech/
 ### 1. Gestión de Clientes
 - Registro de clientes con RUC/CI
 - Datos de contacto completos
+
 - Historial de equipos por cliente
+- **CRUD Completo**: Crear, Editar, Eliminar clientes
 
 ### 2. Gestión de Equipos
 - Registro de dispositivos (PC, Notebooks, etc.)
 - Asociación con clientes
+
 - Información técnica (marca, modelo, serie)
+- **CRUD Completo**: Crear, Editar, Eliminar equipos
 
 ### 3. Órdenes de Reparación
 - Estados: Pendiente → Diagnóstico → En Reparación → Listo → Entregado
@@ -145,7 +149,9 @@ docker-compose up -d
 ## 🤝 Contribución
 
 Este es un proyecto en desarrollo activo. Próximas funcionalidades:
-- [ ] CRUD completo para todas las entidades
+- [x] CRUD completo para Clientes
+- [x] CRUD completo para Equipos
+- [ ] CRUD completo para Repuestos y Órdenes
 - [ ] Generación de reportes PDF
 - [ ] Módulo de facturación
 - [ ] Búsqueda y filtros avanzados

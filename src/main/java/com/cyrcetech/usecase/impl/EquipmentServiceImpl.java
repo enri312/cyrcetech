@@ -39,4 +39,34 @@ public class EquipmentServiceImpl implements EquipmentService {
             return null;
         }
     }
+
+    @Override
+    public void updateEquipment(Equipment equipment) {
+        try {
+            equipmentDAO.update(equipment);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating equipment", e);
+        }
+    }
+
+    @Override
+    public void deleteEquipment(String id) {
+        try {
+            equipmentDAO.delete(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error deleting equipment", e);
+        }
+    }
+
+    @Override
+    public List<Equipment> getAllEquipment() {
+        try {
+            return equipmentDAO.findAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 }

@@ -29,6 +29,43 @@ public class EquipmentDAO {
         }
     }
 
+    public void update(Equipment equipment) throws SQLException {
+        String sql = "UPDATE equipment SET brand = ?, model = ?, device_type = ?, serial_number = ?, physical_condition = ?, customer_id = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, equipment.brand());
+            stmt.setString(2, equipment.model());
+            stmt.setString(3, equipment.deviceType().name());
+            stmt.setString(4, equipment.serialNumber());
+            stmt.setString(5, equipment.physicalCondition());
+            stmt.setString(6, equipment.customerId());
+            stmt.setString(7, equipment.id());
+            stmt.executeUpdate();
+        }
+    }
+
+    public void delete(String id) throws SQLException {
+        String sql = "DELETE FROM equipment WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    public List<Equipment> findAll() throws SQLException {
+        List<Equipment> equipmentList = new ArrayList<>();
+        String sql = "SELECT * FROM equipment";
+        try (Connection conn = DatabaseConnection.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                equipmentList.add(mapResultSetToEquipment(rs));
+            }
+        }
+        return equipmentList;
+    }
+
     public List<Equipment> findByCustomerId(String customerId) throws SQLException {
         List<Equipment> equipmentList = new ArrayList<>();
         String sql = "SELECT * FROM equipment WHERE customer_id = ?";

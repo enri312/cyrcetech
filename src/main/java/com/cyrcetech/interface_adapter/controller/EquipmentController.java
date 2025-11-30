@@ -10,8 +10,21 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import com.cyrcetech.app.I18nUtil;
+import javafx.scene.control.ButtonType;
+import java.util.Optional;
+import com.cyrcetech.app.DependencyContainer;
+import com.cyrcetech.usecase.EquipmentService;
+import javafx.collections.FXCollections;
 
 public class EquipmentController {
+
+    private final EquipmentService equipmentService = DependencyContainer.getEquipmentService();
 
     @FXML
     private TableView<Equipment> equipmentTable;
@@ -34,14 +47,11 @@ public class EquipmentController {
         serialColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
         conditionColumn.setCellValueFactory(new PropertyValueFactory<>("physicalCondition"));
 
-        // For now, we can't easily list all equipment without a method in service/DAO.
-        // EquipmentDAO has findByCustomerId but not findAll.
-        // Let's leave it empty or implement findAll later.
-        // Or just show an alert saying "Select a client to view equipment" if we were
-        // doing that flow.
-        // But for this view, we probably want all equipment.
-        // I'll leave it empty for now to avoid compilation errors if findAll is
-        // missing.
+        loadEquipment();
+    }
+
+    private void loadEquipment() {
+        equipmentTable.setItems(FXCollections.observableArrayList(equipmentService.getAllEquipment()));
     }
 
     @FXML
@@ -51,8 +61,64 @@ public class EquipmentController {
 
     @FXML
     private void handleNewEquipment(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(com.cyrcetech.app.I18nUtil.getBundle().getString("equipment.pending"));
+        openEquipmentForm(null);
+    }
+
+    @FXML
+    private void handleEditEquipment(ActionEvent event) {
+        Equipment selected = equipmentTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            openEquipmentForm(selected);
+        } else {
+            showWarning(I18nUtil.getBundle().getString("equipment.warning.select"));
+        }
+    }
+
+    @FXML
+    private void handleDeleteEquipment(ActionEvent event) {
+        Equipment selected = equipmentTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(I18nUtil.getBundle().getString("equipment.delete.title"));
+            alert.setHeaderText(null);
+            alert.setContentText(I18nUtil.getBundle().getString("equipment.delete.confirm"));
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                equipmentService.deleteEquipment(selected.id());
+                loadEquipment();
+            }
+        } else {
+            showWarning(I18nUtil.getBundle().getString("equipment.warning.select"));
+        }
+    }
+
+    private void openEquipmentForm(Equipment equipment) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/cyrcetech/app/view/EquipmentFormView.fxml"));
+            loader.setResources(I18nUtil.getBundle());
+            Parent root = loader.load();
+
+            EquipmentFormController controller = loader.getController();
+            controller.setEquipment(equipment);
+            controller.setOnSaveCallback(this::loadEquipment);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(equipment == null ? I18nUtil.getBundle().getString("equipment.form.title.new")
+                    : I18nUtil.getBundle().getString("equipment.form.title.edit"));
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.show();
     }
 }
