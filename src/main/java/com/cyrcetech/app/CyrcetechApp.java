@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,6 +48,14 @@ public class CyrcetechApp extends Application {
         stage.setResizable(true);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
+
+        // Load application icon
+        URL iconResource = getClass().getResource("/app_icon.png");
+        if (iconResource != null) {
+            stage.getIcons().add(new Image(iconResource.toExternalForm()));
+        } else {
+            System.err.println("Warning: app_icon.png not found");
+        }
 
         // System.out.println("Showing stage...");
         stage.show();
