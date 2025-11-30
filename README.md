@@ -4,8 +4,9 @@ Sistema completo de gestión para talleres de reparación de computadoras y note
 
 ## ✨ Características
 
-- 🎨 **Interfaz Moderna** - Diseño Dark Mode con Glassmorphism e iconos SVG
-- 🌐 **Multilenguaje** - Soporte para Español e Inglés
+- 🎨 **Interfaz Moderna** - Diseño Neon Dark Mode con Glassmorphism e iconos SVG
+- 📊 **Dashboard Interactivo** - Contadores en tiempo real y accesos directos
+- 🌐 **Multilenguaje** - Soporte completo para Español e Inglés
 - 👥 **Gestión de Clientes** - Registro completo de clientes con datos de contacto
 - 💻 **Gestión de Equipos** - Control de dispositivos por cliente
 - 📋 **Órdenes de Reparación** - Seguimiento completo del ciclo de reparación
@@ -71,6 +72,7 @@ cyrcetech/
 │   ├── messages_*.properties   # Archivos de localización
 │   └── schema.sql             # Esquema de base de datos
 ├── frontend-web/              # Frontend Web (React/TypeScript)
+├── scripts/                   # Scripts de utilidad
 ├── docker-compose.yml         # Configuración PostgreSQL
 └── INICIAR.bat               # Script de inicio rápido
 ```
