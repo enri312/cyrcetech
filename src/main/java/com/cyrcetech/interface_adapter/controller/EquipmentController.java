@@ -1,10 +1,7 @@
 package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.entity.Equipment;
-import com.cyrcetech.usecase.EquipmentService;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,8 +25,6 @@ public class EquipmentController {
     private TableColumn<Equipment, String> serialColumn;
     @FXML
     private TableColumn<Equipment, String> conditionColumn;
-
-    private final EquipmentService equipmentService = DependencyContainer.getEquipmentService();
 
     @FXML
     public void initialize() {
@@ -57,7 +52,7 @@ public class EquipmentController {
     @FXML
     private void handleNewEquipment(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Funcionalidad de crear equipo desde aquí pendiente.");
+        alert.setContentText(com.cyrcetech.app.I18nUtil.getBundle().getString("equipment.pending"));
         alert.show();
     }
 }

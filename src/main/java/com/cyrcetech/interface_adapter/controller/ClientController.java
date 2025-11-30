@@ -51,7 +51,7 @@ public class ClientController {
     @FXML
     private void handleNewClient(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Funcionalidad de crear cliente desde aquí pendiente.");
+        alert.setContentText(com.cyrcetech.app.I18nUtil.getBundle().getString("clients.pending"));
         alert.show();
     }
 }

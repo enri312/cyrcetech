@@ -36,9 +36,9 @@ public class ReportsController {
 
     private void showNotImplemented(String reportName) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Funcionalidad Pendiente");
+        alert.setTitle(com.cyrcetech.app.I18nUtil.getBundle().getString("reports.pending.title"));
         alert.setHeaderText(reportName);
-        alert.setContentText("Esta funcionalidad estará disponible próximamente.");
+        alert.setContentText(com.cyrcetech.app.I18nUtil.getBundle().getString("reports.pending.message"));
         alert.show();
     }
 }

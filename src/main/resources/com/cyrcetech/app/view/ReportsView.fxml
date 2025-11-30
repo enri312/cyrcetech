@@ -21,8 +21,8 @@
 
             <!-- Header -->
             <HBox alignment="CENTER_LEFT" spacing="20">
-                <Button text="⬅ Volver" onAction="#handleBack" styleClass="button-secondary" />
-                <Label text="Reportes" styleClass="title-label">
+                <Button text="%reports.back" onAction="#handleBack" styleClass="button-secondary" />
+                <Label text="%reports.title" styleClass="title-label">
                     <font>
                         <Font size="24.0" />
                     </font>
@@ -39,43 +39,43 @@
                 <!-- Report Card 1 -->
                 <VBox spacing="15" styleClass="glass-pane" style="-fx-padding: 20;"
                     GridPane.columnIndex="0" GridPane.rowIndex="0">
-                    <Label text="📊 Resumen de Órdenes"
+                    <Label text="%reports.orders.title"
                         style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
-                    <Label text="Total de órdenes procesadas, pendientes y completadas."
+                    <Label text="%reports.orders.desc"
                         styleClass="subtitle-label" />
-                    <Button text="Generar Reporte" onAction="#handleOrdersReport"
+                    <Button text="%reports.generate" onAction="#handleOrdersReport"
                         styleClass="button-primary" />
                 </VBox>
 
                 <!-- Report Card 2 -->
                 <VBox spacing="15" styleClass="glass-pane" style="-fx-padding: 20;"
                     GridPane.columnIndex="1" GridPane.rowIndex="0">
-                    <Label text="💰 Ingresos"
+                    <Label text="%reports.income.title"
                         style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
-                    <Label text="Reporte de ingresos por período." styleClass="subtitle-label" />
-                    <Button text="Generar Reporte" onAction="#handleIncomeReport"
+                    <Label text="%reports.income.desc" styleClass="subtitle-label" />
+                    <Button text="%reports.generate" onAction="#handleIncomeReport"
                         styleClass="button-primary" />
                 </VBox>
 
                 <!-- Report Card 3 -->
                 <VBox spacing="15" styleClass="glass-pane" style="-fx-padding: 20;"
                     GridPane.columnIndex="0" GridPane.rowIndex="1">
-                    <Label text="👥 Clientes"
+                    <Label text="%reports.customers.title"
                         style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
-                    <Label text="Listado completo de clientes registrados."
+                    <Label text="%reports.customers.desc"
                         styleClass="subtitle-label" />
-                    <Button text="Generar Reporte" onAction="#handleCustomersReport"
+                    <Button text="%reports.generate" onAction="#handleCustomersReport"
                         styleClass="button-primary" />
                 </VBox>
 
                 <!-- Report Card 4 -->
                 <VBox spacing="15" styleClass="glass-pane" style="-fx-padding: 20;"
                     GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <Label text="📦 Inventario"
+                    <Label text="%reports.inventory.title"
                         style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
-                    <Label text="Estado actual del inventario de repuestos."
+                    <Label text="%reports.inventory.desc"
                         styleClass="subtitle-label" />
-                    <Button text="Generar Reporte" onAction="#handleInventoryReport"
+                    <Button text="%reports.generate" onAction="#handleInventoryReport"
                         styleClass="button-primary" />
                 </VBox>
             </GridPane>

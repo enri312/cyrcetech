@@ -44,7 +44,7 @@ public class SparePartsController {
     @FXML
     private void handleNewSparePart(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Funcionalidad de crear repuesto pendiente.");
+        alert.setContentText(com.cyrcetech.app.I18nUtil.getBundle().getString("spareParts.pending"));
         alert.show();
     }
 }
