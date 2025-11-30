@@ -115,7 +115,7 @@ case "$( uname )" in                #(
 esac
 
 
-MODULE_PATH=$APP_HOME/lib/cyrcetech.jar:$APP_HOME/lib/controlsfx-11.2.1.jar:$APP_HOME/lib/formsfx-core-11.6.0.jar:$APP_HOME/lib/validatorfx-0.5.0.jar:$APP_HOME/lib/ikonli-javafx-12.3.1.jar:$APP_HOME/lib/gson-2.10.1.jar:$APP_HOME/lib/javafx-fxml-25.0.1-win.jar:$APP_HOME/lib/javafx-controls-25.0.1-win.jar:$APP_HOME/lib/ikonli-core-12.3.1.jar:$APP_HOME/lib/javafx-graphics-25.0.1-win.jar:$APP_HOME/lib/javafx-base-25.0.1-win.jar
+MODULE_PATH=$APP_HOME/lib/cyrcetech.jar:$APP_HOME/lib/controlsfx-11.2.1.jar:$APP_HOME/lib/formsfx-core-11.6.0.jar:$APP_HOME/lib/validatorfx-0.5.0.jar:$APP_HOME/lib/ikonli-javafx-12.3.1.jar:$APP_HOME/lib/gson-2.10.1.jar:$APP_HOME/lib/postgresql-42.7.2.jar:$APP_HOME/lib/javafx-fxml-25.0.1-win.jar:$APP_HOME/lib/javafx-controls-25.0.1-win.jar:$APP_HOME/lib/ikonli-core-12.3.1.jar:$APP_HOME/lib/checker-qual-3.42.0.jar:$APP_HOME/lib/javafx-graphics-25.0.1-win.jar:$APP_HOME/lib/javafx-base-25.0.1-win.jar
 
 
 # Determine the Java command to use to start the JVM.
