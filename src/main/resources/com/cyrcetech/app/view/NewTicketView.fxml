@@ -22,7 +22,7 @@
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="15">
-        <Label text="Nueva Orden de Reparación" styleClass="title-label">
+        <Label text="%ticket.title" styleClass="title-label">
             <font>
                 <Font size="28.0" />
             </font>
@@ -36,7 +36,7 @@
 
             <!-- Customer Data Section -->
             <VBox spacing="15">
-                <Label text="👤 Datos del Cliente"
+                <Label text="%ticket.customer"
                     style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;" />
 
                 <GridPane hgap="15.0" vgap="12.0">
@@ -46,30 +46,33 @@
                     </columnConstraints>
 
                     <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                        <Label text="Nombre Completo" styleClass="subtitle-label" />
-                        <TextField fx:id="nameField" promptText="Ej: Juan Pérez" />
+                        <Label text="%ticket.customer.name" styleClass="subtitle-label" />
+                        <TextField fx:id="nameField" promptText="%ticket.customer.name.placeholder" />
                     </VBox>
 
                     <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                        <Label text="Cédula / RUC" styleClass="subtitle-label" />
-                        <TextField fx:id="taxIdField" promptText="Ej: 4.555.666" />
+                        <Label text="%ticket.customer.taxId" styleClass="subtitle-label" />
+                        <TextField fx:id="taxIdField"
+                            promptText="%ticket.customer.taxId.placeholder" />
                     </VBox>
 
                     <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                        <Label text="Dirección" styleClass="subtitle-label" />
-                        <TextField fx:id="addressField" promptText="Ej: Av. Siempre Viva 123" />
+                        <Label text="%ticket.customer.address" styleClass="subtitle-label" />
+                        <TextField fx:id="addressField"
+                            promptText="%ticket.customer.address.placeholder" />
                     </VBox>
 
                     <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                        <Label text="Teléfono" styleClass="subtitle-label" />
-                        <TextField fx:id="phoneField" promptText="Ej: 0981-555-0101" />
+                        <Label text="%ticket.customer.phone" styleClass="subtitle-label" />
+                        <TextField fx:id="phoneField"
+                            promptText="%ticket.customer.phone.placeholder" />
                     </VBox>
                 </GridPane>
             </VBox>
 
             <!-- Device Data Section -->
             <VBox spacing="15">
-                <Label text="💻 Datos del Equipo"
+                <Label text="%ticket.device"
                     style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;" />
 
                 <GridPane hgap="15.0" vgap="12.0">
@@ -79,24 +82,26 @@
                     </columnConstraints>
 
                     <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                        <Label text="Tipo de Equipo" styleClass="subtitle-label" />
-                        <ComboBox fx:id="deviceTypeCombo" promptText="Seleccione..."
+                        <Label text="%ticket.device.type" styleClass="subtitle-label" />
+                        <ComboBox fx:id="deviceTypeCombo"
+                            promptText="%ticket.device.type.placeholder"
                             maxWidth="Infinity" />
                     </VBox>
 
                     <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                        <Label text="Marca" styleClass="subtitle-label" />
-                        <TextField fx:id="brandField" promptText="Ej: Dell" />
+                        <Label text="%ticket.device.brand" styleClass="subtitle-label" />
+                        <TextField fx:id="brandField" promptText="%ticket.device.brand.placeholder" />
                     </VBox>
 
                     <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                        <Label text="Modelo" styleClass="subtitle-label" />
-                        <TextField fx:id="modelField" promptText="Ej: XPS 15" />
+                        <Label text="%ticket.device.model" styleClass="subtitle-label" />
+                        <TextField fx:id="modelField" promptText="%ticket.device.model.placeholder" />
                     </VBox>
 
                     <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                        <Label text="Nº Serie" styleClass="subtitle-label" />
-                        <TextField fx:id="serialField" promptText="Ej: JX-2292" />
+                        <Label text="%ticket.device.serial" styleClass="subtitle-label" />
+                        <TextField fx:id="serialField"
+                            promptText="%ticket.device.serial.placeholder" />
                     </VBox>
                 </GridPane>
             </VBox>
@@ -104,31 +109,31 @@
             <!-- Problem Description -->
             <VBox spacing="10">
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="🔧 Motivo de Ingreso / Problema"
+                    <Label text="%ticket.problem"
                         style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;"
                         HBox.hgrow="ALWAYS" />
-                    <Button text="🤖 Diagnóstico IA" onAction="#handleConsultAI"
+                    <Button text="%ticket.consultAI" onAction="#handleConsultAI"
                         styleClass="button-secondary" />
                 </HBox>
                 <TextArea fx:id="problemArea" prefHeight="100.0"
-                    promptText="Describa el problema que presenta el equipo..." />
+                    promptText="%ticket.problem.placeholder" />
             </VBox>
 
             <!-- Observations / Diagnosis -->
             <VBox spacing="10">
-                <Label text="📝 Observaciones / Diagnóstico"
+                <Label text="%ticket.observations"
                     style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;" />
                 <TextArea fx:id="observationsArea" prefHeight="80.0"
-                    promptText="Observaciones técnicas y diagnóstico..." />
+                    promptText="%ticket.observations.placeholder" />
             </VBox>
 
             <!-- AI Diagnosis (Read-only suggestion) -->
             <VBox spacing="10">
-                <Label text="✨ Sugerencia IA (Deepseek)"
+                <Label text="%ticket.aiDiagnosis"
                     style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #d500f9;" />
                 <TextArea fx:id="aiDiagnosisArea" prefHeight="60.0" editable="false"
                     style="-fx-background-color: rgba(213, 0, 249, 0.1); -fx-border-color: rgba(213, 0, 249, 0.3); -fx-text-fill: #e0e0e0;"
-                    promptText="La sugerencia de IA aparecerá aquí..." />
+                    promptText="%ticket.aiPlaceholder" />
             </VBox>
 
             <!-- Action Buttons -->
@@ -136,9 +141,9 @@
                 <padding>
                     <Insets top="10" />
                 </padding>
-                <Button text="Cancelar" onAction="#handleCancel" styleClass="button-secondary"
+                <Button text="%ticket.cancel" onAction="#handleCancel" styleClass="button-secondary"
                     prefWidth="120" />
-                <Button text="Crear Orden" onAction="#handleSave" prefWidth="120" />
+                <Button text="%ticket.save" onAction="#handleSave" prefWidth="120" />
             </HBox>
         </VBox>
     </ScrollPane>
