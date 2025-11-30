@@ -4,6 +4,8 @@ Sistema completo de gestión para talleres de reparación de computadoras y note
 
 ## ✨ Características
 
+- 🎨 **Interfaz Moderna** - Diseño Dark Mode con Glassmorphism e iconos SVG
+- 🌐 **Multilenguaje** - Soporte para Español e Inglés
 - 👥 **Gestión de Clientes** - Registro completo de clientes con datos de contacto
 - 💻 **Gestión de Equipos** - Control de dispositivos por cliente
 - 📋 **Órdenes de Reparación** - Seguimiento completo del ciclo de reparación
@@ -66,7 +68,9 @@ cyrcetech/
 │   └── interface_adapter/     # Controladores UI
 ├── src/main/resources/
 │   ├── com/cyrcetech/app/view/ # Vistas FXML
+│   ├── messages_*.properties   # Archivos de localización
 │   └── schema.sql             # Esquema de base de datos
+├── frontend-web/              # Frontend Web (React/TypeScript)
 ├── docker-compose.yml         # Configuración PostgreSQL
 └── INICIAR.bat               # Script de inicio rápido
 ```
@@ -151,5 +155,5 @@ Proyecto privado - Todos los derechos reservados
 
 ---
 
-**Versión**: 2.0.0  
+**Versión**: 2.1.0  
 **Última actualización**: Noviembre 2025
