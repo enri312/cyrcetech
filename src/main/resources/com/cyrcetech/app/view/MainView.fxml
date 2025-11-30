@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.SVGPath?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.cyrcetech.interface_adapter.controller.MainController" styleClass="root">
@@ -26,24 +27,65 @@
                     <Insets left="20" right="20" bottom="30" />
                 </padding>
                 <Label text="🔧" style="-fx-font-size: 24px;" />
-                <Label text="CyrceTech"
+                <Label text="%login.title"
                     style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
             </HBox>
 
             <!-- Navigation Buttons -->
-            <Button text="📊  Inicio" styleClass="sidebar-button, sidebar-button-active"
-                maxWidth="Infinity" />
-            <Button text="➕  Registrar Orden" onAction="#handleNewTicket"
-                styleClass="sidebar-button" maxWidth="Infinity" />
-            <Button text="👥  Clientes" onAction="#handleClients" styleClass="sidebar-button"
-                maxWidth="Infinity" />
-            <Button text="💻  Equipos" onAction="#handleEquipment" styleClass="sidebar-button"
-                maxWidth="Infinity" />
-            <Button text="📋  Órdenes Activas" onAction="#handleOrders" styleClass="sidebar-button"
-                maxWidth="Infinity" />
-            <Button text="📦  Repuestos" onAction="#handleSpareParts" styleClass="sidebar-button"
-                maxWidth="Infinity" />
-            <Button text="🕒  Historial Técnico" styleClass="sidebar-button" maxWidth="Infinity" />
+            <Button text="%nav.home" styleClass="sidebar-button, sidebar-button-active"
+                maxWidth="Infinity">
+                <graphic>
+                    <SVGPath content="M3 3h7v7H3z M14 3h7v7h-7z M14 14h7v7h-7z M3 14h7v7H3z"
+                        fill="TRANSPARENT" stroke="WHITE" strokeWidth="2" />
+                </graphic>
+            </Button>
+            <Button text="%nav.newOrder" onAction="#handleNewTicket" styleClass="sidebar-button"
+                maxWidth="Infinity">
+                <graphic>
+                    <SVGPath content="M12 5v14M5 12h14" fill="TRANSPARENT" stroke="WHITE"
+                        strokeWidth="2" strokeLineCap="ROUND" />
+                </graphic>
+            </Button>
+            <Button text="%nav.clients" onAction="#handleClients" styleClass="sidebar-button"
+                maxWidth="Infinity">
+                <graphic>
+                    <SVGPath
+                        content="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M16 3.13a4 4 0 0 1 0 7.75 M23 21v-2a4 4 0 0 0-3-3.87"
+                        fill="TRANSPARENT" stroke="WHITE" strokeWidth="2" strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND" />
+                </graphic>
+            </Button>
+            <Button text="%nav.equipment" onAction="#handleEquipment" styleClass="sidebar-button"
+                maxWidth="Infinity">
+                <graphic>
+                    <SVGPath content="M2 3h20v14H2z M8 21h8 M12 17v4" fill="TRANSPARENT"
+                        stroke="WHITE" strokeWidth="2" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
+                </graphic>
+            </Button>
+            <Button text="%nav.activeOrders" onAction="#handleOrders" styleClass="sidebar-button"
+                maxWidth="Infinity">
+                <graphic>
+                    <SVGPath content="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"
+                        fill="TRANSPARENT" stroke="WHITE" strokeWidth="2" strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND" />
+                </graphic>
+            </Button>
+            <Button text="%nav.spareParts" onAction="#handleSpareParts" styleClass="sidebar-button"
+                maxWidth="Infinity">
+                <graphic>
+                    <SVGPath
+                        content="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z M3.27 6.96L12 12.01l8.73-5.05 M12 22.08V12"
+                        fill="TRANSPARENT" stroke="WHITE" strokeWidth="2" strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND" />
+                </graphic>
+            </Button>
+            <Button text="%nav.technicalHistory" styleClass="sidebar-button" maxWidth="Infinity">
+                <graphic>
+                    <SVGPath content="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10z M12 6v6l4 2"
+                        fill="TRANSPARENT" stroke="WHITE" strokeWidth="2" strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND" />
+                </graphic>
+            </Button>
 
             <!-- Spacer -->
             <VBox VBox.vgrow="ALWAYS" />
@@ -53,9 +95,16 @@
                 <padding>
                     <Insets left="20" right="20" top="20" />
                 </padding>
-                <Label text="👤  Técnico Admin" style="-fx-text-fill: #808090; -fx-font-size: 12px;" />
-                <Button text="🚪  Salir" onAction="#handleLogout" styleClass="button-danger"
-                    maxWidth="Infinity" />
+                <Label text="%nav.admin" style="-fx-text-fill: #808090; -fx-font-size: 12px;" />
+                <Button text="%nav.logout" onAction="#handleLogout" styleClass="button-danger"
+                    maxWidth="Infinity">
+                    <graphic>
+                        <SVGPath
+                            content="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4 M16 17l5-5-5-5 M21 12H9"
+                            fill="TRANSPARENT" stroke="WHITE" strokeWidth="2" strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND" />
+                    </graphic>
+                </Button>
             </VBox>
         </VBox>
     </left>
@@ -69,7 +118,7 @@
 
             <!-- Header -->
             <HBox alignment="CENTER_LEFT" spacing="10">
-                <Label text="Panel Principal" styleClass="title-label">
+                <Label text="%main.title" styleClass="title-label">
                     <font>
                         <Font size="32.0" />
                     </font>
@@ -88,7 +137,7 @@
                 <VBox spacing="10" styleClass="stat-card, stat-card-yellow" GridPane.columnIndex="0">
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
-                            <Label text="Pendientes / Diagnóstico" styleClass="stat-label" />
+                            <Label text="%main.pending" styleClass="stat-label" />
                             <Label text="1" styleClass="stat-number" />
                         </VBox>
                         <Label text="🔧" styleClass="icon-box, icon-box-yellow"
@@ -100,7 +149,7 @@
                 <VBox spacing="10" styleClass="stat-card, stat-card-green" GridPane.columnIndex="1">
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
-                            <Label text="Listos para Entregar" styleClass="stat-label" />
+                            <Label text="%main.ready" styleClass="stat-label" />
                             <Label text="1" styleClass="stat-number" />
                         </VBox>
                         <Label text="✅" styleClass="icon-box, icon-box-green"
@@ -112,7 +161,7 @@
                 <VBox spacing="10" styleClass="stat-card, stat-card-blue" GridPane.columnIndex="2">
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
-                            <Label text="Entregados" styleClass="stat-label" />
+                            <Label text="%main.delivered" styleClass="stat-label" />
                             <Label text="0" styleClass="stat-number" />
                         </VBox>
                         <Label text="🔄" styleClass="icon-box, icon-box-blue"
@@ -130,53 +179,19 @@
 
                 <!-- En Taller -->
                 <VBox spacing="15" GridPane.columnIndex="0">
-                    <Label text="🔧 En Taller"
+                    <Label text="%main.inWorkshop"
                         style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffcc00;" />
                     <VBox spacing="10" styleClass="glass-pane" style="-fx-padding: 15;">
-                        <!-- Sample Ticket -->
-                        <HBox alignment="CENTER_LEFT" spacing="15"
-                            style="-fx-background-color: rgba(255,255,255,0.03); -fx-background-radius: 8; -fx-padding: 12;">
-                            <Label text="💻" styleClass="icon-box, icon-box-yellow"
-                                style="-fx-font-size: 18px;" />
-                            <VBox spacing="3" HBox.hgrow="ALWAYS">
-                                <Label text="Juan Perez"
-                                    style="-fx-font-weight: bold; -fx-text-fill: white;" />
-                                <Label text="Dell Xps 15" styleClass="subtitle-label"
-                                    style="-fx-font-size: 11px;" />
-                            </VBox>
-                            <VBox alignment="CENTER_RIGHT" spacing="3">
-                                <Label text="2023-10-25"
-                                    style="-fx-font-size: 10px; -fx-text-fill: #606070;" />
-                                <Label text="En Diagnóstico"
-                                    style="-fx-font-size: 10px; -fx-background-color: rgba(255,204,0,0.2); -fx-text-fill: #ffcc00; -fx-padding: 3 8; -fx-background-radius: 4;" />
-                            </VBox>
-                        </HBox>
+                        <!-- Sample Ticket removed -->
                     </VBox>
                 </VBox>
 
                 <!-- Para Retirar -->
                 <VBox spacing="15" GridPane.columnIndex="1">
-                    <Label text="✅ Para Retirar"
+                    <Label text="%main.toPickup"
                         style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #00ff00;" />
                     <VBox spacing="10" styleClass="glass-pane" style="-fx-padding: 15;">
-                        <!-- Sample Ticket -->
-                        <HBox alignment="CENTER_LEFT" spacing="15"
-                            style="-fx-background-color: rgba(255,255,255,0.03); -fx-background-radius: 8; -fx-padding: 12;">
-                            <Label text="📱" styleClass="icon-box, icon-box-green"
-                                style="-fx-font-size: 18px;" />
-                            <VBox spacing="3" HBox.hgrow="ALWAYS">
-                                <Label text="Maria Gomez"
-                                    style="-fx-font-weight: bold; -fx-text-fill: white;" />
-                                <Label text="Apple iPhone 13" styleClass="subtitle-label"
-                                    style="-fx-font-size: 11px;" />
-                            </VBox>
-                            <VBox alignment="CENTER_RIGHT" spacing="3">
-                                <Label text="2023-10-26"
-                                    style="-fx-font-size: 10px; -fx-text-fill: #606070;" />
-                                <Label text="Listo"
-                                    style="-fx-font-size: 10px; -fx-background-color: rgba(0,255,0,0.2); -fx-text-fill: #00ff00; -fx-padding: 3 8; -fx-background-radius: 4;" />
-                            </VBox>
-                        </HBox>
+                        <!-- Sample Ticket removed -->
                     </VBox>
                 </VBox>
             </GridPane>
