@@ -12,6 +12,7 @@ module com.cyrcetech {
     // External libraries
     requires com.google.gson;
     requires org.postgresql.jdbc;
+    requires org.apache.pdfbox;
 
     // Open packages for JavaFX reflection (FXML loading)
     opens com.cyrcetech.app to javafx.fxml;

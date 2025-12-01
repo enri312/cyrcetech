@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cyrcetech.interface_adapter.controller.InvoiceFormController"
+    spacing="20" styleClass="root" style="-fx-background-color: #0f0f1a; -fx-padding: 30;">
+
+    <!-- Header -->
+    <Label fx:id="titleLabel" text="%invoice.form.title.new" styleClass="title-label">
+        <font>
+            <Font size="24.0" />
+        </font>
+    </Label>
+
+    <!-- Form -->
+    <GridPane hgap="15" vgap="15">
+        <Label text="%invoice.ticketId" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="ticketIdField" promptText="%invoice.ticketId" GridPane.columnIndex="1"
+            GridPane.rowIndex="0" prefWidth="300" />
+
+        <Label text="%invoice.invoiceNumber" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="invoiceNumberField" promptText="%invoice.invoiceNumber" editable="false"
+            GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="300" />
+
+        <Label text="%invoice.issueDate" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <DatePicker fx:id="issueDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"
+            prefWidth="300" />
+
+        <Label text="%invoice.dueDate" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <DatePicker fx:id="dueDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3"
+            prefWidth="300" />
+
+        <Label text="%invoice.subtotal" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+        <TextField fx:id="subtotalField" promptText="0.00" GridPane.columnIndex="1"
+            GridPane.rowIndex="4" prefWidth="300" />
+
+        <Label text="%invoice.taxAmount" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+        <TextField fx:id="taxAmountField" promptText="0.00" GridPane.columnIndex="1"
+            GridPane.rowIndex="5" prefWidth="300" />
+
+        <Label text="%invoice.totalAmount" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+        <TextField fx:id="totalAmountField" promptText="0.00" editable="false"
+            GridPane.columnIndex="1" GridPane.rowIndex="6" prefWidth="300" />
+
+        <Label text="%invoice.paymentStatus" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+        <ComboBox fx:id="paymentStatusCombo" GridPane.columnIndex="1" GridPane.rowIndex="7"
+            prefWidth="300" />
+
+        <Label text="%invoice.paymentMethod" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+        <ComboBox fx:id="paymentMethodCombo" GridPane.columnIndex="1" GridPane.rowIndex="8"
+            prefWidth="300" />
+
+        <Label text="%invoice.paymentDate" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+        <DatePicker fx:id="paymentDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="9"
+            prefWidth="300" />
+
+        <Label text="%invoice.notes" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+        <TextArea fx:id="notesArea" promptText="%invoice.notes" GridPane.columnIndex="1"
+            GridPane.rowIndex="10" prefWidth="300" prefHeight="80" />
+    </GridPane>
+
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="%invoice.form.cancel" onAction="#handleCancel" styleClass="button-secondary" />
+        <Button text="%invoice.form.save" onAction="#handleSave" styleClass="button-primary" />
+    </HBox>
+</VBox>

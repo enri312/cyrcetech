@@ -152,7 +152,7 @@ Este es un proyecto en desarrollo activo. Próximas funcionalidades:
 - [x] CRUD completo para Clientes
 - [x] CRUD completo para Equipos
 - [ ] CRUD completo para Repuestos y Órdenes
-- [ ] Generación de reportes PDF
+- [x] Generación de reportes PDF
 - [ ] Módulo de facturación
 - [ ] Búsqueda y filtros avanzados
 - [ ] Copias de seguridad automáticas

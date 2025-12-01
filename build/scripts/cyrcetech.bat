@@ -70,10 +70,11 @@ goto fail
 :execute
 @rem Setup the command line
 
-set MODULE_PATH=%APP_HOME%\lib\cyrcetech.jar;%APP_HOME%\lib\controlsfx-11.2.1.jar;%APP_HOME%\lib\formsfx-core-11.6.0.jar;%APP_HOME%\lib\validatorfx-0.5.0.jar;%APP_HOME%\lib\ikonli-javafx-12.3.1.jar;%APP_HOME%\lib\gson-2.10.1.jar;%APP_HOME%\lib\postgresql-42.7.2.jar;%APP_HOME%\lib\javafx-fxml-25.0.1-win.jar;%APP_HOME%\lib\javafx-controls-25.0.1-win.jar;%APP_HOME%\lib\ikonli-core-12.3.1.jar;%APP_HOME%\lib\checker-qual-3.42.0.jar;%APP_HOME%\lib\javafx-graphics-25.0.1-win.jar;%APP_HOME%\lib\javafx-base-25.0.1-win.jar
+set CLASSPATH=%APP_HOME%\lib\commons-logging-1.2.jar
+set MODULE_PATH=%APP_HOME%\lib\cyrcetech.jar;%APP_HOME%\lib\controlsfx-11.2.1.jar;%APP_HOME%\lib\formsfx-core-11.6.0.jar;%APP_HOME%\lib\validatorfx-0.5.0.jar;%APP_HOME%\lib\ikonli-javafx-12.3.1.jar;%APP_HOME%\lib\gson-2.10.1.jar;%APP_HOME%\lib\postgresql-42.7.2.jar;%APP_HOME%\lib\pdfbox-3.0.1.jar;%APP_HOME%\lib\javafx-fxml-25.0.1-win.jar;%APP_HOME%\lib\javafx-controls-25.0.1-win.jar;%APP_HOME%\lib\ikonli-core-12.3.1.jar;%APP_HOME%\lib\checker-qual-3.42.0.jar;%APP_HOME%\lib\fontbox-3.0.1.jar;%APP_HOME%\lib\pdfbox-io-3.0.1.jar;%APP_HOME%\lib\junit-jupiter-params-5.10.1.jar;%APP_HOME%\lib\junit-jupiter-engine-5.10.1.jar;%APP_HOME%\lib\junit-jupiter-api-5.10.1.jar;%APP_HOME%\lib\junit-platform-engine-1.10.1.jar;%APP_HOME%\lib\junit-platform-commons-1.10.1.jar;%APP_HOME%\lib\junit-jupiter-5.10.1.jar;%APP_HOME%\lib\javafx-graphics-25.0.1-win.jar;%APP_HOME%\lib\javafx-base-25.0.1-win.jar;%APP_HOME%\lib\opentest4j-1.3.0.jar
 
 @rem Execute cyrcetech
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %CYRCETECH_OPTS%  --module-path "%MODULE_PATH%" --module com.cyrcetech/com.cyrcetech.app.CyrcetechApp %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %CYRCETECH_OPTS%  -classpath "%CLASSPATH%" --module-path "%MODULE_PATH%" --module com.cyrcetech/com.cyrcetech.app.CyrcetechApp %*
 
 :end
 @rem End local scope for the variables with windows NT shell

@@ -39,3 +39,19 @@ CREATE TABLE IF NOT EXISTS spare_parts (
     stock INTEGER NOT NULL DEFAULT 0,
     provider VARCHAR(100)
 );
+
+CREATE TABLE IF NOT EXISTS invoices (
+    id VARCHAR(50) PRIMARY KEY,
+    ticket_id VARCHAR(50) NOT NULL,
+    invoice_number VARCHAR(50) UNIQUE NOT NULL,
+    issue_date DATE NOT NULL,
+    due_date DATE,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    tax_amount DECIMAL(10, 2) DEFAULT 0,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    payment_status VARCHAR(20) NOT NULL,
+    payment_date DATE,
+    payment_method VARCHAR(20),
+    notes TEXT,
+    FOREIGN KEY (ticket_id) REFERENCES tickets(id)
+);

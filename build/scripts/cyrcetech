@@ -114,8 +114,9 @@ case "$( uname )" in                #(
   NONSTOP* )        nonstop=true ;;
 esac
 
+CLASSPATH=$APP_HOME/lib/commons-logging-1.2.jar
 
-MODULE_PATH=$APP_HOME/lib/cyrcetech.jar:$APP_HOME/lib/controlsfx-11.2.1.jar:$APP_HOME/lib/formsfx-core-11.6.0.jar:$APP_HOME/lib/validatorfx-0.5.0.jar:$APP_HOME/lib/ikonli-javafx-12.3.1.jar:$APP_HOME/lib/gson-2.10.1.jar:$APP_HOME/lib/postgresql-42.7.2.jar:$APP_HOME/lib/javafx-fxml-25.0.1-win.jar:$APP_HOME/lib/javafx-controls-25.0.1-win.jar:$APP_HOME/lib/ikonli-core-12.3.1.jar:$APP_HOME/lib/checker-qual-3.42.0.jar:$APP_HOME/lib/javafx-graphics-25.0.1-win.jar:$APP_HOME/lib/javafx-base-25.0.1-win.jar
+MODULE_PATH=$APP_HOME/lib/cyrcetech.jar:$APP_HOME/lib/controlsfx-11.2.1.jar:$APP_HOME/lib/formsfx-core-11.6.0.jar:$APP_HOME/lib/validatorfx-0.5.0.jar:$APP_HOME/lib/ikonli-javafx-12.3.1.jar:$APP_HOME/lib/gson-2.10.1.jar:$APP_HOME/lib/postgresql-42.7.2.jar:$APP_HOME/lib/pdfbox-3.0.1.jar:$APP_HOME/lib/javafx-fxml-25.0.1-win.jar:$APP_HOME/lib/javafx-controls-25.0.1-win.jar:$APP_HOME/lib/ikonli-core-12.3.1.jar:$APP_HOME/lib/checker-qual-3.42.0.jar:$APP_HOME/lib/fontbox-3.0.1.jar:$APP_HOME/lib/pdfbox-io-3.0.1.jar:$APP_HOME/lib/junit-jupiter-params-5.10.1.jar:$APP_HOME/lib/junit-jupiter-engine-5.10.1.jar:$APP_HOME/lib/junit-jupiter-api-5.10.1.jar:$APP_HOME/lib/junit-platform-engine-1.10.1.jar:$APP_HOME/lib/junit-platform-commons-1.10.1.jar:$APP_HOME/lib/junit-jupiter-5.10.1.jar:$APP_HOME/lib/javafx-graphics-25.0.1-win.jar:$APP_HOME/lib/javafx-base-25.0.1-win.jar:$APP_HOME/lib/opentest4j-1.3.0.jar
 
 
 # Determine the Java command to use to start the JVM.
@@ -173,6 +174,7 @@ fi
 # For Cygwin or MSYS, switch paths to Windows format before running java
 if "$cygwin" || "$msys" ; then
     APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
+    CLASSPATH=$( cygpath --path --mixed "$CLASSPATH" )
     MODULE_PATH=$( cygpath --path --mixed "$MODULE_PATH" )
     JAVACMD=$( cygpath --unix "$JAVACMD" )
 
@@ -211,6 +213,7 @@ DEFAULT_JVM_OPTS=""
 #     treated as '${Hostname}' itself on the command line.
 
 set -- \
+        -classpath "$CLASSPATH" \
         --module-path "$MODULE_PATH" \
         --module com.cyrcetech/com.cyrcetech.app.CyrcetechApp \
         "$@"
