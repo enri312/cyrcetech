@@ -28,6 +28,8 @@
                     </font>
                 </Label>
                 <HBox HBox.hgrow="ALWAYS" />
+                <TextField fx:id="searchField" promptText="%clients.search.placeholder"
+                    prefWidth="250" onKeyReleased="#handleSearch" styleClass="text-field" />
                 <Button text="%clients.edit" onAction="#handleEditClient"
                     styleClass="button-secondary" />
                 <Button text="%clients.delete" onAction="#handleDeleteClient"

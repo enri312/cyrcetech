@@ -31,3 +31,11 @@ CREATE TABLE IF NOT EXISTS tickets (
     FOREIGN KEY (customer_id) REFERENCES customers(id),
     FOREIGN KEY (equipment_id) REFERENCES equipment(id)
 );
+
+CREATE TABLE IF NOT EXISTS spare_parts (
+    id VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    stock INTEGER NOT NULL DEFAULT 0,
+    provider VARCHAR(100)
+);

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
@@ -20,7 +21,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.cyrcetech.app.I18nUtil;
 import javafx.scene.control.ButtonType;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ClientController {
 
@@ -37,6 +40,11 @@ public class ClientController {
 
     private final CustomerService customerService = DependencyContainer.getCustomerService();
 
+    private List<Customer> allCustomers;
+
+    @FXML
+    private TextField searchField;
+
     @FXML
     public void initialize() {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -48,7 +56,31 @@ public class ClientController {
     }
 
     private void loadClients() {
-        clientTable.setItems(FXCollections.observableArrayList(customerService.getAllCustomers()));
+        allCustomers = customerService.getAllCustomers();
+        updateTableView(allCustomers);
+    }
+
+    private void updateTableView(List<Customer> customers) {
+        clientTable.setItems(FXCollections.observableArrayList(customers));
+    }
+
+    @FXML
+    private void handleSearch() {
+        String searchText = searchField.getText().toLowerCase().trim();
+
+        if (searchText.isEmpty()) {
+            updateTableView(allCustomers);
+            return;
+        }
+
+        List<Customer> filtered = allCustomers.stream()
+                .filter(customer -> customer.name().toLowerCase().contains(searchText) ||
+                        customer.taxId().toLowerCase().contains(searchText) ||
+                        customer.phone().toLowerCase().contains(searchText) ||
+                        customer.address().toLowerCase().contains(searchText))
+                .collect(Collectors.toList());
+
+        updateTableView(filtered);
     }
 
     @FXML

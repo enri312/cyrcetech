@@ -7,7 +7,11 @@ module com.cyrcetech {
     // Java modules
     requires java.net.http;
     requires java.sql;
+    requires java.desktop;
+
+    // External libraries
     requires com.google.gson;
+    requires org.postgresql.jdbc;
 
     // Open packages for JavaFX reflection (FXML loading)
     opens com.cyrcetech.app to javafx.fxml;

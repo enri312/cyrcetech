@@ -2,9 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -29,6 +31,14 @@
                     </font>
                 </Label>
                 <HBox HBox.hgrow="ALWAYS" />
+                <CheckBox fx:id="lowStockFilter" text="%spareParts.filter.lowStock"
+                    onAction="#handleFilter" />
+                <TextField fx:id="searchField" promptText="%spareParts.search.placeholder"
+                    prefWidth="250" onKeyReleased="#handleSearch" styleClass="text-field" />
+                <Button text="%sparePart.edit" onAction="#handleEditSparePart"
+                    styleClass="button-secondary" />
+                <Button text="%sparePart.delete" onAction="#handleDeleteSparePart"
+                    styleClass="button-danger" />
                 <Button text="%spareParts.newPart" onAction="#handleNewSparePart"
                     styleClass="button-primary" />
             </HBox>

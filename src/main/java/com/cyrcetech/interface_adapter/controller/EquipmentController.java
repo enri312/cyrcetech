@@ -1,30 +1,43 @@
 package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
+import com.cyrcetech.app.DependencyContainer;
+import com.cyrcetech.app.I18nUtil;
+import com.cyrcetech.entity.DeviceType;
 import com.cyrcetech.entity.Equipment;
+import com.cyrcetech.usecase.EquipmentService;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import com.cyrcetech.app.I18nUtil;
-import javafx.scene.control.ButtonType;
+
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
-import com.cyrcetech.app.DependencyContainer;
-import com.cyrcetech.usecase.EquipmentService;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 
 public class EquipmentController {
 
     private final EquipmentService equipmentService = DependencyContainer.getEquipmentService();
+
+    private List<Equipment> allEquipment;
+
+    @FXML
+    private TextField searchField;
+    @FXML
+    private ComboBox<DeviceType> typeFilter;
 
     @FXML
     private TableView<Equipment> equipmentTable;
@@ -47,11 +60,49 @@ public class EquipmentController {
         serialColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
         conditionColumn.setCellValueFactory(new PropertyValueFactory<>("physicalCondition"));
 
+        // Initialize type filter
+        typeFilter.setItems(FXCollections.observableArrayList(DeviceType.values()));
+
         loadEquipment();
     }
 
     private void loadEquipment() {
-        equipmentTable.setItems(FXCollections.observableArrayList(equipmentService.getAllEquipment()));
+        allEquipment = equipmentService.getAllEquipment();
+        applyFilters();
+    }
+
+    private void applyFilters() {
+        List<Equipment> filtered = allEquipment;
+
+        // Apply type filter
+        if (typeFilter.getValue() != null) {
+            filtered = filtered.stream()
+                    .filter(eq -> eq.deviceType() == typeFilter.getValue())
+                    .collect(Collectors.toList());
+        }
+
+        // Apply search filter
+        String searchText = searchField != null ? searchField.getText() : "";
+        if (!searchText.trim().isEmpty()) {
+            String search = searchText.toLowerCase().trim();
+            filtered = filtered.stream()
+                    .filter(eq -> eq.brand().toLowerCase().contains(search) ||
+                            eq.model().toLowerCase().contains(search) ||
+                            eq.serialNumber().toLowerCase().contains(search))
+                    .collect(Collectors.toList());
+        }
+
+        equipmentTable.setItems(FXCollections.observableArrayList(filtered));
+    }
+
+    @FXML
+    private void handleSearch() {
+        applyFilters();
+    }
+
+    @FXML
+    private void handleFilter() {
+        applyFilters();
     }
 
     @FXML

@@ -28,6 +28,11 @@
                     </font>
                 </Label>
                 <HBox HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="typeFilter" promptText="%equipment.filter.type"
+                    prefWidth="150" onAction="#handleFilter" styleClass="combo-box" />
+                <TextField fx:id="searchField" promptText="%equipment.search.placeholder"
+                    prefWidth="250" onKeyReleased="#handleSearch" styleClass="text-field" />
+                <HBox HBox.hgrow="ALWAYS" />
                 <HBox HBox.hgrow="ALWAYS" />
                 <Button text="%equipment.edit" onAction="#handleEditEquipment"
                     styleClass="button-secondary" />
