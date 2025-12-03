@@ -1,18 +1,53 @@
 # 🔧 CyrceTech - Sistema de Gestión para Taller de Reparación
 
-Sistema completo de gestión para talleres de reparación de computadoras y notebooks, con diagnóstico asistido por IA local.
+Sistema completo de gestión para talleres de reparación de computadoras y notebooks, con arquitectura híbrida (JavaFX + Web) y diagnóstico asistido por IA local.
 
-## ✨ Características
+## 🎯 Arquitectura Híbrida
+
+Este proyecto está en transición hacia una **arquitectura híbrida moderna**:
+
+### Etapa Actual: JavaFX Desktop ✅
+- ✅ Aplicación de escritorio completamente funcional
+- ✅ Interfaz moderna con Neon Dark Mode
+- ✅ CRUD completo para Clientes, Equipos e Historial Técnico
+- ✅ Integración con PostgreSQL
+- ✅ Diagnóstico con IA (Ollama)
+
+### Próximas Etapas 🚀
+1. **Etapa 1 - Backend API (Spring Boot)** ⏳ En Planificación
+   - REST API para compartir lógica de negocio
+   - Spring Boot + PostgreSQL + JPA
+   - Documentación con Swagger/OpenAPI
+
+2. **Etapa 2 - Conectar JavaFX al Backend**
+   - Migrar JavaFX para consumir API REST
+   - Mantener funcionalidad actual
+
+3. **Etapa 3 - Frontend Web (React + TypeScript)**
+   - Interfaz web moderna
+   - Acceso desde navegador
+   - Mismo backend que JavaFX
+
+4. **Etapa 4 - Docker Compose Unificado**
+   - Deployment completo dockerizado
+   - Backend + Frontend + PostgreSQL
+
+5. **Etapa 5 - Preparación SaaS** (Futuro)
+   - Multi-tenancy
+   - Sistema de suscripciones
+
+## ✨ Características Actuales
 
 - 🎨 **Interfaz Moderna** - Diseño Neon Dark Mode con Glassmorphism e iconos SVG
 - 📊 **Dashboard Interactivo** - Contadores en tiempo real y accesos directos
 - 🌐 **Multilenguaje** - Soporte completo para Español e Inglés
-- 👥 **Gestión de Clientes** - Registro completo de clientes con datos de contacto
-- 💻 **Gestión de Equipos** - Control de dispositivos por cliente
-- 📋 **Órdenes de Reparación** - Seguimiento completo del ciclo de reparación
-- 📦 **Control de Repuestos** - Inventario de piezas y componentes
+- 👥 **Gestión de Clientes** - CRUD completo con búsqueda
+- 💻 **Gestión de Equipos** - CRUD completo con filtros
+- 📋 **Órdenes de Reparación** - Seguimiento completo del ciclo
+- 📦 **Control de Repuestos** - Inventario de piezas
+- 📜 **Historial Técnico** - Vista completa de todas las órdenes con búsqueda
 - 🤖 **Diagnóstico con IA** - Asistencia inteligente usando Ollama (local)
-- 📊 **Reportes** - Generación de informes del taller
+- 📊 **Reportes PDF** - Generación de informes
 - 💾 **Base de Datos PostgreSQL** - Persistencia robusta con Docker
 
 ## 🚀 Inicio Rápido
@@ -62,7 +97,7 @@ Para usar el diagnóstico asistido por IA:
 ```
 cyrcetech/
 ├── src/main/java/com/cyrcetech/
-│   ├── app/                    # Aplicación principal
+│   ├── app/                    # Aplicación principal JavaFX
 │   ├── entity/                 # Entidades de dominio
 │   ├── infrastructure/         # DAOs y DB
 │   ├── usecase/               # Servicios de negocio
@@ -71,7 +106,8 @@ cyrcetech/
 │   ├── com/cyrcetech/app/view/ # Vistas FXML
 │   ├── messages_*.properties   # Archivos de localización
 │   └── schema.sql             # Esquema de base de datos
-├── frontend-web/              # Frontend Web (React/TypeScript)
+├── frontend-web/              # Frontend Web (React/TypeScript) - En desarrollo
+├── cyrcetech-backend/         # Backend API (Spring Boot) - Planificado
 ├── scripts/                   # Scripts de utilidad
 ├── docker-compose.yml         # Configuración PostgreSQL
 └── INICIAR.bat               # Script de inicio rápido
@@ -79,43 +115,55 @@ cyrcetech/
 
 ## 🛠️ Tecnologías
 
+### Stack Actual (JavaFX)
 - **Java 25** - Lenguaje principal
-- **JavaFX** - Interfaz gráfica moderna
+- **JavaFX 25** - Interfaz gráfica moderna
 - **PostgreSQL 18.1** - Base de datos (via Docker)
 - **Gradle 9.2.1** - Gestión de dependencias
 - **Ollama** - IA local para diagnósticos
 - **Clean Architecture** - Arquitectura por capas
 
+### Stack Futuro (Híbrido)
+- **Spring Boot 3.2** - Backend REST API
+- **React 18 + TypeScript** - Frontend Web
+- **Spring Data JPA** - ORM
+- **Swagger/OpenAPI** - Documentación API
+- **Docker Compose** - Orquestación de servicios
+
 ## 📖 Módulos del Sistema
 
-### 1. Gestión de Clientes
+### 1. Gestión de Clientes ✅
 - Registro de clientes con RUC/CI
 - Datos de contacto completos
-
 - Historial de equipos por cliente
-- **CRUD Completo**: Crear, Editar, Eliminar clientes
+- **CRUD Completo**: Crear, Editar, Eliminar, Buscar
 
-### 2. Gestión de Equipos
+### 2. Gestión de Equipos ✅
 - Registro de dispositivos (PC, Notebooks, etc.)
 - Asociación con clientes
-
 - Información técnica (marca, modelo, serie)
-- **CRUD Completo**: Crear, Editar, Eliminar equipos
+- **CRUD Completo**: Crear, Editar, Eliminar, Filtrar
 
-### 3. Órdenes de Reparación
+### 3. Órdenes de Reparación ✅
 - Estados: Pendiente → Diagnóstico → En Reparación → Listo → Entregado
 - Descripción de problemas
 - Diagnóstico técnico y de IA
 - Control de costos
 
-### 4. Repuestos
+### 4. Historial Técnico ✅
+- Vista completa de todas las órdenes
+- Búsqueda en tiempo real
+- Filtrado por cliente, equipo, problema
+- Actualización de datos
+
+### 5. Repuestos
 - Control de inventario
 - Precios y proveedores
 - Stock disponible
 
-### 5. Reportes
+### 6. Reportes ✅
 - Resumen de órdenes
-- Ingresos por período
+- Generación de PDF
 - Listado de clientes
 - Estado de inventario
 
@@ -127,7 +175,7 @@ cyrcetech/
 ## 📚 Documentación Adicional
 
 - [COMO_INICIAR.md](COMO_INICIAR.md) - Guía detallada de inicio
-- [Walkthrough](https://github.com/user/cyrcetech/wiki) - Documentación técnica
+- [Implementation Plan](/.gemini/antigravity/brain/*/implementation_plan.md) - Plan técnico de migración
 
 ## 🐛 Solución de Problemas
 
@@ -146,16 +194,29 @@ docker-compose up -d
 ./gradlew clean build
 ```
 
-## 🤝 Contribución
+## 🗺️ Roadmap
 
-Este es un proyecto en desarrollo activo. Próximas funcionalidades:
+### Completado ✅
 - [x] CRUD completo para Clientes
 - [x] CRUD completo para Equipos
-- [ ] CRUD completo para Repuestos y Órdenes
+- [x] Historial Técnico con búsqueda
 - [x] Generación de reportes PDF
-- [ ] Módulo de facturación
+- [x] Integración con IA (Ollama)
+- [x] Interfaz moderna con Dark Mode
+
+### En Progreso ⏳
+- [ ] **Etapa 1**: Backend API con Spring Boot
+- [ ] Migración de entidades a JPA
+- [ ] Documentación API con Swagger
+
+### Planificado 📋
+- [ ] **Etapa 2**: Conectar JavaFX al Backend REST
+- [ ] **Etapa 3**: Frontend Web con React + TypeScript
+- [ ] **Etapa 4**: Docker Compose unificado
+- [ ] Módulo de facturación completo
 - [ ] Búsqueda y filtros avanzados
 - [ ] Copias de seguridad automáticas
+- [ ] **Etapa 5**: Preparación para SaaS
 
 ## 📄 Licencia
 
@@ -163,5 +224,6 @@ Proyecto privado - Todos los derechos reservados
 
 ---
 
-**Versión**: 2.1.0  
-**Última actualización**: Noviembre 2025
+**Versión**: 3.0.0-hybrid  
+**Última actualización**: Diciembre 2025  
+**Estado**: En transición a arquitectura híbrida
