@@ -79,7 +79,7 @@
                         strokeLineJoin="ROUND" />
                 </graphic>
             </Button>
-            <Button text="%nav.technicalHistory" styleClass="sidebar-button" maxWidth="Infinity">
+            <Button text="%nav.technicalHistory" onAction="#handleTechnicalHistory" styleClass="sidebar-button" maxWidth="Infinity">
                 <graphic>
                     <SVGPath content="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10z M12 6v6l4 2"
                         fill="TRANSPARENT" stroke="WHITE" strokeWidth="2" strokeLineCap="ROUND"

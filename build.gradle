@@ -1,17 +1,26 @@
 plugins {
-    id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.gradlex.extra-java-module-info' version '1.9'
 }
 
 repositories {
     mavenCentral()
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
-    }
+dependencies {
+    // PDFBox Maven dependency
+    implementation 'org.apache.pdfbox:pdfbox:3.0.3'
+
+    // Database driver
+    implementation 'org.postgresql:postgresql:42.7.2'
+
+    // JSON library
+    implementation 'com.google.code.gson:gson:2.13.2'
+
+    // JavaFX dependencies (gestionadas por el plugin)
+    implementation 'org.openjfx:javafx-controls:25.0.1'
+    implementation 'org.openjfx:javafx-fxml:25.0.1'
 }
 
 javafx {
@@ -19,39 +28,12 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
+// Configuration for extra Java modules
+extraJavaModuleInfo {
+
+}
+
 application {
     mainModule = 'com.cyrcetech'
     mainClass = 'com.cyrcetech.app.CyrcetechApp'
-}
-
-dependencies {
-    implementation 'org.controlsfx:controlsfx:11.2.1'
-    implementation 'com.dlsc.formsfx:formsfx-core:11.6.0'
-    implementation 'net.synedra:validatorfx:0.5.0'
-    implementation 'org.kordamp.ikonli:ikonli-javafx:12.3.1'
-    implementation 'com.google.code.gson:gson:2.10.1'
-
-    implementation 'org.postgresql:postgresql:42.7.2'
-    implementation 'org.apache.pdfbox:pdfbox:3.0.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.0'
-}
-
-test {
-    useJUnitPlatform()
-    jvmArgs("--enable-preview")
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-    options.compilerArgs += ["--enable-preview"]
-    options.release.set(25)
-}
-
-tasks.withType(JavaExec).configureEach {
-    jvmArgs += [
-        "--enable-preview",
-        "--enable-native-access=ALL-UNNAMED",
-        "--add-opens", "java.base/java.lang=ALL-UNNAMED"
-    ]
 }

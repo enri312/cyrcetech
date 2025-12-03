@@ -1,0 +1,22 @@
+Configuration on demand is an incubating feature.
+
+> Task :dependencies
+
+------------------------------------------------------------
+Root project 'cyrcetech'
+------------------------------------------------------------
+
+implementation - Implementation dependencies for the 'main' feature. (n)
++--- org.apache.pdfbox:pdfbox:3.0.3 (n)
++--- org.postgresql:postgresql:42.7.2 (n)
++--- com.google.code.gson:gson:2.13.2 (n)
++--- org.openjfx:javafx-controls:25.0.1 (n)
+\--- org.openjfx:javafx-fxml:25.0.1 (n)
+
+(n) - A dependency or dependency configuration that cannot be resolved.
+
+A web-based, searchable dependency report is available by adding the --scan option.
+
+BUILD SUCCESSFUL in 2s
+1 actionable task: 1 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html

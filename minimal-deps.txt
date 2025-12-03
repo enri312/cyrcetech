@@ -1,0 +1,18 @@
+Configuration on demand is an incubating feature.
+
+> Task :dependencies
+
+------------------------------------------------------------
+Root project 'cyrcetech'
+------------------------------------------------------------
+
+implementation - Implementation dependencies for the 'main' feature. (n)
+\--- com.google.code.gson:gson:2.13.2 (n)
+
+(n) - A dependency or dependency configuration that cannot be resolved.
+
+A web-based, searchable dependency report is available by adding the --scan option.
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html
