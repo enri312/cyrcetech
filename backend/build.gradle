@@ -8,7 +8,8 @@ group = 'com.cyrcetech'
 version = '1.0.0'
 
 java {
-    sourceCompatibility = '25'
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
 }
 
 configurations {
