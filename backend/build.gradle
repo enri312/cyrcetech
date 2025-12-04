@@ -8,7 +8,7 @@ group = 'com.cyrcetech'
 version = '1.0.0'
 
 java {
-    sourceCompatibility = '21'
+    sourceCompatibility = '25'
 }
 
 configurations {
@@ -32,10 +32,6 @@ dependencies {
     
     // Swagger/OpenAPI Documentation
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-    
-    // Lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
     
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
