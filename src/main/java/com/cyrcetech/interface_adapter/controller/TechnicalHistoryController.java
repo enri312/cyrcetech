@@ -1,9 +1,8 @@
 package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.entity.Ticket;
-import com.cyrcetech.usecase.TicketService;
+import com.cyrcetech.infrastructure.api.service.TicketApiService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ public class TechnicalHistoryController {
     @FXML
     private TextField searchField;
 
-    private final TicketService ticketService = DependencyContainer.getTicketService();
+    private final TicketApiService ticketApiService = new TicketApiService();
     private List<Ticket> allTickets;
 
     @FXML
@@ -55,8 +54,13 @@ public class TechnicalHistoryController {
     }
 
     private void loadHistory() {
-        allTickets = ticketService.getAllTickets();
-        historyTable.setItems(FXCollections.observableArrayList(allTickets));
+        try {
+            allTickets = ticketApiService.getAllTickets();
+            historyTable.setItems(FXCollections.observableArrayList(allTickets));
+        } catch (Exception e) {
+            showError("Error loading tickets: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -85,6 +89,13 @@ public class TechnicalHistoryController {
             System.err.println("ERROR: Failed to navigate back to MainView");
             e.printStackTrace();
         }
+    }
+
+    private void showError(String message) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 
     @FXML

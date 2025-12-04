@@ -1,9 +1,8 @@
 package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.entity.Customer;
-import com.cyrcetech.usecase.CustomerService;
+import com.cyrcetech.infrastructure.api.service.CustomerApiService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +37,7 @@ public class ClientController {
     @FXML
     private TableColumn<Customer, String> addressColumn;
 
-    private final CustomerService customerService = DependencyContainer.getCustomerService();
+    private final CustomerApiService customerApiService = new CustomerApiService();
 
     private List<Customer> allCustomers;
 
@@ -56,8 +55,13 @@ public class ClientController {
     }
 
     private void loadClients() {
-        allCustomers = customerService.getAllCustomers();
-        updateTableView(allCustomers);
+        try {
+            allCustomers = customerApiService.getAllCustomers();
+            updateTableView(allCustomers);
+        } catch (Exception e) {
+            showError("Error loading customers: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void updateTableView(List<Customer> customers) {
@@ -114,8 +118,13 @@ public class ClientController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                customerService.deleteCustomer(selected.id());
-                loadClients();
+                try {
+                    customerApiService.deleteCustomer(selected.id());
+                    loadClients();
+                } catch (Exception e) {
+                    showError("Error deleting customer: " + e.getMessage());
+                    e.printStackTrace();
+                }
             }
         } else {
             showWarning(I18nUtil.getBundle().getString("clients.warning.select"));
@@ -145,6 +154,13 @@ public class ClientController {
 
     private void showWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.show();

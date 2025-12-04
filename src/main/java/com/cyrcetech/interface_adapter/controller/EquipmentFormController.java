@@ -1,12 +1,11 @@
 package com.cyrcetech.interface_adapter.controller;
 
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.app.I18nUtil;
 import com.cyrcetech.entity.Customer;
 import com.cyrcetech.entity.DeviceType;
 import com.cyrcetech.entity.Equipment;
-import com.cyrcetech.usecase.CustomerService;
-import com.cyrcetech.usecase.EquipmentService;
+import com.cyrcetech.infrastructure.api.service.CustomerApiService;
+import com.cyrcetech.infrastructure.api.service.EquipmentApiService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,8 +33,8 @@ public class EquipmentFormController {
     @FXML
     private TextField conditionField;
 
-    private final EquipmentService equipmentService = DependencyContainer.getEquipmentService();
-    private final CustomerService customerService = DependencyContainer.getCustomerService();
+    private final EquipmentApiService equipmentApiService = new EquipmentApiService();
+    private final CustomerApiService customerApiService = new CustomerApiService();
     private Equipment existingEquipment;
     private Runnable onSaveCallback;
 
@@ -43,7 +42,13 @@ public class EquipmentFormController {
     public void initialize() {
         typeComboBox.setItems(FXCollections.observableArrayList(DeviceType.values()));
 
-        customerComboBox.setItems(FXCollections.observableArrayList(customerService.getAllCustomers()));
+        try {
+            customerComboBox.setItems(FXCollections.observableArrayList(customerApiService.getAllCustomers()));
+        } catch (Exception e) {
+            showError("Error loading customers: " + e.getMessage());
+            e.printStackTrace();
+        }
+
         customerComboBox.setConverter(new StringConverter<Customer>() {
             @Override
             public String toString(Customer customer) {
@@ -68,8 +73,13 @@ public class EquipmentFormController {
             typeComboBox.setValue(equipment.deviceType());
 
             // Find and select the customer
-            Customer customer = customerService.getCustomerById(equipment.customerId());
-            customerComboBox.setValue(customer);
+            try {
+                Customer customer = customerApiService.getCustomerById(equipment.customerId());
+                customerComboBox.setValue(customer);
+            } catch (Exception e) {
+                showError("Error loading customer details: " + e.getMessage());
+                e.printStackTrace();
+            }
             // Disable customer change on edit if desired, or leave enabled.
             // customerComboBox.setDisable(true);
         } else {
@@ -98,9 +108,9 @@ public class EquipmentFormController {
 
             try {
                 if (existingEquipment != null) {
-                    equipmentService.updateEquipment(equipment);
+                    equipmentApiService.updateEquipment(existingEquipment.id(), equipment);
                 } else {
-                    equipmentService.createEquipment(equipment);
+                    equipmentApiService.createEquipment(equipment);
                 }
                 if (onSaveCallback != null) {
                     onSaveCallback.run();

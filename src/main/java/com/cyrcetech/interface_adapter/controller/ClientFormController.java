@@ -3,7 +3,6 @@ package com.cyrcetech.interface_adapter.controller;
 import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.app.I18nUtil;
 import com.cyrcetech.entity.Customer;
-import com.cyrcetech.usecase.CustomerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,7 +23,7 @@ public class ClientFormController {
     @FXML
     private TextField addressField;
 
-    private final CustomerService customerService = DependencyContainer.getCustomerService();
+    private final com.cyrcetech.infrastructure.api.service.CustomerApiService customerApiService = new com.cyrcetech.infrastructure.api.service.CustomerApiService();
     private Customer existingCustomer;
     private Runnable onSaveCallback;
 
@@ -58,9 +57,9 @@ public class ClientFormController {
 
             try {
                 if (existingCustomer != null) {
-                    customerService.updateCustomer(customer);
+                    customerApiService.updateCustomer(existingCustomer.id(), customer);
                 } else {
-                    customerService.createCustomer(customer);
+                    customerApiService.createCustomer(customer);
                 }
                 if (onSaveCallback != null) {
                     onSaveCallback.run();

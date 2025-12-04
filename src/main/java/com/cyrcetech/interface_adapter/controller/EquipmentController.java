@@ -1,11 +1,10 @@
 package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.app.I18nUtil;
 import com.cyrcetech.entity.DeviceType;
 import com.cyrcetech.entity.Equipment;
-import com.cyrcetech.usecase.EquipmentService;
+import com.cyrcetech.infrastructure.api.service.EquipmentApiService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
 
 public class EquipmentController {
 
-    private final EquipmentService equipmentService = DependencyContainer.getEquipmentService();
+    private final EquipmentApiService equipmentApiService = new EquipmentApiService();
 
     private List<Equipment> allEquipment;
 
@@ -66,8 +65,13 @@ public class EquipmentController {
     }
 
     private void loadEquipment() {
-        allEquipment = equipmentService.getAllEquipment();
-        applyFilters();
+        try {
+            allEquipment = equipmentApiService.getAllEquipment();
+            applyFilters();
+        } catch (Exception e) {
+            showError("Error loading equipment: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void applyFilters() {
@@ -135,8 +139,13 @@ public class EquipmentController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                equipmentService.deleteEquipment(selected.id());
-                loadEquipment();
+                try {
+                    equipmentApiService.deleteEquipment(selected.id());
+                    loadEquipment();
+                } catch (Exception e) {
+                    showError("Error deleting equipment: " + e.getMessage());
+                    e.printStackTrace();
+                }
             }
         } else {
             showWarning(I18nUtil.getBundle().getString("equipment.warning.select"));
@@ -167,6 +176,13 @@ public class EquipmentController {
 
     private void showWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.show();
