@@ -1,0 +1,6 @@
+# Cyrcetech Backend
+
+backend/
+build/
+.gradle/
+*.log
