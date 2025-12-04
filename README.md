@@ -1,222 +1,299 @@
-# 🔧 CyrceTech - Sistema de Gestión para Taller de Reparación
+# 🔧 Cyrcetech - Sistema de Gestión de Taller de Reparación
 
-Sistema completo de gestión para talleres de reparación de computadoras y notebooks, con arquitectura híbrida (JavaFX + Web) y diagnóstico asistido por IA local.
+Sistema integral de gestión para talleres de reparación de dispositivos electrónicos, con arquitectura híbrida (JavaFX Desktop + Spring Boot REST API + React Web).
 
-## 🎯 Arquitectura Híbrida
+## 📋 Descripción
 
-Este proyecto está en transición hacia una **arquitectura híbrida moderna**:
+Cyrcetech es una solución completa que permite gestionar:
+- 👥 **Clientes** - Información de contacto y historial
+- 💻 **Equipos** - Dispositivos en reparación (notebooks, smartphones, tablets, etc.)
+- 🎫 **Órdenes de Reparación** - Seguimiento del estado de reparaciones
+- 📦 **Inventario de Repuestos** - Control de stock y proveedores
+- 💰 **Facturación** - Generación de facturas y seguimiento de pagos
 
-### Etapa Actual: JavaFX Desktop ✅
-- ✅ Aplicación de escritorio completamente funcional
-- ✅ Interfaz moderna con Neon Dark Mode
-- ✅ CRUD completo para Clientes, Equipos e Historial Técnico
-- ✅ Integración con PostgreSQL
-- ✅ Diagnóstico con IA (Ollama)
+## 🏗️ Arquitectura
 
-### Próximas Etapas 🚀
-1. **Etapa 1 - Backend API (Spring Boot)** ⏳ En Planificación
-   - REST API para compartir lógica de negocio
-   - Spring Boot + PostgreSQL + JPA
-   - Documentación con Swagger/OpenAPI
+### Arquitectura Híbrida (3 Capas)
 
-2. **Etapa 2 - Conectar JavaFX al Backend**
-   - Migrar JavaFX para consumir API REST
-   - Mantener funcionalidad actual
+```
+┌─────────────────────────────────────────────────────────┐
+│                    FRONTEND LAYER                        │
+├──────────────────────┬──────────────────────────────────┤
+│   JavaFX Desktop     │      React Web App               │
+│   (Aplicación Local) │   (Aplicación Web Moderna)       │
+└──────────────────────┴──────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────┐
+│                    BACKEND LAYER                         │
+│              Spring Boot REST API                        │
+│                  (Puerto 8080)                           │
+└─────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────┐
+│                   DATABASE LAYER                         │
+│         PostgreSQL 18.1 (Docker - Puerto 5433)          │
+└─────────────────────────────────────────────────────────┘
+```
 
-3. **Etapa 3 - Frontend Web (React + TypeScript)**
-   - Interfaz web moderna
-   - Acceso desde navegador
-   - Mismo backend que JavaFX
+## ✅ Estado del Proyecto
 
-4. **Etapa 4 - Docker Compose Unificado**
-   - Deployment completo dockerizado
-   - Backend + Frontend + PostgreSQL
+### Etapa 1: Backend API ✅ **COMPLETADO**
+- ✅ Spring Boot 3.4.0 configurado
+- ✅ PostgreSQL conectado y funcionando
+- ✅ 5 entidades implementadas (Customer, Equipment, Ticket, SparePart, Invoice)
+- ✅ 44 endpoints REST funcionando
+- ✅ Documentación Swagger/OpenAPI
+- ✅ Manejo global de excepciones
+- ✅ CORS configurado
 
-5. **Etapa 5 - Preparación SaaS** (Futuro)
-   - Multi-tenancy
-   - Sistema de suscripciones
+### Etapa 2: Integración JavaFX ⏳ **EN PROGRESO**
+- [ ] Conectar app desktop al backend REST API
+- [ ] Reemplazar gestión local con llamadas HTTP
+- [ ] Actualizar controllers para consumir endpoints
 
-## ✨ Características Actuales
+### Etapa 3: Frontend React 📋 **PLANIFICADO**
+- [ ] Crear aplicación web React
+- [ ] Diseño responsive moderno
+- [ ] Consumir API REST del backend
 
-- 🎨 **Interfaz Moderna** - Diseño Neon Dark Mode con Glassmorphism e iconos SVG
-- 📊 **Dashboard Interactivo** - Contadores en tiempo real y accesos directos
-- 🌐 **Multilenguaje** - Soporte completo para Español e Inglés
-- 👥 **Gestión de Clientes** - CRUD completo con búsqueda
-- 💻 **Gestión de Equipos** - CRUD completo con filtros
-- 📋 **Órdenes de Reparación** - Seguimiento completo del ciclo
-- 📦 **Control de Repuestos** - Inventario de piezas
-- 📜 **Historial Técnico** - Vista completa de todas las órdenes con búsqueda
-- 🤖 **Diagnóstico con IA** - Asistencia inteligente usando Ollama (local)
-- 📊 **Reportes PDF** - Generación de informes
-- 💾 **Base de Datos PostgreSQL** - Persistencia robusta con Docker
+### Etapa 4: Seguridad 📋 **PLANIFICADO**
+- [ ] Autenticación JWT
+- [ ] Autorización basada en roles
+- [ ] Endpoints seguros
 
 ## 🚀 Inicio Rápido
 
 ### Requisitos Previos
 
-- **Java JDK 25** o superior
-- **Docker Desktop** (para PostgreSQL)
-- **Ollama** (opcional, para diagnóstico IA)
+- **Java JDK 21** o superior
+- **PostgreSQL** (Docker recomendado)
+- **Gradle 9.2.1**
+- **Node.js 18+** (para frontend React en el futuro)
 
-### Instalación y Ejecución
+### 1. Iniciar Base de Datos
 
-1. **Iniciar Base de Datos**:
-   ```bash
-   docker-compose up -d
-   ```
+```bash
+# Iniciar contenedor PostgreSQL
+docker start cyrcetech_db
 
-2. **Ejecutar Aplicación**:
-   ```bash
-   INICIAR.bat
-   ```
-   O manualmente:
-   ```bash
-   ./gradlew run
-   ```
+# O con docker-compose (si tienes el archivo)
+docker-compose up -d
+```
 
-La base de datos se inicializa automáticamente al arrancar la aplicación.
+### 2. Iniciar Backend API
 
-## 🤖 Configuración de IA (Opcional)
+```bash
+cd backend
+.\gradlew.bat bootRun --no-daemon
+```
 
-Para usar el diagnóstico asistido por IA:
+El servidor estará disponible en `http://localhost:8080`
 
-1. **Instalar Ollama**: [ollama.ai](https://ollama.ai)
+### 3. Iniciar Aplicación JavaFX
 
-2. **Iniciar servicio**:
-   ```bash
-   ollama serve
-   ```
+```bash
+# Desde el directorio raíz
+.\gradlew.bat run
+```
 
-3. **Descargar modelo**:
-   ```bash
-   ollama pull deepseek-r1:8b
-   ```
+## 📡 API Endpoints
+
+### Customers (6 endpoints)
+```
+GET    /api/customers              - Listar clientes
+GET    /api/customers/{id}         - Obtener cliente
+POST   /api/customers              - Crear cliente
+PUT    /api/customers/{id}         - Actualizar cliente
+DELETE /api/customers/{id}         - Eliminar cliente
+GET    /api/customers/search?q=... - Buscar clientes
+```
+
+### Equipment (8 endpoints)
+```
+GET    /api/equipment                      - Listar equipos
+GET    /api/equipment/{id}                 - Obtener equipo
+GET    /api/equipment/customer/{id}        - Equipos de cliente
+GET    /api/equipment/type/{deviceType}    - Equipos por tipo
+POST   /api/equipment                      - Crear equipo
+PUT    /api/equipment/{id}                 - Actualizar equipo
+DELETE /api/equipment/{id}                 - Eliminar equipo
+GET    /api/equipment/search?q=...         - Buscar equipos
+```
+
+### Tickets (10 endpoints)
+```
+GET    /api/tickets                        - Listar tickets
+GET    /api/tickets/{id}                   - Obtener ticket
+GET    /api/tickets/customer/{id}          - Tickets de cliente
+GET    /api/tickets/equipment/{id}         - Tickets de equipo
+GET    /api/tickets/status/{status}        - Tickets por estado
+GET    /api/tickets/active                 - Tickets activos
+POST   /api/tickets                        - Crear ticket
+PUT    /api/tickets/{id}                   - Actualizar ticket
+DELETE /api/tickets/{id}                   - Eliminar ticket
+GET    /api/tickets/search?q=...           - Buscar tickets
+```
+
+### Spare Parts (9 endpoints)
+```
+GET    /api/spare-parts                    - Listar repuestos
+GET    /api/spare-parts/{id}               - Obtener repuesto
+GET    /api/spare-parts/low-stock          - Stock bajo
+GET    /api/spare-parts/out-of-stock       - Sin stock
+GET    /api/spare-parts/in-stock           - Con stock
+POST   /api/spare-parts                    - Crear repuesto
+PUT    /api/spare-parts/{id}               - Actualizar repuesto
+DELETE /api/spare-parts/{id}               - Eliminar repuesto
+GET    /api/spare-parts/search?q=...       - Buscar repuestos
+```
+
+### Invoices (11 endpoints)
+```
+GET    /api/invoices                       - Listar facturas
+GET    /api/invoices/{id}                  - Obtener factura
+GET    /api/invoices/ticket/{id}           - Factura de ticket
+GET    /api/invoices/number/{number}       - Buscar por número
+GET    /api/invoices/status/{status}       - Por estado de pago
+GET    /api/invoices/overdue               - Facturas vencidas
+GET    /api/invoices/paid                  - Facturas pagadas
+GET    /api/invoices/pending               - Facturas pendientes
+POST   /api/invoices                       - Crear factura
+PUT    /api/invoices/{id}                  - Actualizar factura
+DELETE /api/invoices/{id}                  - Eliminar factura
+```
+
+**Total: 44 endpoints REST**
+
+## 🛠️ Tecnologías
+
+### Backend
+- **Spring Boot 3.4.0** - Framework principal
+- **Spring Data JPA** - ORM y persistencia
+- **PostgreSQL 18.1** - Base de datos
+- **Swagger/OpenAPI 2.3.0** - Documentación de API
+- **Java 21** - Lenguaje
+
+### Frontend Desktop
+- **JavaFX 21** - Framework UI
+- **FXML** - Diseño de interfaces
+- **CSS** - Estilos personalizados
+
+### Frontend Web (Futuro)
+- **React 18** - Framework UI
+- **TypeScript** - Lenguaje tipado
+- **Tailwind CSS** - Framework de estilos
 
 ## 📁 Estructura del Proyecto
 
 ```
-cyrcetech/
-├── src/main/java/com/cyrcetech/
-│   ├── app/                    # Aplicación principal JavaFX
-│   ├── entity/                 # Entidades de dominio
-│   ├── infrastructure/         # DAOs y DB
-│   ├── usecase/               # Servicios de negocio
-│   └── interface_adapter/     # Controladores UI
+Cyrcetech/
+├── backend/                          # Spring Boot REST API
+│   ├── src/main/java/
+│   │   └── com/cyrcetech/backend/
+│   │       ├── controller/           # REST Controllers (5)
+│   │       ├── service/              # Business Logic (5)
+│   │       ├── repository/           # JPA Repositories (5)
+│   │       ├── domain/entity/        # JPA Entities (5)
+│   │       ├── dto/                  # DTOs (15)
+│   │       ├── exception/            # Exception Handling
+│   │       └── config/               # Configuraciones
+│   ├── src/main/resources/
+│   │   └── application.yml           # Configuración
+│   ├── build.gradle                  # Dependencias backend
+│   └── README.md                     # Documentación backend
+│
+├── src/main/java/com/cyrcetech/      # JavaFX Desktop App
+│   ├── entity/                       # Entidades (legacy)
+│   ├── interface_adapter/
+│   │   └── controller/               # Controllers JavaFX
+│   ├── service/                      # Services (legacy)
+│   └── CyrcetechApplication.java     # Main JavaFX
+│
 ├── src/main/resources/
-│   ├── com/cyrcetech/app/view/ # Vistas FXML
-│   ├── messages_*.properties   # Archivos de localización
-│   └── schema.sql             # Esquema de base de datos
-├── frontend-web/              # Frontend Web (React/TypeScript) - En desarrollo
-├── cyrcetech-backend/         # Backend API (Spring Boot) - Planificado
-├── scripts/                   # Scripts de utilidad
-├── docker-compose.yml         # Configuración PostgreSQL
-└── INICIAR.bat               # Script de inicio rápido
+│   └── com/cyrcetech/app/view/       # FXML Views
+│
+├── build.gradle                      # Dependencias JavaFX
+└── README.md                         # Este archivo
 ```
 
-## 🛠️ Tecnologías
+## 🧪 Testing
 
-### Stack Actual (JavaFX)
-- **Java 25** - Lenguaje principal
-- **JavaFX 25** - Interfaz gráfica moderna
-- **PostgreSQL 18.1** - Base de datos (via Docker)
-- **Gradle 9.2.1** - Gestión de dependencias
-- **Ollama** - IA local para diagnósticos
-- **Clean Architecture** - Arquitectura por capas
-
-### Stack Futuro (Híbrido)
-- **Spring Boot 3.2** - Backend REST API
-- **React 18 + TypeScript** - Frontend Web
-- **Spring Data JPA** - ORM
-- **Swagger/OpenAPI** - Documentación API
-- **Docker Compose** - Orquestación de servicios
-
-## 📖 Módulos del Sistema
-
-### 1. Gestión de Clientes ✅
-- Registro de clientes con RUC/CI
-- Datos de contacto completos
-- Historial de equipos por cliente
-- **CRUD Completo**: Crear, Editar, Eliminar, Buscar
-
-### 2. Gestión de Equipos ✅
-- Registro de dispositivos (PC, Notebooks, etc.)
-- Asociación con clientes
-- Información técnica (marca, modelo, serie)
-- **CRUD Completo**: Crear, Editar, Eliminar, Filtrar
-
-### 3. Órdenes de Reparación ✅
-- Estados: Pendiente → Diagnóstico → En Reparación → Listo → Entregado
-- Descripción de problemas
-- Diagnóstico técnico y de IA
-- Control de costos
-
-### 4. Historial Técnico ✅
-- Vista completa de todas las órdenes
-- Búsqueda en tiempo real
-- Filtrado por cliente, equipo, problema
-- Actualización de datos
-
-### 5. Repuestos
-- Control de inventario
-- Precios y proveedores
-- Stock disponible
-
-### 6. Reportes ✅
-- Resumen de órdenes
-- Generación de PDF
-- Listado de clientes
-- Estado de inventario
-
-## 🔐 Credenciales por Defecto
-
-- **Usuario**: `admin`
-- **Contraseña**: `admin`
-
-## 📚 Documentación Adicional
-
-- [COMO_INICIAR.md](COMO_INICIAR.md) - Guía detallada de inicio
-- [Implementation Plan](/.gemini/antigravity/brain/*/implementation_plan.md) - Plan técnico de migración
-
-## 🐛 Solución de Problemas
-
-### La aplicación no inicia
-- Verifica que Docker Desktop esté ejecutándose
-- Asegúrate de que el puerto 5432 no esté en uso
-
-### Error de conexión a base de datos
+### Backend API
 ```bash
-docker-compose down
-docker-compose up -d
+cd backend
+
+# Compilar
+.\gradlew.bat build
+
+# Tests
+.\gradlew.bat test
+
+# Ejecutar
+.\gradlew.bat bootRun --no-daemon
 ```
 
-### Problemas con Gradle
-```bash
-./gradlew clean build
-```
+### Testing con Thunder Client
+Ver guías en:
+- `backend/THUNDER_CLIENT_GUIDE.md` - Customer API
+- `backend/EQUIPMENT_TEST_GUIDE.md` - Equipment API
+
+## 📊 Estadísticas
+
+- **Entidades JPA**: 5
+- **Enums**: 4 (DeviceType, TicketStatus, PaymentStatus, PaymentMethod)
+- **Repositories**: 5
+- **Services**: 5
+- **Controllers**: 5
+- **DTOs**: 15 (10 Request + 5 Response)
+- **Endpoints REST**: 44
+- **Líneas de código**: ~3,500+ (backend)
 
 ## 🗺️ Roadmap
 
-### Completado ✅
-- [x] CRUD completo para Clientes
-- [x] CRUD completo para Equipos
-- [x] Historial Técnico con búsqueda
-- [x] Generación de reportes PDF
-- [x] Integración con IA (Ollama)
-- [x] Interfaz moderna con Dark Mode
+### ✅ Completado
+- [x] Aplicación JavaFX desktop funcional
+- [x] Backend REST API completo
+- [x] 5 entidades con relaciones JPA
+- [x] 44 endpoints REST
+- [x] Documentación Swagger
+- [x] Manejo de excepciones
+- [x] CORS configurado
 
-### En Progreso ⏳
-- [ ] **Etapa 1**: Backend API con Spring Boot
-- [ ] Migración de entidades a JPA
-- [ ] Documentación API con Swagger
+### 🚧 En Progreso
+- [ ] Integración JavaFX con backend REST API
 
-### Planificado 📋
-- [ ] **Etapa 2**: Conectar JavaFX al Backend REST
-- [ ] **Etapa 3**: Frontend Web con React + TypeScript
-- [ ] **Etapa 4**: Docker Compose unificado
-- [ ] Módulo de facturación completo
-- [ ] Búsqueda y filtros avanzados
-- [ ] Copias de seguridad automáticas
-- [ ] **Etapa 5**: Preparación para SaaS
+### 📋 Planificado
+- [ ] Frontend React web
+- [ ] Autenticación JWT
+- [ ] Tests unitarios e integración
+- [ ] Dockerización completa
+- [ ] CI/CD Pipeline
+- [ ] Reportes PDF mejorados
+- [ ] Dashboard con estadísticas
+
+## 🔐 Configuración
+
+### Variables de Entorno
+
+```bash
+# Backend
+DB_PASSWORD=password  # Contraseña PostgreSQL (default: password)
+```
+
+### application.yml (Backend)
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/cyrcetech
+    username: admin
+    password: ${DB_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+```
 
 ## 📄 Licencia
 
@@ -224,6 +301,6 @@ Proyecto privado - Todos los derechos reservados
 
 ---
 
-**Versión**: 3.0.0-hybrid  
-**Última actualización**: Diciembre 2025  
-**Estado**: En transición a arquitectura híbrida
+**Versión**: 1.0.0  
+**Estado**: Backend API ✅ Completado | JavaFX Integration ⏳ En Progreso  
+**Última actualización**: 2025-12-04
