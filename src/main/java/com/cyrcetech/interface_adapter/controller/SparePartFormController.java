@@ -1,9 +1,8 @@
 package com.cyrcetech.interface_adapter.controller;
 
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.app.I18nUtil;
 import com.cyrcetech.entity.SparePart;
-import com.cyrcetech.usecase.SparePartService;
+import com.cyrcetech.infrastructure.api.service.SparePartApiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,7 +23,7 @@ public class SparePartFormController {
     @FXML
     private TextField providerField;
 
-    private final SparePartService sparePartService = DependencyContainer.getSparePartService();
+    private final SparePartApiService sparePartApiService = new SparePartApiService();
     private SparePart existingSparePart;
     private Runnable onSaveCallback;
 
@@ -62,9 +61,9 @@ public class SparePartFormController {
                         providerField.getText());
 
                 if (existingSparePart != null) {
-                    sparePartService.updateSparePart(sparePart);
+                    sparePartApiService.updateSparePart(existingSparePart.id(), sparePart);
                 } else {
-                    sparePartService.createSparePart(sparePart);
+                    sparePartApiService.createSparePart(sparePart);
                 }
 
                 if (onSaveCallback != null) {

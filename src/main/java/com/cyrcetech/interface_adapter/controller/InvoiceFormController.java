@@ -1,10 +1,9 @@
 package com.cyrcetech.interface_adapter.controller;
 
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.entity.Invoice;
 import com.cyrcetech.entity.PaymentMethod;
 import com.cyrcetech.entity.PaymentStatus;
-import com.cyrcetech.usecase.InvoiceService;
+import com.cyrcetech.infrastructure.api.service.InvoiceApiService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 
 public class InvoiceFormController {
 
-    private final InvoiceService invoiceService = DependencyContainer.getInvoiceService();
+    private final InvoiceApiService invoiceApiService = new InvoiceApiService();
     private Invoice currentInvoice;
     private Runnable onSaveCallback;
 
@@ -54,7 +53,7 @@ public class InvoiceFormController {
         taxAmountField.textProperty().addListener((obs, old, newVal) -> calculateTotal());
 
         // Generate invoice number
-        invoiceNumberField.setText(invoiceService.generateInvoiceNumber());
+        invoiceNumberField.setText(invoiceApiService.generateInvoiceNumber());
         issueDatePicker.setValue(LocalDate.now());
         paymentStatusCombo.setValue(PaymentStatus.PENDING);
     }
@@ -116,9 +115,9 @@ public class InvoiceFormController {
                     notesArea.getText());
 
             if (currentInvoice == null || currentInvoice.id().isEmpty()) {
-                invoiceService.createInvoice(invoice);
+                invoiceApiService.createInvoice(invoice);
             } else {
-                invoiceService.updateInvoice(invoice);
+                invoiceApiService.updateInvoice(currentInvoice.id(), invoice);
             }
 
             if (onSaveCallback != null) {

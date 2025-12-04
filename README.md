@@ -269,6 +269,7 @@ Ver guías en:
 - [ ] Autenticación JWT
 - [ ] Tests unitarios e integración
 - [ ] Dockerización completa
+- [ ] Integración de n8n (Docker local)
 - [ ] CI/CD Pipeline
 - [ ] Reportes PDF mejorados
 - [ ] Dashboard con estadísticas

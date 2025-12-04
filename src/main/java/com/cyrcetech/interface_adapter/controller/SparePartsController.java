@@ -1,10 +1,9 @@
 package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.app.I18nUtil;
 import com.cyrcetech.entity.SparePart;
-import com.cyrcetech.usecase.SparePartService;
+import com.cyrcetech.infrastructure.api.service.SparePartApiService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class SparePartsController {
 
-    private final SparePartService sparePartService = DependencyContainer.getSparePartService();
+    private final SparePartApiService sparePartApiService = new SparePartApiService();
 
     private List<SparePart> allSpareParts;
 
@@ -59,8 +58,13 @@ public class SparePartsController {
     }
 
     private void loadSpareParts() {
-        allSpareParts = sparePartService.getAllSpareParts();
-        applyFilters();
+        try {
+            allSpareParts = sparePartApiService.getAllSpareParts();
+            applyFilters();
+        } catch (Exception e) {
+            showError("Error loading spare parts: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void applyFilters() {
@@ -127,8 +131,13 @@ public class SparePartsController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                sparePartService.deleteSparePart(selected.id());
-                loadSpareParts();
+                try {
+                    sparePartApiService.deleteSparePart(selected.id());
+                    loadSpareParts();
+                } catch (Exception e) {
+                    showError("Error deleting spare part: " + e.getMessage());
+                    e.printStackTrace();
+                }
             }
         } else {
             showWarning(I18nUtil.getBundle().getString("sparePart.warning.select"));
@@ -159,6 +168,13 @@ public class SparePartsController {
 
     private void showWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.show();
