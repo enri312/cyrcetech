@@ -52,11 +52,17 @@ public class EquipmentController {
 
     @FXML
     public void initialize() {
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("deviceType"));
-        brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        serialColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
-        conditionColumn.setCellValueFactory(new PropertyValueFactory<>("physicalCondition"));
+        // Use lambdas for Java records
+        typeColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
+                cellData.getValue().deviceType() != null ? cellData.getValue().deviceType().toString() : ""));
+        brandColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().brand()));
+        modelColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().model()));
+        serialColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().serialNumber()));
+        conditionColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().physicalCondition()));
 
         // Initialize type filter
         typeFilter.setItems(FXCollections.observableArrayList(DeviceType.values()));

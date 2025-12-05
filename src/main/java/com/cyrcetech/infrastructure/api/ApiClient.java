@@ -46,6 +46,25 @@ public class ApiClient {
     }
 
     /**
+     * Perform GET request and return raw JSON string (for lists)
+     */
+    public String getString(String url) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .header("Content-Type", "application/json")
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() >= 200 && response.statusCode() < 300) {
+            return response.body();
+        } else {
+            throw new RuntimeException("HTTP Error " + response.statusCode() + ": " + response.body());
+        }
+    }
+
+    /**
      * Perform POST request
      */
     public <T> T post(String url, Object requestBody, Class<T> responseType) throws Exception {

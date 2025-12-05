@@ -46,10 +46,15 @@ public class ClientController {
 
     @FXML
     public void initialize() {
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        taxIdColumn.setCellValueFactory(new PropertyValueFactory<>("taxId"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        // Use lambdas instead of PropertyValueFactory for Java records
+        nameColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().name()));
+        taxIdColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().taxId()));
+        phoneColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().phone()));
+        addressColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().address()));
 
         loadClients();
     }

@@ -22,7 +22,7 @@ public class CustomerApiService extends ApiClient {
     public List<Customer> getAllCustomers() throws Exception {
         Type listType = new TypeToken<List<CustomerResponseDTO>>() {
         }.getType();
-        String json = get(ApiConfig.getCustomersUrl(), String.class);
+        String json = getString(ApiConfig.getCustomersUrl());
         List<CustomerResponseDTO> dtos = getGson().fromJson(json, listType);
 
         List<Customer> customers = new ArrayList<>();
@@ -75,7 +75,7 @@ public class CustomerApiService extends ApiClient {
         String url = ApiConfig.getCustomersUrl() + "/search?q=" + searchTerm;
         Type listType = new TypeToken<List<CustomerResponseDTO>>() {
         }.getType();
-        String json = get(url, String.class);
+        String json = getString(url);
         List<CustomerResponseDTO> dtos = getGson().fromJson(json, listType);
 
         List<Customer> customers = new ArrayList<>();

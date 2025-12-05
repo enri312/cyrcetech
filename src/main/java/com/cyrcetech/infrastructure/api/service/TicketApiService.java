@@ -29,7 +29,7 @@ public class TicketApiService extends ApiClient {
     public List<Ticket> getAllTickets() throws Exception {
         Type listType = new TypeToken<List<TicketResponseDTO>>() {
         }.getType();
-        String json = get(ApiConfig.getTicketsUrl(), String.class);
+        String json = getString(ApiConfig.getTicketsUrl());
         List<TicketResponseDTO> dtos = getGson().fromJson(json, listType);
 
         List<Ticket> tickets = new ArrayList<>();
@@ -55,7 +55,7 @@ public class TicketApiService extends ApiClient {
         String url = ApiConfig.getTicketsUrl() + "/active";
         Type listType = new TypeToken<List<TicketResponseDTO>>() {
         }.getType();
-        String json = get(url, String.class);
+        String json = getString(url);
         List<TicketResponseDTO> dtos = getGson().fromJson(json, listType);
 
         List<Ticket> tickets = new ArrayList<>();
@@ -99,7 +99,7 @@ public class TicketApiService extends ApiClient {
         String url = ApiConfig.getTicketsUrl() + "/search?q=" + searchTerm;
         Type listType = new TypeToken<List<TicketResponseDTO>>() {
         }.getType();
-        String json = get(url, String.class);
+        String json = getString(url);
         List<TicketResponseDTO> dtos = getGson().fromJson(json, listType);
 
         List<Ticket> tickets = new ArrayList<>();

@@ -1,12 +1,11 @@
 package com.cyrcetech.infrastructure;
 
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.entity.Customer;
 import com.cyrcetech.entity.SparePart;
 import com.cyrcetech.entity.Ticket;
-import com.cyrcetech.usecase.CustomerService;
-import com.cyrcetech.usecase.SparePartService;
-import com.cyrcetech.usecase.TicketService;
+import com.cyrcetech.infrastructure.api.service.CustomerApiService;
+import com.cyrcetech.infrastructure.api.service.SparePartApiService;
+import com.cyrcetech.infrastructure.api.service.TicketApiService;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -22,9 +21,9 @@ import java.util.List;
 
 public class PDFReportService {
 
-    private final CustomerService customerService = DependencyContainer.getCustomerService();
-    private final TicketService ticketService = DependencyContainer.getTicketService();
-    private final SparePartService sparePartService = DependencyContainer.getSparePartService();
+    private final CustomerApiService customerApiService = new CustomerApiService();
+    private final TicketApiService ticketApiService = new TicketApiService();
+    private final SparePartApiService sparePartApiService = new SparePartApiService();
 
     private static final float MARGIN = 50;
     private static final float TITLE_FONT_SIZE = 18;
@@ -34,7 +33,12 @@ public class PDFReportService {
     private static final float TABLE_ROW_HEIGHT = 20;
 
     public void generateOrdersReport(File outputFile) throws IOException {
-        List<Ticket> tickets = ticketService.getAllTickets();
+        List<Ticket> tickets;
+        try {
+            tickets = ticketApiService.getAllTickets();
+        } catch (Exception e) {
+            throw new IOException("Error fetching tickets from API: " + e.getMessage(), e);
+        }
 
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage(PDRectangle.A4);
@@ -90,7 +94,12 @@ public class PDFReportService {
     }
 
     public void generateCustomersReport(File outputFile) throws IOException {
-        List<Customer> customers = customerService.getAllCustomers();
+        List<Customer> customers;
+        try {
+            customers = customerApiService.getAllCustomers();
+        } catch (Exception e) {
+            throw new IOException("Error fetching customers from API: " + e.getMessage(), e);
+        }
 
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage(PDRectangle.A4);
@@ -146,7 +155,12 @@ public class PDFReportService {
     }
 
     public void generateInventoryReport(File outputFile) throws IOException {
-        List<SparePart> spareParts = sparePartService.getAllSpareParts();
+        List<SparePart> spareParts;
+        try {
+            spareParts = sparePartApiService.getAllSpareParts();
+        } catch (Exception e) {
+            throw new IOException("Error fetching spare parts from API: " + e.getMessage(), e);
+        }
 
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage(PDRectangle.A4);

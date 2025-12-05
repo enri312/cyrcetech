@@ -26,7 +26,7 @@ public class InvoiceApiService extends ApiClient {
     public List<Invoice> getAllInvoices() throws Exception {
         Type listType = new TypeToken<List<InvoiceResponseDTO>>() {
         }.getType();
-        String json = get(ApiConfig.getInvoicesUrl(), String.class);
+        String json = getString(ApiConfig.getInvoicesUrl());
         List<InvoiceResponseDTO> dtos = getGson().fromJson(json, listType);
 
         List<Invoice> invoices = new ArrayList<>();

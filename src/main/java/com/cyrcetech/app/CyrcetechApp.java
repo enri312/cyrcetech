@@ -23,9 +23,8 @@ public class CyrcetechApp extends Application {
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
 
-        // Initialize database
-        System.out.println("Initializing database...");
-        com.cyrcetech.infrastructure.DatabaseInitializer.initialize();
+        // Application now uses REST API - no local database initialization needed
+        System.out.println("Starting Cyrcetech application (REST API mode)...");
 
         // System.out.println("Starting Cyrcetech application...");
 

@@ -3,11 +3,9 @@ module com.cyrcetech {
     requires javafx.fxml;
     requires transitive javafx.graphics;
     requires org.apache.pdfbox;
-    requires transitive java.sql;
     requires java.desktop;
     requires java.net.http;
     requires com.google.gson;
-    requires org.postgresql.jdbc;
 
     opens com.cyrcetech.app to javafx.fxml;
     opens com.cyrcetech.usecase to javafx.fxml;

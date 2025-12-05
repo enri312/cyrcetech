@@ -12,15 +12,20 @@ dependencies {
     // PDFBox Maven dependency
     implementation 'org.apache.pdfbox:pdfbox:3.0.3'
 
-    // Database driver
-    implementation 'org.postgresql:postgresql:42.7.2'
-
-    // JSON library
+    // JSON library for REST API communication
     implementation 'com.google.code.gson:gson:2.13.2'
 
     // JavaFX dependencies (gestionadas por el plugin)
     implementation 'org.openjfx:javafx-controls:25.0.1'
     implementation 'org.openjfx:javafx-fxml:25.0.1'
+
+    // Testing dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 javafx {

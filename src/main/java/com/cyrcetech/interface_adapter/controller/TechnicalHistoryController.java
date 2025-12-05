@@ -39,12 +39,14 @@ public class TechnicalHistoryController {
 
     @FXML
     public void initialize() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getId()));
         customerColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
                 cellData.getValue().getCustomer() != null ? cellData.getValue().getCustomer().name() : "N/A"));
         deviceColumn.setCellValueFactory(
                 cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeviceSummary()));
-        problemColumn.setCellValueFactory(new PropertyValueFactory<>("problemDescription"));
+        problemColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
+                cellData.getValue().getProblemDescription()));
         statusColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
                 cellData.getValue().getStatus() != null ? cellData.getValue().getStatus().getDisplayName() : "N/A"));
         dateColumn.setCellValueFactory(

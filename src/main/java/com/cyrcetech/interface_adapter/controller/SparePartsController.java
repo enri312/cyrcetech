@@ -49,10 +49,15 @@ public class SparePartsController {
 
     @FXML
     public void initialize() {
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        providerColumn.setCellValueFactory(new PropertyValueFactory<>("provider"));
+        // Use lambdas for Java records
+        nameColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().name()));
+        priceColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().price()));
+        stockColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().stock()));
+        providerColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().provider()));
 
         loadSpareParts();
     }
