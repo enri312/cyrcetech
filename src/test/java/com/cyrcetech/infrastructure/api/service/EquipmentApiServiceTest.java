@@ -26,7 +26,7 @@ public class EquipmentApiServiceTest {
         try {
             CustomerApiService customerApiService = new CustomerApiService();
             var customer = new com.cyrcetech.entity.Customer(
-                    null, "Equipment Test Customer", "equip@test.com",
+                    null, "Equipment Test Customer",
                     "0981-EQUIP", "Test Address", "11111111-1");
             var created = customerApiService.createCustomer(customer);
             testCustomerId = created.id();

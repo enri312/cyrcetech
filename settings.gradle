@@ -1,1 +1,2 @@
 rootProject.name = 'cyrcetech'
+includeBuild 'backend'

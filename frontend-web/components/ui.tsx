@@ -1,4 +1,6 @@
 import React, { ReactNode } from 'react';
+import { Globe } from 'lucide-react';
+import { Language } from '../types';
 
 // --- Glass Card ---
 interface GlassCardProps {
@@ -71,16 +73,16 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = ({ 
-  children, 
-  variant = 'primary', 
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  variant = 'primary',
   size = 'md',
-  isLoading, 
-  className, 
-  ...props 
+  isLoading,
+  className,
+  ...props
 }) => {
   const baseStyles = "rounded-lg font-semibold transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2";
-  
+
   const sizes = {
     sm: "px-3 py-1.5 text-sm",
     md: "px-6 py-3 text-base",
@@ -108,23 +110,58 @@ export const Button: React.FC<ButtonProps> = ({
 };
 
 // --- Badge ---
-export const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
-  let colors = "bg-gray-500/20 text-gray-300 border-gray-500/50";
-  // Check for Spanish statuses (from types.ts)
-  if (status === 'Pendiente') colors = "bg-yellow-500/20 text-yellow-300 border-yellow-500/50";
-  if (status === 'En Reparación') colors = "bg-blue-500/20 text-blue-300 border-blue-500/50";
-  if (status === 'Listo para Entregar') colors = "bg-green-500/20 text-green-300 border-green-500/50";
-  if (status === 'Entregado') colors = "bg-gray-800 text-gray-500 border-gray-700";
+import { TicketStatus, TicketStatusDisplay } from '../types';
 
-  // Fallback for English statuses
-  if (status === 'Pending') colors = "bg-yellow-500/20 text-yellow-300 border-yellow-500/50";
-  if (status === 'In Progress') colors = "bg-blue-500/20 text-blue-300 border-blue-500/50";
-  if (status === 'Ready to Deliver') colors = "bg-green-500/20 text-green-300 border-green-500/50";
-  if (status === 'Delivered') colors = "bg-gray-800 text-gray-500 border-gray-700";
+export const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
+  // Map backend status to display info
+  const statusInfo = TicketStatusDisplay[status as TicketStatus];
+
+  let colors = "bg-gray-500/20 text-gray-300 border-gray-500/50";
+  let displayName = status;
+
+  if (statusInfo) {
+    displayName = statusInfo.name;
+    const color = statusInfo.color;
+
+    // Convert hex color to tailwind-like classes
+    switch (status) {
+      case 'PENDING':
+        colors = "bg-yellow-500/20 text-yellow-300 border-yellow-500/50";
+        break;
+      case 'DIAGNOSING':
+        colors = "bg-blue-500/20 text-blue-300 border-blue-500/50";
+        break;
+      case 'IN_PROGRESS':
+        colors = "bg-orange-500/20 text-orange-300 border-orange-500/50";
+        break;
+      case 'WAITING_PARTS':
+        colors = "bg-purple-500/20 text-purple-300 border-purple-500/50";
+        break;
+      case 'READY':
+        colors = "bg-green-500/20 text-green-300 border-green-500/50";
+        break;
+      case 'DELIVERED':
+        colors = "bg-cyan-500/20 text-cyan-300 border-cyan-500/50";
+        break;
+      case 'CANCELLED':
+        colors = "bg-red-500/20 text-red-300 border-red-500/50";
+        break;
+    }
+  }
 
   return (
     <span className={`px-3 py-1 rounded-full text-xs font-medium border ${colors}`}>
-      {status}
+      {displayName}
     </span>
   );
 };
+// --- Language Toggle ---
+export const LanguageToggle = ({ lang, setLang }: { lang: Language, setLang: (l: Language) => void }) => (
+  <button
+    onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
+    className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition text-xs font-mono"
+  >
+    <Globe size={12} />
+    {lang.toUpperCase()}
+  </button>
+);

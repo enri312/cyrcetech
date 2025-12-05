@@ -43,7 +43,6 @@ public class CustomerApiServiceTest {
             Customer newCustomer = new Customer(
                     null,
                     "Test Customer " + System.currentTimeMillis(),
-                    "test@example.com",
                     "0981-TEST-123",
                     "Test Address 123",
                     "12345678-9");
@@ -84,7 +83,6 @@ public class CustomerApiServiceTest {
             Customer updated = new Customer(
                     createdCustomerId,
                     "Updated Test Customer",
-                    "updated@example.com",
                     "0981-UPDATED",
                     "Updated Address 456",
                     "87654321-0");

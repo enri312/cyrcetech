@@ -31,6 +31,12 @@ public class SparePart {
     @Column(name = "provider")
     private String provider;
 
+    @Column(name = "min_stock")
+    private int minStock;
+
+    @Column(name = "compatibility")
+    private String compatibility;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -41,14 +47,23 @@ public class SparePart {
     public SparePart() {
         this.price = 0.0;
         this.stock = 0;
+        this.minStock = 0;
     }
 
-    public SparePart(String name, double price, int stock, String provider) {
+    public SparePart(String id, String name, double price, int stock, int minStock, String provider,
+            String compatibility) {
         this();
+        this.id = id;
         this.name = name;
         this.price = price;
         this.stock = stock;
+        this.minStock = minStock;
         this.provider = provider;
+        this.compatibility = compatibility;
+    }
+
+    public SparePart(String name, double price, int stock, int minStock, String provider, String compatibility) {
+        this(null, name, price, stock, minStock, provider, compatibility);
     }
 
     // Lifecycle callbacks
@@ -111,6 +126,25 @@ public class SparePart {
 
     public void setProvider(String provider) {
         this.provider = provider;
+    }
+
+    public int getMinStock() {
+        return minStock;
+    }
+
+    public void setMinStock(int minStock) {
+        if (minStock < 0) {
+            throw new IllegalArgumentException("Minimum stock cannot be negative");
+        }
+        this.minStock = minStock;
+    }
+
+    public String getCompatibility() {
+        return compatibility;
+    }
+
+    public void setCompatibility(String compatibility) {
+        this.compatibility = compatibility;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -43,6 +43,9 @@ public class CustomerService {
      * Get customer by ID
      */
     public CustomerResponse getCustomerById(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Customer ID cannot be null");
+        }
         log.debug("Fetching customer with id: {}", id);
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
@@ -71,6 +74,9 @@ public class CustomerService {
      * Update existing customer
      */
     public CustomerResponse updateCustomer(String id, UpdateCustomerRequest request) {
+        if (id == null) {
+            throw new IllegalArgumentException("Customer ID cannot be null");
+        }
         log.debug("Updating customer with id: {}", id);
 
         Customer customer = customerRepository.findById(id)
@@ -89,6 +95,7 @@ public class CustomerService {
             customer.setPhone(request.getPhone());
         }
 
+        @SuppressWarnings("null")
         Customer updated = customerRepository.save(customer);
         log.info("Customer updated: {}", id);
 
@@ -99,6 +106,9 @@ public class CustomerService {
      * Delete customer
      */
     public void deleteCustomer(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Customer ID cannot be null");
+        }
         log.debug("Deleting customer with id: {}", id);
 
         if (!customerRepository.existsById(id)) {
@@ -113,6 +123,9 @@ public class CustomerService {
      * Search customers
      */
     public List<CustomerResponse> searchCustomers(String searchTerm) {
+        if (searchTerm == null) {
+            searchTerm = "";
+        }
         log.debug("Searching customers with term: {}", searchTerm);
         return customerRepository.searchCustomers(searchTerm).stream()
                 .map(this::toResponse)
