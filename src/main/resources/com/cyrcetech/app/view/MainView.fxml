@@ -181,8 +181,8 @@
                 <VBox spacing="15" GridPane.columnIndex="0">
                     <Label text="%main.inWorkshop"
                         style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffcc00;" />
-                    <VBox spacing="10" styleClass="glass-pane" style="-fx-padding: 15;">
-                        <!-- Sample Ticket removed -->
+                    <VBox fx:id="workshopTicketsContainer" spacing="10" styleClass="glass-pane" style="-fx-padding: 15;">
+                        <!-- Loaded dynamically -->
                     </VBox>
                 </VBox>
 
@@ -190,8 +190,8 @@
                 <VBox spacing="15" GridPane.columnIndex="1">
                     <Label text="%main.toPickup"
                         style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #00ff00;" />
-                    <VBox spacing="10" styleClass="glass-pane" style="-fx-padding: 15;">
-                        <!-- Sample Ticket removed -->
+                    <VBox fx:id="pickupTicketsContainer" spacing="10" styleClass="glass-pane" style="-fx-padding: 15;">
+                        <!-- Loaded dynamically -->
                     </VBox>
                 </VBox>
             </GridPane>

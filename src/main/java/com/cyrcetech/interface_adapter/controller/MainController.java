@@ -7,9 +7,12 @@ import com.cyrcetech.infrastructure.api.service.TicketApiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainController {
 
@@ -19,6 +22,10 @@ public class MainController {
     private Label readyCountLabel;
     @FXML
     private Label deliveredCountLabel;
+    @FXML
+    private VBox workshopTicketsContainer;
+    @FXML
+    private VBox pickupTicketsContainer;
 
     private final TicketApiService ticketApiService = new TicketApiService();
 
@@ -31,6 +38,7 @@ public class MainController {
         try {
             List<Ticket> tickets = ticketApiService.getAllTickets();
 
+            // Count by status
             long pending = tickets.stream()
                     .filter(t -> t.getStatus() == TicketStatus.PENDING || t.getStatus() == TicketStatus.DIAGNOSING)
                     .count();
@@ -43,6 +51,7 @@ public class MainController {
                     .filter(t -> t.getStatus() == TicketStatus.DELIVERED)
                     .count();
 
+            // Update counters
             if (pendingCountLabel != null) {
                 pendingCountLabel.setText(String.valueOf(pending));
             }
@@ -52,10 +61,69 @@ public class MainController {
             if (deliveredCountLabel != null) {
                 deliveredCountLabel.setText(String.valueOf(delivered));
             }
+
+            // Load workshop tickets (in progress: PENDING, DIAGNOSING, IN_PROGRESS,
+            // WAITING_PARTS)
+            List<Ticket> workshopTickets = tickets.stream()
+                    .filter(t -> t.getStatus() != null && t.getStatus().isActive()
+                            && t.getStatus() != TicketStatus.READY)
+                    .collect(Collectors.toList());
+            loadTicketsIntoContainer(workshopTicketsContainer, workshopTickets);
+
+            // Load ready for pickup tickets
+            List<Ticket> pickupTickets = tickets.stream()
+                    .filter(t -> t.getStatus() == TicketStatus.READY)
+                    .collect(Collectors.toList());
+            loadTicketsIntoContainer(pickupTicketsContainer, pickupTickets);
+
         } catch (Exception e) {
             System.err.println("Error loading dashboard stats: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void loadTicketsIntoContainer(VBox container, List<Ticket> tickets) {
+        if (container == null)
+            return;
+
+        container.getChildren().clear();
+
+        if (tickets.isEmpty()) {
+            Label emptyLabel = new Label("No hay tickets");
+            emptyLabel.setStyle("-fx-text-fill: #808090; -fx-font-style: italic;");
+            container.getChildren().add(emptyLabel);
+        } else {
+            for (Ticket ticket : tickets) {
+                HBox ticketCard = createTicketCard(ticket);
+                container.getChildren().add(ticketCard);
+            }
+        }
+    }
+
+    private HBox createTicketCard(Ticket ticket) {
+        HBox card = new HBox(10);
+        card.setStyle("-fx-background-color: #1a1a2e; -fx-background-radius: 8; -fx-padding: 10;");
+
+        // Ticket info
+        VBox info = new VBox(3);
+
+        String customerName = ticket.getCustomer() != null ? ticket.getCustomer().name() : "Sin cliente";
+        Label nameLabel = new Label(customerName);
+        nameLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+
+        String deviceInfo = ticket.getDeviceSummary();
+        Label deviceLabel = new Label(deviceInfo);
+        deviceLabel.setStyle("-fx-text-fill: #a0a0b0; -fx-font-size: 12px;");
+
+        String statusText = ticket.getStatus() != null ? ticket.getStatus().getDisplayName() : "—";
+        Label statusLabel = new Label(statusText);
+        String statusColor = ticket.getStatus() != null ? ticket.getStatus().getColorCode() : "#808080";
+        statusLabel.setStyle("-fx-text-fill: " + statusColor + "; -fx-font-size: 11px;");
+
+        info.getChildren().addAll(nameLabel, deviceLabel, statusLabel);
+        card.getChildren().add(info);
+
+        return card;
     }
 
     @FXML
@@ -66,11 +134,8 @@ public class MainController {
     @FXML
     private void handleClients(ActionEvent event) {
         try {
-            System.out.println("DEBUG: handleClients called");
             CyrcetechApp.setRoot("view/ClientView");
-            System.out.println("DEBUG: ClientView loaded successfully");
         } catch (IOException e) {
-            System.err.println("ERROR: Failed to load ClientView");
             e.printStackTrace();
         }
     }
@@ -78,11 +143,8 @@ public class MainController {
     @FXML
     private void handleEquipment(ActionEvent event) {
         try {
-            System.out.println("DEBUG: handleEquipment called");
             CyrcetechApp.setRoot("view/EquipmentView");
-            System.out.println("DEBUG: EquipmentView loaded successfully");
         } catch (IOException e) {
-            System.err.println("ERROR: Failed to load EquipmentView");
             e.printStackTrace();
         }
     }
@@ -100,11 +162,8 @@ public class MainController {
     @FXML
     private void handleTechnicalHistory(ActionEvent event) {
         try {
-            System.out.println("DEBUG: handleTechnicalHistory called");
             CyrcetechApp.setRoot("view/TechnicalHistoryView");
-            System.out.println("DEBUG: TechnicalHistoryView loaded successfully");
         } catch (IOException e) {
-            System.err.println("ERROR: Failed to load TechnicalHistoryView");
             e.printStackTrace();
         }
     }
