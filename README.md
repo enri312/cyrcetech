@@ -125,4 +125,3 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 **Versión**: 2.2.0
 **Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅
 **Última actualización**: 2025-12-07
-
