@@ -1,17 +1,68 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:18-alpine # Using 18-alpine as 18.1 specific tag might vary, alpine is lighter
-    container_name: cyrcetech_db
+  # ----------------------------
+  # DATABASE (PostgreSQL)
+  # ----------------------------
+  db:
+    image: postgres:18-alpine
+    container_name: cyrcetech_db_docker
     environment:
-      POSTGRES_DB: cyrcetech
-      POSTGRES_USER: admin
+      POSTGRES_DB: cyrcetech_db
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - cyrcetech-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------
+  # BACKEND (Spring Boot)
+  # ----------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cyrcetech_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cyrcetech_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - cyrcetech-network
+
+  # ----------------------------
+  # FRONTEND (React + Nginx)
+  # ----------------------------
+  frontend:
+    build:
+      context: ./frontend-web
+      dockerfile: Dockerfile
+    container_name: cyrcetech_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - cyrcetech-network
+
+# ----------------------------
+# NETWORKS & VOLUMES
+# ----------------------------
+networks:
+  cyrcetech-network:
+    driver: bridge
 
 volumes:
-  postgres_data:
+  pg_data:

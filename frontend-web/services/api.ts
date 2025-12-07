@@ -3,19 +3,63 @@ const API_BASE_URL = 'http://localhost:8080/api';
 
 // Generic fetch helper
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    const token = localStorage.getItem('token');
+    const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+        ...options?.headers,
+    };
+
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
         ...options,
+        headers,
     });
 
+    if (response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/'; // Force reload/redirect to login
+        throw new Error('Session expired');
+    }
+
     if (!response.ok) {
-        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        // Try to parse error message from JSON response
+        try {
+            const errorBody = await response.json();
+            throw new Error(errorBody.message || `API Error: ${response.status}`);
+        } catch (e) {
+            throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
     }
 
     return response.json();
 }
+
+// === AUTH ===
+export interface LoginRequest {
+    email: string;
+    password?: string;
+}
+
+export interface RegisterRequest {
+    fullName: string;
+    email: string;
+    password: string;
+}
+
+export interface AuthResponse {
+    token: string;
+    userId: string;
+    email: string;
+    role: string;
+}
+
+export const authApi = {
+    login: (data: LoginRequest) =>
+        fetchApi<AuthResponse>('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
+    register: (data: RegisterRequest) =>
+        fetchApi<AuthResponse>('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
+};
 
 // === CUSTOMERS ===
 export interface CustomerDTO {

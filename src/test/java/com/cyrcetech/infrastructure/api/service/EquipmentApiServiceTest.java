@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Integration tests for EquipmentApiService.
  * Requires backend running at http://localhost:8080
  */
+@Tag("integration")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EquipmentApiServiceTest {
 
@@ -71,13 +72,12 @@ public class EquipmentApiServiceTest {
         try {
             Equipment newEquipment = new Equipment(
                     null,
-                    testCustomerId,
-                    "LAPTOP",
                     "Dell",
                     "XPS 15",
+                    com.cyrcetech.entity.DeviceType.NOTEBOOK,
                     "SN-TEST-" + System.currentTimeMillis(),
-                    "Test accessories",
-                    "Good condition");
+                    "Good condition",
+                    testCustomerId);
 
             Equipment created = equipmentApiService.createEquipment(newEquipment);
             assertNotNull(created);

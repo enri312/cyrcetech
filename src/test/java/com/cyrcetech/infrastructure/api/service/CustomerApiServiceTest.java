@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Integration tests for CustomerApiService.
  * Requires backend running at http://localhost:8080
  */
+@Tag("integration")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomerApiServiceTest {
 

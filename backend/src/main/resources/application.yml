@@ -31,8 +31,10 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
-    operations-sorter: method
-    tags-sorter: alpha
+
+jwt:
+  secret: c3ByaW5nc2VjdXJpdHlqd3RzZWNyZXRrZXlzcHJpbmdzZWN1cml0eXRlc3Q=
+  expiration: 86400000 # 1 day in ms
 
 # Logging
 logging:

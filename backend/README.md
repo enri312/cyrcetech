@@ -19,7 +19,7 @@ Backend API construido con Spring Boot que expone endpoints REST para gestionar 
 ### Requisitos Previos
 
 - Java JDK 21 o superior
-- PostgreSQL corriendo en Docker (puerto 5433)
+- PostgreSQL corriendo en Docker (puerto 5432)
 - Gradle 9.2.1
 
 ### Configuración
@@ -204,7 +204,7 @@ DB_PASSWORD=password  # Contraseña de PostgreSQL (default: password)
 ```yaml
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/cyrcetech
+    url: jdbc:postgresql://localhost:5432/cyrcetech
     username: admin
     password: ${DB_PASSWORD:password}
   jpa:
@@ -245,28 +245,28 @@ Ver guías de testing:
 - [x] Customer API (CRUD completo + búsqueda)
 - [x] Equipment API (CRUD completo + filtros por customer/tipo)
 - [x] Ticket API (CRUD completo + filtros por customer/equipment/status)
+- [x] SparePart API (CRUD completo + control de stock)
+- [x] Invoice API (Facturación completa)
 - [x] Documentación con Swagger
 - [x] Manejo global de excepciones
 - [x] Configuración CORS
+- [x] Tests unitarios y de integración
 
 ### En Progreso ⏳
-- [ ] SparePart API
-- [ ] Invoice API
+- [ ] Dockerización completa (opcional)
 
 ### Planificado 📋
 - [ ] Autenticación JWT
-- [ ] Tests unitarios y de integración
-- [ ] Dockerización completa
 - [ ] CI/CD Pipeline
 
 ## 📊 Progreso de Implementación
 
-**Entidades Completadas**: 3/5 (60%)
+**Entidades Completadas**: 5/5 (100%)
 - ✅ Customer
 - ✅ Equipment
 - ✅ Ticket
-- ⏳ SparePart
-- ⏳ Invoice
+- ✅ SparePart
+- ✅ Invoice
 
 ## 📄 Licencia
 
@@ -276,5 +276,5 @@ Proyecto privado - Todos los derechos reservados
 
 **Versión**: 1.0.0  
 **Puerto**: 8080  
-**Base de Datos**: PostgreSQL 18.1 (Docker puerto 5433)  
+**Base de Datos**: PostgreSQL 18.1 (Docker puerto 5432)  
 **Java**: 21

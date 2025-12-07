@@ -1,81 +1,61 @@
 # Frontend Web - CyrceTech
 
-Versión web del sistema de gestión de tickets CyrceTech, desarrollada con React + Vite.
+Cliente web oficial del sistema de gestión CyrceTech, desarrollado con React + Vite y conectado al Backend Spring Boot.
 
-## Descripción
+## 📋 Descripción
 
-Este es el frontend web original del sistema CyrceTech, que fue posteriormente convertido a una aplicación JavaFX de escritorio. Se conserva como referencia y para posible uso futuro como interfaz web.
+Interfaz de usuario moderna y responsiva para la gestión integral del taller. Se conecta a la API REST para realizar operaciones CRUD sobre clientes, equipos, tickets, repuestos y facturas.
 
-## Características
+## 🚀 Características
 
-- **Framework**: React 19 + TypeScript
-- **Build Tool**: Vite
-- **Styling**: TailwindCSS (CDN)
-- **UI**: Diseño glassmorphism con tema oscuro y acentos neón
-- **Funcionalidades**:
-  - Sistema de login
-  - Dashboard con estadísticas
-  - Gestión de tickets de reparación
-  - Administración de clientes
-  - Inventario de repuestos
-  - Diagnóstico asistido por IA (Deepseek/Ollama)
-  - Internacionalización (ES/EN)
+- **Stack Moderno**: React 19 + TypeScript + Vite
+- **Diseño Premium**: Interfaz "Glassmorphism" con Tailwind CSS
+- **Conexión Real**: Integrado con Backend Spring Boot (`http://localhost:8080`)
+- **Funcionalidades Completas**:
+  - 📊 **Dashboard**: Métricas en tiempo real
+  - 👥 **Clientes**: Gestión completa (CRUD)
+  - 💻 **Equipos**: Registro de dispositivos por cliente
+  - 🎫 **Tickets**: Flujo de reparación (Pendiente -> Entregado)
+  - 🔧 **Repuestos**: Control de stock e inventario
+  - 📄 **Facturación**: Generación de facturas calculadas
 
-## Ejecutar Localmente
+## 🛠️ Ejecución
 
 ### Requisitos
 - Node.js 16+
-- npm o yarn
+- Backend Spring Boot corriendo en puerto 8080
 
-### Instalación
+### Pasos
+
+1. **Instalar dependencias**:
+   ```bash
+   npm install
+   ```
+
+2. **Iniciar servidor de desarrollo**:
+   ```bash
+   npm run dev
+   ```
+
+3. **Acceder**:
+   Abrir `http://localhost:5173` en el navegador.
+
+## 📦 Build para Producción
+
+Para generar los archivos estáticos listos para desplegar:
 
 ```bash
-# Instalar dependencias
-npm install
-
-# Configurar API Key (si se usa IA)
-# Editar .env.local y agregar GEMINI_API_KEY
-
-# Iniciar servidor de desarrollo
-npm run dev
-
-# La aplicación estará disponible en http://localhost:3000
+npm run build
+# Los archivos se generarán en la carpeta /dist
 ```
 
-### Comandos Disponibles
-
-```bash
-npm run dev      # Servidor de desarrollo
-npm run build    # Build de producción
-npm run preview  # Preview del build
-```
-
-## Estructura
+## 📂 Estructura
 
 ```
 frontend-web/
-├── components/          # Componentes UI reutilizables
-│   └── ui.tsx          # GlassCard, Input, Button, etc.
-├── services/           # Servicios externos
-│   └── geminiService.ts # Integración con IA
-├── App.tsx             # Componente principal
-├── index.tsx           # Entry point
-├── index.html          # HTML base
-├── types.ts            # Definiciones TypeScript
-├── vite.config.ts      # Configuración Vite
-├── tsconfig.json       # Configuración TypeScript
-└── package.json        # Dependencias
+├── components/     # UI Kit (Botones, Inputs, Cards)
+├── services/       # Cliente HTTP y llamadas API
+├── views/          # Pantallas principales (Dashboard, Clientes, etc.)
+├── App.tsx         # Router y Layout principal
+└── types.ts        # Definiciones de tipos TypeScript
 ```
-
-## Relación con JavaFX
-
-Esta versión web fue la base para el desarrollo de la aplicación JavaFX de escritorio. Ambas comparten:
-- La misma lógica de negocio
-- Modelos de datos similares (Ticket, Customer, SparePart)
-- Flujos de trabajo idénticos
-
-## Notas
-
-- **Estado**: Archivado/Referencia
-- **Uso actual**: La aplicación principal es la versión JavaFX
-- **Propósito**: Conservado para referencia histórica y posible uso futuro como interfaz web

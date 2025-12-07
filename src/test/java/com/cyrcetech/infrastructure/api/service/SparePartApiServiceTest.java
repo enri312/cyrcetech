@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Integration tests for SparePartApiService.
  * Requires backend running at http://localhost:8080
  */
+@Tag("integration")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SparePartApiServiceTest {
 
@@ -45,9 +46,7 @@ public class SparePartApiServiceTest {
                     "Test Part " + System.currentTimeMillis(),
                     150000.0, // price in Guaraníes
                     25, // stock
-                    5, // min stock
-                    "Test Provider",
-                    "Compatible with test devices");
+                    "Test Provider");
 
             SparePart created = sparePartApiService.createSparePart(newPart);
             assertNotNull(created);
@@ -87,9 +86,7 @@ public class SparePartApiServiceTest {
                     "Updated Test Part",
                     200000.0,
                     30,
-                    10,
-                    "Updated Provider",
-                    "Updated compatibility");
+                    "Updated Provider");
 
             SparePart result = sparePartApiService.updateSparePart(createdSparePartId, updated);
             assertNotNull(result);
