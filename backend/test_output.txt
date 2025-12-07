@@ -1,0 +1,37 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources UP-TO-DATE
+> Task :testClasses UP-TO-DATE
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :test
+
+AuthControllerUnitTest > register_ShouldReturnToken() FAILED
+    org.mockito.exceptions.base.MockitoException at MockitoExtension.java:160
+        Caused by: org.mockito.exceptions.base.MockitoException at TypeCache.java:168
+            Caused by: java.lang.IllegalStateException at InlineBytecodeGenerator.java:285
+                Caused by: java.lang.IllegalArgumentException at OpenedClassReader.java:120
+
+AuthControllerUnitTest > login_ShouldReturnToken() FAILED
+    org.mockito.exceptions.base.MockitoException at MockitoExtension.java:160
+        Caused by: org.mockito.exceptions.base.MockitoException at TypeCache.java:168
+            Caused by: java.lang.IllegalStateException at InlineBytecodeGenerator.java:285
+
+                Caused by: java.lang.IllegalArgumentException at OpenedClassReader.java:120
+2 tests completed, 2 failed
+
+
+> Task :test FAILED
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///C:/Users/enri3/OneDrive/Desktop/Projectos/Cyrcetech/backend/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to generate a Build Scan (powered by Develocity).
+
+BUILD FAILED in 6s
+5 actionable tasks: 1 executed, 4 up-to-date

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Orden de Servicio</title>
+    <style>
+        body { font-family: sans-serif; font-size: 12px; color: #333; }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        .header h1 { margin: 0; color: #0044cc; }
+        .header p { margin: 2px; color: #666; }
+        
+        .section { margin-bottom: 15px; }
+        .section-title { font-weight: bold; background-color: #f0f0f0; padding: 5px; border-bottom: 1px solid #ccc; margin-bottom: 5px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+        th { background-color: #f9f9f9; }
+        
+        .row { display: table; width: 100%; }
+        .col { display: table-cell; padding: 5px; }
+        .label { font-weight: bold; color: #555; }
+        
+        .footer { position: fixed; bottom: 0; width: 100%; text-align: center; font-size: 10px; border-top: 1px solid #ddd; padding-top: 5px; }
+        
+        .status-badge { 
+            padding: 3px 8px; border-radius: 3px; font-weight: bold; color: white; display: inline-block;
+            background-color: #6c757d; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>CYRCETECH</h1>
+        <p>Servicio Técnico Especializado</p>
+        <p>Orden de Servicio #<span th:text="${ticket.id.substring(0,8)}">00000</span></p>
+        <p>Fecha: <span th:text="${ticket.dateCreated}">2025-01-01</span></p>
+    </div>
+
+    <!-- Info Cliente y Equipo -->
+    <div class="section">
+        <div class="section-title">Información General</div>
+        <table style="width: 100%; border: none;">
+            <tr style="border: none;">
+                <td style="width: 50%; border: none; vertical-align: top;">
+                    <div class="label">CLIENTE:</div>
+                    <div th:text="${ticket.customerName}">Nombre Cliente</div>
+                    <!-- Assuming we might pass customer object details later or fetch phone -->
+                </td>
+                <td style="width: 50%; border: none; vertical-align: top;">
+                    <div class="label">EQUIPO:</div>
+                    <div th:text="${ticket.equipmentSummary}">Resumen Equipo</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Problema -->
+    <div class="section">
+        <div class="section-title">Detalle del Servicio</div>
+        <div class="label">Descripción del Problema:</div>
+        <p th:text="${ticket.problemDescription}">Descripción...</p>
+        
+        <div class="label" style="margin-top: 10px;">Diagnóstico Preliminar (IA):</div>
+        <p th:text="${ticket.aiDiagnosis}" style="font-style: italic; color: #555;">Diagnóstico...</p>
+    </div>
+
+    <!-- Estado y Costos -->
+    <div class="section">
+        <div class="section-title">Estado y Presupuesto</div>
+        <table>
+            <tr>
+                <th>Estado Actual</th>
+                <th>Costo Estimado</th>
+                <th>Abonado</th>
+                <th>Saldo Pendiente</th>
+            </tr>
+            <tr>
+                <td><span class="status-badge" th:style="'background-color:' + ${ticket.statusColorCode}" th:text="${ticket.statusDisplayName}">Estado</span></td>
+                <td th:text="'$' + ${ticket.estimatedCost}">$0.00</td>
+                <td th:text="'$' + ${ticket.amountPaid}">$0.00</td>
+                <td th:text="'$' + ${ticket.remainingBalance}">$0.00</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section" style="margin-top: 30px;">
+        <div class="section-title">Observaciones Técnicas</div>
+        <p th:text="${ticket.observations}" style="min-height: 20px; border: 1px solid #eee; padding: 10px;">
+            Sin observaciones adicionales.
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>Gracias por confiar en Cyrcetech. Conserve este documento para retirar su equipo.</p>
+        <p>Generado automáticamente el <span th:text="${#calendars.format(#calendars.createNow(), 'dd/MM/yyyy HH:mm')}">Fecha</span></p>
+    </div>
+
+</body>
+</html>

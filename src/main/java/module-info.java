@@ -2,7 +2,7 @@ module com.cyrcetech {
     requires javafx.controls;
     requires javafx.fxml;
     requires transitive javafx.graphics;
-    requires org.apache.pdfbox;
+    requires com.cyrcepdf;
     requires java.desktop;
     requires java.net.http;
     requires com.google.gson;

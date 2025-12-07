@@ -10,6 +10,7 @@ public class InvoiceResponse {
 
     private String id;
     private String ticketId;
+    private String customerName;
     private String invoiceNumber;
     private String issueDate;
     private String dueDate;
@@ -45,6 +46,14 @@ public class InvoiceResponse {
 
     public void setTicketId(String ticketId) {
         this.ticketId = ticketId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getInvoiceNumber() {

@@ -6,7 +6,9 @@ import com.cyrcetech.entity.TicketStatus;
 import com.cyrcetech.infrastructure.api.service.TicketApiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import com.cyrcetech.infrastructure.session.SessionManager;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -27,12 +29,57 @@ public class MainController {
     @FXML
     private VBox pickupTicketsContainer;
 
+    @FXML
+    private Button homeButton;
+    @FXML
+    private Button newOrderButton;
+    @FXML
+    private Button clientsButton;
+    @FXML
+    private Button equipmentButton;
+    @FXML
+    private Button ordersButton;
+    @FXML
+    private Button sparePartsButton;
+    @FXML
+    private Button technicalHistoryButton;
+
     private final TicketApiService ticketApiService = new TicketApiService();
 
     @FXML
     public void initialize() {
+        applyRolePermissions();
         loadDashboardStats();
     }
+
+    private void applyRolePermissions() {
+        if (SessionManager.getInstance().isUser()) {
+            // User only sees Home + My Tickets (New/Orders)
+            setButtonVisible(clientsButton, false);
+            setButtonVisible(equipmentButton, false);
+            setButtonVisible(sparePartsButton, false);
+            setButtonVisible(technicalHistoryButton, false);
+        } else if (SessionManager.getInstance().isTechnician()) {
+            // Technician sees almost everything except detailed admin stuff if any
+            // Based on requirement: View Clients, Equipment, Spare Parts = Checked.
+            // Assuming Technical History is for everyone or Tech+
+            setButtonVisible(clientsButton, true);
+            setButtonVisible(equipmentButton, true);
+            setButtonVisible(sparePartsButton, true);
+            setButtonVisible(technicalHistoryButton, true);
+        }
+        // Admin sees everything (default)
+    }
+
+    private void setButtonVisible(Button button, boolean visible) {
+        if (button != null) {
+            button.setVisible(visible);
+            button.setManaged(visible);
+        }
+    }
+
+    @FXML
+    private javafx.scene.chart.PieChart statusChart;
 
     private void loadDashboardStats() {
         try {
@@ -41,6 +88,11 @@ public class MainController {
             // Count by status
             long pending = tickets.stream()
                     .filter(t -> t.getStatus() == TicketStatus.PENDING || t.getStatus() == TicketStatus.DIAGNOSING)
+                    .count();
+
+            long inProgress = tickets.stream()
+                    .filter(t -> t.getStatus() == TicketStatus.IN_PROGRESS
+                            || t.getStatus() == TicketStatus.WAITING_PARTS)
                     .count();
 
             long ready = tickets.stream()
@@ -60,6 +112,16 @@ public class MainController {
             }
             if (deliveredCountLabel != null) {
                 deliveredCountLabel.setText(String.valueOf(delivered));
+            }
+
+            // Update Chart
+            if (statusChart != null) {
+                statusChart.getData().clear();
+                statusChart.getData().addAll(
+                        new javafx.scene.chart.PieChart.Data("Pendientes (" + pending + ")", pending),
+                        new javafx.scene.chart.PieChart.Data("En Progreso (" + inProgress + ")", inProgress),
+                        new javafx.scene.chart.PieChart.Data("Listos (" + ready + ")", ready),
+                        new javafx.scene.chart.PieChart.Data("Entregados (" + delivered + ")", delivered));
             }
 
             // Load workshop tickets (in progress: PENDING, DIAGNOSING, IN_PROGRESS,

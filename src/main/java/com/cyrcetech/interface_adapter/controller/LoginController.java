@@ -2,6 +2,7 @@ package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
 import com.cyrcetech.app.I18nUtil;
+import com.cyrcetech.infrastructure.api.service.AuthApiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -53,15 +54,33 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if ("CENV".equals(username) && "8994C".equals(password)) {
-            CyrcetechApp.setRoot("view/MainView");
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(I18nUtil.getBundle().getString("login.error.title"));
-            alert.setHeaderText(null);
-            alert.setContentText(I18nUtil.getBundle().getString("login.error.message"));
-            alert.showAndWait();
+        if (username.isEmpty() || password.isEmpty()) {
+            showError(I18nUtil.getBundle().getString("login.error.empty"));
+            return;
         }
+
+        try {
+            AuthApiService authService = new AuthApiService();
+            authService.login(username, password);
+            CyrcetechApp.setRoot("view/MainView");
+        } catch (Exception e) {
+            String errorMessage = e.getMessage();
+            if (errorMessage.contains("401") || errorMessage.contains("403")) {
+                showError(I18nUtil.getBundle().getString("login.error.message"));
+            } else if (errorMessage.contains("Connection refused")) {
+                showError("Error de conexión: El servidor no está disponible");
+            } else {
+                showError("Error: " + errorMessage);
+            }
+        }
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(I18nUtil.getBundle().getString("login.error.title"));
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML

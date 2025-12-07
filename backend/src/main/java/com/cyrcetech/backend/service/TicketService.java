@@ -31,13 +31,16 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final CustomerRepository customerRepository;
     private final EquipmentRepository equipmentRepository;
+    private final WebhookService webhookService;
 
     public TicketService(TicketRepository ticketRepository,
             CustomerRepository customerRepository,
-            EquipmentRepository equipmentRepository) {
+            EquipmentRepository equipmentRepository,
+            WebhookService webhookService) {
         this.ticketRepository = ticketRepository;
         this.customerRepository = customerRepository;
         this.equipmentRepository = equipmentRepository;
+        this.webhookService = webhookService;
     }
 
     /**
@@ -129,6 +132,11 @@ public class TicketService {
 
         Ticket saved = ticketRepository.save(ticket);
         log.info("Ticket created with id: {}", saved.getId());
+
+        // Notify n8n
+        if (webhookService != null) {
+            webhookService.notifyTicketCreated(toResponse(saved));
+        }
 
         return toResponse(saved);
     }

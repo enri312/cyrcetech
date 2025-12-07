@@ -34,6 +34,7 @@ public class ApiClient {
                 .uri(URI.create(url))
                 .GET()
                 .header("Content-Type", "application/json")
+                .headers(getAuthHeaders())
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -53,6 +54,7 @@ public class ApiClient {
                 .uri(URI.create(url))
                 .GET()
                 .header("Content-Type", "application/json")
+                .headers(getAuthHeaders())
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -74,6 +76,7 @@ public class ApiClient {
                 .uri(URI.create(url))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .header("Content-Type", "application/json")
+                .headers(getAuthHeaders())
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -114,6 +117,7 @@ public class ApiClient {
                 .uri(URI.create(url))
                 .DELETE()
                 .header("Content-Type", "application/json")
+                .headers(getAuthHeaders())
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -125,5 +129,13 @@ public class ApiClient {
 
     protected Gson getGson() {
         return gson;
+    }
+
+    private String[] getAuthHeaders() {
+        String token = com.cyrcetech.infrastructure.session.SessionManager.getInstance().getToken();
+        if (token != null && !token.isEmpty()) {
+            return new String[] { "Authorization", "Bearer " + token };
+        }
+        return new String[] {};
     }
 }

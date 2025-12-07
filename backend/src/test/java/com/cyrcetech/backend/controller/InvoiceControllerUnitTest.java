@@ -34,8 +34,9 @@ class InvoiceControllerUnitTest {
         ResponseEntity<List<InvoiceResponse>> result = invoiceController.getAllInvoices();
 
         assertEquals(200, result.getStatusCode().value());
-        assertNotNull(result.getBody());
-        assertEquals(1, result.getBody().size());
+        List<InvoiceResponse> body = result.getBody();
+        assertNotNull(body);
+        assertEquals(1, body.size());
         verify(invoiceService).getAllInvoices();
     }
 
@@ -53,7 +54,9 @@ class InvoiceControllerUnitTest {
         ResponseEntity<InvoiceResponse> result = invoiceController.createInvoice(request);
 
         assertEquals(201, result.getStatusCode().value());
-        assertEquals("new", result.getBody().getId());
+        InvoiceResponse body = result.getBody();
+        assertNotNull(body);
+        assertEquals("new", body.getId());
         verify(invoiceService).createInvoice(request);
     }
 }

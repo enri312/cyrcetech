@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,8 +36,9 @@ class EquipmentControllerUnitTest {
         ResponseEntity<List<EquipmentResponse>> result = equipmentController.getAllEquipment();
 
         assertEquals(200, result.getStatusCode().value());
-        assertNotNull(result.getBody());
-        assertEquals(1, result.getBody().size());
+        List<EquipmentResponse> body = result.getBody();
+        assertNotNull(body);
+        assertEquals(1, body.size());
         verify(equipmentService).getAllEquipment();
     }
 
@@ -52,7 +53,9 @@ class EquipmentControllerUnitTest {
         ResponseEntity<EquipmentResponse> result = equipmentController.createEquipment(request);
 
         assertEquals(201, result.getStatusCode().value());
-        assertEquals("new", result.getBody().getId());
+        EquipmentResponse body = result.getBody();
+        assertNotNull(body);
+        assertEquals("new", body.getId());
         verify(equipmentService).createEquipment(request);
     }
 }

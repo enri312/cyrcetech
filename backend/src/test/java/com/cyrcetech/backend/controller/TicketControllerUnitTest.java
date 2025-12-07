@@ -34,8 +34,9 @@ class TicketControllerUnitTest {
         ResponseEntity<List<TicketResponse>> result = ticketController.getAllTickets();
 
         assertEquals(200, result.getStatusCode().value());
-        assertNotNull(result.getBody());
-        assertEquals(1, result.getBody().size());
+        List<TicketResponse> body = result.getBody();
+        assertNotNull(body);
+        assertEquals(1, body.size());
         verify(ticketService).getAllTickets();
     }
 
@@ -49,7 +50,9 @@ class TicketControllerUnitTest {
         ResponseEntity<TicketResponse> result = ticketController.createTicket(request);
 
         assertEquals(201, result.getStatusCode().value());
-        assertEquals("new", result.getBody().getId());
+        TicketResponse body = result.getBody();
+        assertNotNull(body);
+        assertEquals("new", body.getId());
         verify(ticketService).createTicket(request);
     }
 }

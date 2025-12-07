@@ -8,8 +8,8 @@ group = 'com.cyrcetech'
 version = '1.0.0'
 
 java {
-    sourceCompatibility = '21'
-    targetCompatibility = '21'
+    sourceCompatibility = '25'
+    targetCompatibility = '25'
 }
 
 configurations {
@@ -19,6 +19,7 @@ configurations {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -37,6 +38,10 @@ dependencies {
     // PostgreSQL
     runtimeOnly 'org.postgresql:postgresql'
     
+    // PDF Generation (CyrcePDF 1.0.0)
+    implementation 'io.github.enri312:cyrcepdf:1.0.0'
+    // implementation 'org.apache.pdfbox:pdfbox:3.0.6'
+
     // Swagger/OpenAPI Documentation
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
     

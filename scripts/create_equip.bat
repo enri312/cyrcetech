@@ -1,0 +1,2 @@
+@echo off
+curl -X POST http://localhost:8080/api/equipment -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDRU5WIiwiaWF0IjoxNzY1MDgwMzcwLCJleHAiOjE3NjUxNjY3NzB9.FUv81Gv5w5asx6pQog8XKMCvXEPgW8X6-HjCEZwoxfU" -d "{\"customerId\":\"e6040cf8-91ef-42f3-b4cf-eb7eaa7b715e\",\"deviceType\":\"NOTEBOOK\",\"brand\":\"ManualBrand\",\"model\":\"Manual-Model\",\"serialNumber\":\"MANUAL-001\"}" > equip_res.json

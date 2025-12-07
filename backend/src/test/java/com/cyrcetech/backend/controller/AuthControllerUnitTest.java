@@ -33,7 +33,9 @@ class AuthControllerUnitTest {
         ResponseEntity<AuthResponse> result = authController.register(request);
 
         assertEquals(200, result.getStatusCode().value());
-        assertEquals("token123", result.getBody().getToken());
+        AuthResponse body = result.getBody();
+        assertNotNull(body);
+        assertEquals("token123", body.getToken());
         verify(authService).register(request);
     }
 
@@ -47,7 +49,9 @@ class AuthControllerUnitTest {
         ResponseEntity<AuthResponse> result = authController.login(request);
 
         assertEquals(200, result.getStatusCode().value());
-        assertEquals("token123", result.getBody().getToken());
+        AuthResponse body = result.getBody();
+        assertNotNull(body);
+        assertEquals("token123", body.getToken());
         verify(authService).login(request);
     }
 }

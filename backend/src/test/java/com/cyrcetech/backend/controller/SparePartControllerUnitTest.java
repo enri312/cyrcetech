@@ -34,8 +34,9 @@ class SparePartControllerUnitTest {
         ResponseEntity<List<SparePartResponse>> result = sparePartController.getAllSpareParts();
 
         assertEquals(200, result.getStatusCode().value());
-        assertNotNull(result.getBody());
-        assertEquals(1, result.getBody().size());
+        List<SparePartResponse> body = result.getBody();
+        assertNotNull(body);
+        assertEquals(1, body.size());
         verify(sparePartService).getAllSpareParts();
     }
 
@@ -49,7 +50,9 @@ class SparePartControllerUnitTest {
         ResponseEntity<SparePartResponse> result = sparePartController.createSparePart(request);
 
         assertEquals(201, result.getStatusCode().value());
-        assertEquals("new", result.getBody().getId());
+        SparePartResponse body = result.getBody();
+        assertNotNull(body);
+        assertEquals("new", body.getId());
         verify(sparePartService).createSparePart(request);
     }
 }

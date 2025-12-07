@@ -1,7 +1,7 @@
 package com.cyrcetech.backend.domain.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,8 +16,7 @@ import java.util.UUID;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 

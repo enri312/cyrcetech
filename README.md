@@ -54,7 +54,7 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 
 | Capa | Tecnología |
 |---|---|
-| Backend | Spring Boot 3.4.0, Spring Data JPA |
+| Backend | Spring Boot 3.4.0, Spring Data JPA, **CyrcePDF** |
 | Database | PostgreSQL 18.1 (Docker) |
 | Frontend Desktop | JavaFX 21, Gson |
 | Frontend Web | React 19 (Vite) |
@@ -87,16 +87,19 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 - [x] Sistema de autenticación JWT integrado
 - [x] Soporte multi-idioma (ES/EN)
 
-### Etapa 4: Seguridad ⏳ EN PROGRESO
-- [x] Autenticación JWT implementada (backend)
-- [x] Login/Register en frontend web
-- [ ] Autorización basada en roles
-- [ ] Autenticación en JavaFX Desktop
+### Etapa 4: Seguridad ✅ COMPLETADO
+- [x] `Autenticación JWT implementada (backend)`
+- [x] `Login/Register en frontend web`
+- [x] `Autorización basada en roles`
+- [x] `Autenticación en JavaFX Desktop`
+- [x] `Renderizado condicional de Menú`
 
-### Etapa 5: Integraciones 📋 PLANIFICADO
-- [ ] n8n para automatizaciones
-- [ ] Notificaciones WhatsApp/Email
-- [ ] Reportes PDF avanzados
+### Etapa 5: Integraciones ✅ COMPLETADO
+- [x] `Librería propia CyrcePDF implementada`
+- [x] `Dashboard Avanzado con JavaFX Charts`
+- [x] `Generación de Reportes PDF (CyrcePDF)`
+- [x] `Integración Local con n8n (Docker)`
+- [x] `Automatización de flujos de trabajo`/Email
 
 ---
 
@@ -107,7 +110,7 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 - **Endpoints REST**: 44
 - **API Services JavaFX**: 5
 - **API Services React**: 6 (Auth + 5 entidades)
-- **Controllers JavaFX**: 13
+- **Controllers JavaFX**: 14 (incluyendo Login)
 
 ---
 
@@ -119,7 +122,7 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 
 ---
 
-**Versión**: 2.1.0
-**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ⏳
+**Versión**: 2.2.0
+**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅
 **Última actualización**: 2025-12-07
 

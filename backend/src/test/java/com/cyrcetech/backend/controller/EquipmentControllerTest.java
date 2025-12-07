@@ -9,12 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -29,7 +30,7 @@ public class EquipmentControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private EquipmentService equipmentService;
 
     @Autowired
@@ -79,8 +80,8 @@ public class EquipmentControllerTest {
         when(equipmentService.createEquipment(any(CreateEquipmentRequest.class))).thenReturn(response);
 
         mockMvc.perform(post("/api/equipment")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .contentType(Objects.requireNonNull(MediaType.APPLICATION_JSON))
+                .content(Objects.requireNonNull(objectMapper.writeValueAsString(request))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.brand").value("Apple"));
     }
@@ -97,8 +98,8 @@ public class EquipmentControllerTest {
         when(equipmentService.updateEquipment(eq("1"), any(UpdateEquipmentRequest.class))).thenReturn(response);
 
         mockMvc.perform(put("/api/equipment/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .contentType(Objects.requireNonNull(MediaType.APPLICATION_JSON))
+                .content(Objects.requireNonNull(objectMapper.writeValueAsString(request))))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.brand").value("Apple Updated"));
     }

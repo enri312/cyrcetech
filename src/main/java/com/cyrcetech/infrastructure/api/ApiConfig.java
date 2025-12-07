@@ -30,4 +30,8 @@ public class ApiConfig {
     public static String getInvoicesUrl() {
         return BASE_URL + "/invoices";
     }
+
+    public static String getAuthUrl() {
+        return BASE_URL + "/auth";
+    }
 }

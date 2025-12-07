@@ -2,5 +2,6 @@ package com.cyrcetech.backend.domain.entity;
 
 public enum Role {
     ROLE_USER,
+    ROLE_TECHNICIAN,
     ROLE_ADMIN
 }

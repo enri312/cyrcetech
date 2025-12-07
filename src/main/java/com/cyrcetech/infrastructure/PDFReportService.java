@@ -6,17 +6,14 @@ import com.cyrcetech.entity.Ticket;
 import com.cyrcetech.infrastructure.api.service.CustomerApiService;
 import com.cyrcetech.infrastructure.api.service.SparePartApiService;
 import com.cyrcetech.infrastructure.api.service.TicketApiService;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import com.cyrcepdf.core.PdfBuilder;
+import com.cyrcepdf.core.StandardFont;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PDFReportService {
@@ -25,12 +22,8 @@ public class PDFReportService {
     private final TicketApiService ticketApiService = new TicketApiService();
     private final SparePartApiService sparePartApiService = new SparePartApiService();
 
-    private static final float MARGIN = 50;
-    private static final float TITLE_FONT_SIZE = 18;
-    private static final float HEADER_FONT_SIZE = 12;
-    private static final float BODY_FONT_SIZE = 10;
-    private static final float LINE_HEIGHT = 15;
-    private static final float TABLE_ROW_HEIGHT = 20;
+    private static final double MARGIN = 50;
+    private static final double ROW_HEIGHT = 20;
 
     public void generateOrdersReport(File outputFile) throws IOException {
         List<Ticket> tickets;
@@ -40,57 +33,50 @@ public class PDFReportService {
             throw new IOException("Error fetching tickets from API: " + e.getMessage(), e);
         }
 
-        try (PDDocument document = new PDDocument()) {
-            PDPage page = new PDPage(PDRectangle.A4);
-            document.addPage(page);
+        PdfBuilder builder = PdfBuilder.create().title("Reporte de Órdenes");
+        List<List<Ticket>> chunks = partition(tickets, 25);
 
-            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                float yPosition = page.getMediaBox().getHeight() - MARGIN;
+        if (chunks.isEmpty()) {
+            builder.addPage(page -> page.text("No hay órdenes.", MARGIN, 800));
+        }
 
-                // Title
-                yPosition = drawTitle(contentStream, "Reporte de Órdenes", yPosition);
-                yPosition -= LINE_HEIGHT;
+        for (int i = 0; i < chunks.size(); i++) {
+            List<Ticket> chunk = chunks.get(i);
+            boolean isFirst = (i == 0);
 
-                // Date
-                yPosition = drawText(contentStream, "Fecha: " +
-                        LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        MARGIN, yPosition, BODY_FONT_SIZE);
-                yPosition -= LINE_HEIGHT * 2;
+            builder.addPage(page -> {
+                double y = 800;
+                if (isFirst) {
+                    page.text("Reporte de Órdenes", MARGIN, y, StandardFont.HELVETICA_BOLD, 18);
+                    y -= 30;
+                    page.text("Fecha: " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), MARGIN, y);
+                    y -= 40;
+                }
 
-                // Table headers
-                String[] headers = { "Cliente", "Equipo", "Estado", "Fecha" };
-                float[] columnWidths = { 150, 150, 100, 100 };
-                yPosition = drawTableHeader(contentStream, headers, columnWidths, yPosition);
+                // Header
+                drawRow(page, new String[] { "Cliente", "Equipo", "Estado", "Fecha" },
+                        new double[] { 150, 150, 100, 100 }, y, true);
+                y -= ROW_HEIGHT;
 
-                // Table rows
-                for (Ticket ticket : tickets) {
-                    if (yPosition < MARGIN + TABLE_ROW_HEIGHT) {
-                        contentStream.close();
-                        page = new PDPage(PDRectangle.A4);
-                        document.addPage(page);
-                        PDPageContentStream newStream = new PDPageContentStream(document, page);
-                        yPosition = page.getMediaBox().getHeight() - MARGIN;
-                        yPosition = drawTableHeader(newStream, headers, columnWidths, yPosition);
-                        contentStream.close();
-                    }
-
+                for (Ticket ticket : chunk) {
                     String[] rowData = {
                             ticket.getCustomer().name(),
                             ticket.getEquipment().brand() + " " + ticket.getEquipment().model(),
                             ticket.getStatus().toString(),
                             ticket.getDateCreated().toString()
                     };
-                    yPosition = drawTableRow(contentStream, rowData, columnWidths, yPosition);
+                    drawRow(page, rowData, new double[] { 150, 150, 100, 100 }, y, false);
+                    y -= ROW_HEIGHT;
                 }
 
-                // Summary
-                yPosition -= LINE_HEIGHT * 2;
-                yPosition = drawText(contentStream, "Total de órdenes: " + tickets.size(),
-                        MARGIN, yPosition, HEADER_FONT_SIZE);
-            }
-
-            document.save(outputFile);
+                // Summary on last page if space
+                if (isFirst && chunks.size() == 1) { // Simple summary for now
+                    y -= 20;
+                    page.text("Total de órdenes: " + tickets.size(), MARGIN, y);
+                }
+            });
         }
+        builder.save(outputFile.getAbsolutePath());
     }
 
     public void generateCustomersReport(File outputFile) throws IOException {
@@ -101,216 +87,104 @@ public class PDFReportService {
             throw new IOException("Error fetching customers from API: " + e.getMessage(), e);
         }
 
-        try (PDDocument document = new PDDocument()) {
-            PDPage page = new PDPage(PDRectangle.A4);
-            document.addPage(page);
+        PdfBuilder builder = PdfBuilder.create().title("Listado de Clientes");
+        List<List<Customer>> chunks = partition(customers, 25);
 
-            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                float yPosition = page.getMediaBox().getHeight() - MARGIN;
+        for (int i = 0; i < chunks.size(); i++) {
+            List<Customer> chunk = chunks.get(i);
+            boolean isFirst = (i == 0);
 
-                // Title
-                yPosition = drawTitle(contentStream, "Listado de Clientes", yPosition);
-                yPosition -= LINE_HEIGHT;
-
-                // Date
-                yPosition = drawText(contentStream, "Fecha: " +
-                        LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        MARGIN, yPosition, BODY_FONT_SIZE);
-                yPosition -= LINE_HEIGHT * 2;
-
-                // Table headers
-                String[] headers = { "Nombre", "RUC / CI", "Teléfono", "Dirección" };
-                float[] columnWidths = { 150, 100, 100, 150 };
-                yPosition = drawTableHeader(contentStream, headers, columnWidths, yPosition);
-
-                // Table rows
-                for (Customer customer : customers) {
-                    if (yPosition < MARGIN + TABLE_ROW_HEIGHT) {
-                        contentStream.close();
-                        page = new PDPage(PDRectangle.A4);
-                        document.addPage(page);
-                        PDPageContentStream newStream = new PDPageContentStream(document, page);
-                        yPosition = page.getMediaBox().getHeight() - MARGIN;
-                        yPosition = drawTableHeader(newStream, headers, columnWidths, yPosition);
-                        contentStream.close();
-                    }
-
-                    String[] rowData = {
-                            customer.name(),
-                            customer.taxId(),
-                            customer.phone(),
-                            customer.address()
-                    };
-                    yPosition = drawTableRow(contentStream, rowData, columnWidths, yPosition);
+            builder.addPage(page -> {
+                double y = 800;
+                if (isFirst) {
+                    page.text("Listado de Clientes", MARGIN, y, StandardFont.HELVETICA_BOLD, 18);
+                    y -= 30;
+                    page.text("Fecha: " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), MARGIN, y);
+                    y -= 40;
                 }
 
-                // Summary
-                yPosition -= LINE_HEIGHT * 2;
-                yPosition = drawText(contentStream, "Total de clientes: " + customers.size(),
-                        MARGIN, yPosition, HEADER_FONT_SIZE);
-            }
+                drawRow(page, new String[] { "Nombre", "RUC / CI", "Teléfono", "Dirección" },
+                        new double[] { 150, 100, 100, 150 }, y, true);
+                y -= ROW_HEIGHT;
 
-            document.save(outputFile);
+                for (Customer c : chunk) {
+                    drawRow(page, new String[] { c.name(), c.taxId(), c.phone(), c.address() },
+                            new double[] { 150, 100, 100, 150 }, y, false);
+                    y -= ROW_HEIGHT;
+                }
+
+                if (isFirst && chunks.size() == 1) {
+                    y -= 20;
+                    page.text("Total de clientes: " + customers.size(), MARGIN, y);
+                }
+            });
         }
+        builder.save(outputFile.getAbsolutePath());
     }
 
     public void generateInventoryReport(File outputFile) throws IOException {
-        List<SparePart> spareParts;
+        List<SparePart> parts;
         try {
-            spareParts = sparePartApiService.getAllSpareParts();
+            parts = sparePartApiService.getAllSpareParts();
         } catch (Exception e) {
-            throw new IOException("Error fetching spare parts from API: " + e.getMessage(), e);
+            throw new IOException("Error fetching parts: " + e.getMessage(), e);
         }
 
-        try (PDDocument document = new PDDocument()) {
-            PDPage page = new PDPage(PDRectangle.A4);
-            document.addPage(page);
+        PdfBuilder builder = PdfBuilder.create().title("Reporte de Inventario");
+        List<List<SparePart>> chunks = partition(parts, 25);
 
-            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                float yPosition = page.getMediaBox().getHeight() - MARGIN;
+        for (int i = 0; i < chunks.size(); i++) {
+            List<SparePart> chunk = chunks.get(i);
+            boolean isFirst = (i == 0);
 
-                // Title
-                yPosition = drawTitle(contentStream, "Reporte de Inventario", yPosition);
-                yPosition -= LINE_HEIGHT;
-
-                // Date
-                yPosition = drawText(contentStream, "Fecha: " +
-                        LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        MARGIN, yPosition, BODY_FONT_SIZE);
-                yPosition -= LINE_HEIGHT * 2;
-
-                // Table headers
-                String[] headers = { "Nombre", "Precio", "Stock", "Proveedor" };
-                float[] columnWidths = { 150, 100, 80, 170 };
-                yPosition = drawTableHeader(contentStream, headers, columnWidths, yPosition);
-
-                // Table rows
-                double totalValue = 0;
-                int lowStockCount = 0;
-
-                for (SparePart part : spareParts) {
-                    if (yPosition < MARGIN + TABLE_ROW_HEIGHT) {
-                        contentStream.close();
-                        page = new PDPage(PDRectangle.A4);
-                        document.addPage(page);
-                        PDPageContentStream newStream = new PDPageContentStream(document, page);
-                        yPosition = page.getMediaBox().getHeight() - MARGIN;
-                        yPosition = drawTableHeader(newStream, headers, columnWidths, yPosition);
-                        contentStream.close();
-                    }
-
-                    if (part.isLowStock()) {
-                        lowStockCount++;
-                    }
-
-                    String[] rowData = {
-                            part.name(),
-                            "₲" + String.format("%.2f", part.price()),
-                            String.valueOf(part.stock()),
-                            part.provider()
-                    };
-                    yPosition = drawTableRow(contentStream, rowData, columnWidths, yPosition);
-
-                    totalValue += part.price() * part.stock();
+            builder.addPage(page -> {
+                double y = 800;
+                if (isFirst) {
+                    page.text("Reporte de Inventario", MARGIN, y, StandardFont.HELVETICA_BOLD, 18);
+                    y -= 70;
                 }
 
-                // Summary
-                yPosition -= LINE_HEIGHT * 2;
-                yPosition = drawText(contentStream, "Total de repuestos: " + spareParts.size(),
-                        MARGIN, yPosition, HEADER_FONT_SIZE);
-                yPosition -= LINE_HEIGHT;
-                yPosition = drawText(contentStream, "Valor total del inventario: ₲" +
-                        String.format("%.2f", totalValue), MARGIN, yPosition, HEADER_FONT_SIZE);
-                yPosition -= LINE_HEIGHT;
-                yPosition = drawText(contentStream, "Repuestos con stock bajo: " + lowStockCount,
-                        MARGIN, yPosition, HEADER_FONT_SIZE);
-            }
+                drawRow(page, new String[] { "Nombre", "Precio", "Stock", "Proveedor" },
+                        new double[] { 150, 100, 80, 170 }, y, true);
+                y -= ROW_HEIGHT;
 
-            document.save(outputFile);
+                for (SparePart p : chunk) {
+                    drawRow(page, new String[] { p.name(), "G" + p.price(), String.valueOf(p.stock()), p.provider() },
+                            new double[] { 150, 100, 80, 170 }, y, false);
+                    y -= ROW_HEIGHT;
+                }
+            });
         }
+        builder.save(outputFile.getAbsolutePath());
     }
 
-    private float drawTitle(PDPageContentStream contentStream, String title, float yPosition)
-            throws IOException {
-        contentStream.beginText();
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), TITLE_FONT_SIZE);
-        contentStream.newLineAtOffset(MARGIN, yPosition);
-        contentStream.showText(title);
-        contentStream.endText();
-        return yPosition - LINE_HEIGHT * 2;
-    }
-
-    private float drawText(PDPageContentStream contentStream, String text, float x, float y,
-            float fontSize) throws IOException {
-        contentStream.beginText();
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), fontSize);
-        contentStream.newLineAtOffset(x, y);
-        contentStream.showText(text);
-        contentStream.endText();
-        return y - LINE_HEIGHT;
-    }
-
-    private float drawTableHeader(PDPageContentStream contentStream, String[] headers,
-            float[] columnWidths, float yPosition) throws IOException {
-        float xPosition = MARGIN;
-
-        // Draw header background
-        contentStream.setNonStrokingColor(0.2f, 0.3f, 0.4f);
-        contentStream.addRect(MARGIN, yPosition - TABLE_ROW_HEIGHT + 5,
-                getTotalWidth(columnWidths), TABLE_ROW_HEIGHT);
-        contentStream.fill();
-
-        // Draw header text
-        contentStream.beginText();
-        contentStream.setNonStrokingColor(1f, 1f, 1f);
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), HEADER_FONT_SIZE);
-
-        for (int i = 0; i < headers.length; i++) {
-            contentStream.newLineAtOffset(xPosition, yPosition - TABLE_ROW_HEIGHT + 10);
-            contentStream.showText(headers[i]);
-            contentStream.newLineAtOffset(-xPosition, -(yPosition - TABLE_ROW_HEIGHT + 10));
-            xPosition += columnWidths[i];
-        }
-        contentStream.endText();
-
-        contentStream.setNonStrokingColor(0f, 0f, 0f);
-        return yPosition - TABLE_ROW_HEIGHT;
-    }
-
-    private float drawTableRow(PDPageContentStream contentStream, String[] rowData,
-            float[] columnWidths, float yPosition) throws IOException {
-        float xPosition = MARGIN;
-
-        contentStream.beginText();
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), BODY_FONT_SIZE);
-
-        for (int i = 0; i < rowData.length; i++) {
-            contentStream.newLineAtOffset(xPosition, yPosition - TABLE_ROW_HEIGHT + 10);
-            String text = rowData[i] != null ? rowData[i] : "";
-            // Truncate text if too long
-            if (text.length() > 30) {
+    private void drawRow(com.cyrcepdf.core.PdfBuilder.Page page, String[] data, double[] widths, double y,
+            boolean isHeader) {
+        double x = MARGIN;
+        for (int i = 0; i < data.length; i++) {
+            String text = data[i] != null ? data[i] : "";
+            if (text.length() > 30)
                 text = text.substring(0, 27) + "...";
+
+            if (isHeader) {
+                page.text(text, x, y, StandardFont.HELVETICA_BOLD, 12);
+            } else {
+                page.text(text, x, y, StandardFont.HELVETICA, 10);
             }
-            contentStream.showText(text);
-            contentStream.newLineAtOffset(-xPosition, -(yPosition - TABLE_ROW_HEIGHT + 10));
-            xPosition += columnWidths[i];
+            x += widths[i];
         }
-        contentStream.endText();
-
-        // Draw row separator
-        contentStream.setStrokingColor(0.9f, 0.9f, 0.9f);
-        contentStream.moveTo(MARGIN, yPosition - TABLE_ROW_HEIGHT);
-        contentStream.lineTo(MARGIN + getTotalWidth(columnWidths), yPosition - TABLE_ROW_HEIGHT);
-        contentStream.stroke();
-
-        return yPosition - TABLE_ROW_HEIGHT;
+        // Line separator
+        double totalWidth = 0;
+        for (double w : widths)
+            totalWidth += w;
+        page.line(MARGIN, y - 5, MARGIN + totalWidth, y - 5);
     }
 
-    private float getTotalWidth(float[] columnWidths) {
-        float total = 0;
-        for (float width : columnWidths) {
-            total += width;
+    private <T> List<List<T>> partition(List<T> list, int size) {
+        List<List<T>> parts = new ArrayList<>();
+        for (int i = 0; i < list.size(); i += size) {
+            parts.add(list.subList(i, Math.min(i + size, list.size())));
         }
-        return total;
+        return parts;
     }
 }

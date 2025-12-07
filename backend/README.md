@@ -10,15 +10,17 @@ Backend API construido con Spring Boot que expone endpoints REST para gestionar 
 
 - **Spring Boot 3.4.0** - Framework principal
 - **Spring Data JPA** - ORM y persistencia
+- **Spring Security + JWT** - Seguridad
+- **CyrcePDF 1.0.0** - Generación de PDFs (Librería propia)
 - **PostgreSQL 18.1** - Base de datos
 - **Swagger/OpenAPI 2.3.0** - Documentación de API
-- **Java 21** - Lenguaje
+- **Java 25** - Lenguaje
 
 ## 🚀 Inicio Rápido
 
 ### Requisitos Previos
 
-- Java JDK 21 o superior
+- Java JDK 25 o superior
 - PostgreSQL corriendo en Docker (puerto 5432)
 - Gradle 9.2.1
 
@@ -47,6 +49,13 @@ El servidor se iniciará en `http://localhost:8080`
 - **Swagger UI**: http://localhost:8080/swagger-ui/index.html (en desarrollo)
 
 ## 📡 Endpoints Disponibles
+
+### 🔐 Auth API
+
+```
+POST   /api/auth/login             - Iniciar sesión (Obtener Token)
+POST   /api/auth/register          - Registrar usuario (Admin)
+```
 
 ### 👥 Customers API
 
@@ -152,11 +161,15 @@ backend/
 ├── src/main/java/com/cyrcetech/backend/
 │   ├── CyrcetechBackendApplication.java
 │   ├── config/
-│   │   └── CorsConfig.java
+│   │   ├── ApplicationConfig.java
+│   │   ├── CorsConfig.java
+│   │   ├── OpenApiConfig.java
+│   │   └── SecurityConfig.java
 │   ├── controller/
+│   │   ├── AuthController.java
 │   │   ├── CustomerController.java
 │   │   ├── EquipmentController.java
-│   │   └── TicketController.java
+│   │   ├── TicketController.java
 │   ├── domain/entity/
 │   │   ├── Customer.java
 │   │   ├── Equipment.java
@@ -247,16 +260,21 @@ Ver guías de testing:
 - [x] Ticket API (CRUD completo + filtros por customer/equipment/status)
 - [x] SparePart API (CRUD completo + control de stock)
 - [x] Invoice API (Facturación completa)
+- [x] Autenticación JWT (Backend implementado)
 - [x] Documentación con Swagger
 - [x] Manejo global de excepciones
 - [x] Configuración CORS
 - [x] Tests unitarios y de integración
+- [x] Configuración CORS
+- [x] Tests unitarios y de integración
+- [x] Seguridad basada en Roles (Ajuste fino)
+- [x] Generación de PDFs (Tickets y Facturas)
+- [x] Integración Webhooks (n8n)
 
 ### En Progreso ⏳
 - [ ] Dockerización completa (opcional)
 
 ### Planificado 📋
-- [ ] Autenticación JWT
 - [ ] CI/CD Pipeline
 
 ## 📊 Progreso de Implementación
@@ -277,4 +295,4 @@ Proyecto privado - Todos los derechos reservados
 **Versión**: 1.0.0  
 **Puerto**: 8080  
 **Base de Datos**: PostgreSQL 18.1 (Docker puerto 5432)  
-**Java**: 21
+**Java**: 25

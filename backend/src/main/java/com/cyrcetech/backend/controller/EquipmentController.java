@@ -8,6 +8,7 @@ import com.cyrcetech.backend.service.EquipmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,36 +30,42 @@ public class EquipmentController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
     @Operation(summary = "Get all equipment", description = "Retrieve a list of all equipment")
     public ResponseEntity<List<EquipmentResponse>> getAllEquipment() {
         return ResponseEntity.ok(equipmentService.getAllEquipment());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
     @Operation(summary = "Get equipment by ID", description = "Retrieve equipment by its ID")
     public ResponseEntity<EquipmentResponse> getEquipmentById(@PathVariable String id) {
         return ResponseEntity.ok(equipmentService.getEquipmentById(id));
     }
 
     @GetMapping("/customer/{customerId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
     @Operation(summary = "Get equipment by customer", description = "Retrieve all equipment for a specific customer")
     public ResponseEntity<List<EquipmentResponse>> getEquipmentByCustomerId(@PathVariable String customerId) {
         return ResponseEntity.ok(equipmentService.getEquipmentByCustomerId(customerId));
     }
 
     @GetMapping("/type/{deviceType}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
     @Operation(summary = "Get equipment by device type", description = "Retrieve equipment by device type")
     public ResponseEntity<List<EquipmentResponse>> getEquipmentByDeviceType(@PathVariable DeviceType deviceType) {
         return ResponseEntity.ok(equipmentService.getEquipmentByDeviceType(deviceType));
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
     @Operation(summary = "Create new equipment", description = "Create a new equipment entry")
     public ResponseEntity<EquipmentResponse> createEquipment(@Valid @RequestBody CreateEquipmentRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(equipmentService.createEquipment(request));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
     @Operation(summary = "Update equipment", description = "Update an existing equipment entry")
     public ResponseEntity<EquipmentResponse> updateEquipment(
             @PathVariable String id,
@@ -67,6 +74,7 @@ public class EquipmentController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete equipment", description = "Delete an equipment entry")
     public ResponseEntity<Void> deleteEquipment(@PathVariable String id) {
         equipmentService.deleteEquipment(id);
@@ -74,6 +82,7 @@ public class EquipmentController {
     }
 
     @GetMapping("/search")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
     @Operation(summary = "Search equipment", description = "Search equipment by brand, model, or serial number")
     public ResponseEntity<List<EquipmentResponse>> searchEquipment(@RequestParam String q) {
         return ResponseEntity.ok(equipmentService.searchEquipment(q));

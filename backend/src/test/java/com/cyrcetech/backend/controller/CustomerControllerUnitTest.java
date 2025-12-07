@@ -34,8 +34,9 @@ class CustomerControllerUnitTest {
         ResponseEntity<List<CustomerResponse>> result = customerController.getAllCustomers();
 
         assertEquals(200, result.getStatusCode().value());
-        assertNotNull(result.getBody());
-        assertEquals(1, result.getBody().size());
+        List<CustomerResponse> body = result.getBody();
+        assertNotNull(body);
+        assertEquals(1, body.size());
         verify(customerService).getAllCustomers();
     }
 
@@ -49,7 +50,9 @@ class CustomerControllerUnitTest {
         ResponseEntity<CustomerResponse> result = customerController.createCustomer(request);
 
         assertEquals(201, result.getStatusCode().value());
-        assertEquals("new", result.getBody().getId());
+        CustomerResponse body = result.getBody();
+        assertNotNull(body);
+        assertEquals("new", body.getId());
         verify(customerService).createCustomer(request);
     }
 }

@@ -204,6 +204,7 @@ public class InvoiceService {
         InvoiceResponse response = new InvoiceResponse();
         response.setId(invoice.getId());
         response.setTicketId(invoice.getTicket().getId());
+        response.setCustomerName(invoice.getTicket().getCustomer().getName());
         response.setInvoiceNumber(invoice.getInvoiceNumber());
         response.setIssueDate(invoice.getIssueDate().format(DATE_FORMATTER));
         response.setDueDate(invoice.getDueDate() != null ? invoice.getDueDate().format(DATE_FORMATTER) : null);
