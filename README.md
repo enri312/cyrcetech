@@ -87,16 +87,19 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 - [x] Sistema de autenticación JWT integrado
 - [x] Soporte multi-idioma (ES/EN)
 
-### Etapa 4: Seguridad ⏳ EN PROGRESO
-- [x] Autenticación JWT implementada (backend)
-- [x] Login/Register en frontend web
-- [ ] Autorización basada en roles
-- [ ] Autenticación en JavaFX Desktop
+### Etapa 4: Seguridad ✅ COMPLETADO
+- [x] `Autenticación JWT implementada (backend)`
+- [x] `Login/Register en frontend web`
+- [x] `Autorización basada en roles`
+- [x] `Autenticación en JavaFX Desktop`
+- [x] `Renderizado condicional de Menú`
 
-### Etapa 5: Integraciones 📋 PLANIFICADO
-- [ ] n8n para automatizaciones
-- [ ] Notificaciones WhatsApp/Email
-- [ ] Reportes PDF avanzados
+### Etapa 5: Integraciones ⏳ EN PROGRESO
+- [x] `Librería propia CyrcePDF implementada`
+- [ ] `Dashboard Avanzado con JavaFX Charts`
+- [ ] `Generación de Reportes PDF (OpenPDF)`
+- [ ] `Integración Local con n8n (Docker)`
+- [ ] `Automatización de flujos de trabajo`/Email
 
 ---
 
