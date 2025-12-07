@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +53,7 @@ public class InvoiceService {
      */
     public InvoiceResponse getInvoiceById(String id) {
         log.debug("Fetching invoice with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found with id: " + id));
         return toResponse(invoice);
@@ -124,7 +126,8 @@ public class InvoiceService {
         log.debug("Creating new invoice for ticket: {}", request.getTicketId());
 
         // Validate ticket exists
-        Ticket ticket = ticketRepository.findById(request.getTicketId())
+        String ticketId = Objects.requireNonNull(request.getTicketId(), "Ticket ID cannot be null");
+        Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket not found with id: " + request.getTicketId()));
 
         Invoice invoice = new Invoice();
@@ -148,6 +151,7 @@ public class InvoiceService {
      */
     public InvoiceResponse updateInvoice(String id, UpdateInvoiceRequest request) {
         log.debug("Updating invoice with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
 
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found with id: " + id));
@@ -177,7 +181,7 @@ public class InvoiceService {
             invoice.setNotes(request.getNotes());
         }
 
-        Invoice updated = invoiceRepository.save(invoice);
+        Invoice updated = invoiceRepository.save(Objects.requireNonNull(invoice));
         log.info("Invoice updated: {}", id);
 
         return toResponse(updated);
@@ -188,6 +192,7 @@ public class InvoiceService {
      */
     public void deleteInvoice(String id) {
         log.debug("Deleting invoice with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
 
         if (!invoiceRepository.existsById(id)) {
             throw new ResourceNotFoundException("Invoice not found with id: " + id);

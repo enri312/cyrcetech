@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -58,6 +59,7 @@ public class TicketService {
      */
     public TicketResponse getTicketById(String id) {
         log.debug("Fetching ticket with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket not found with id: " + id));
         return toResponse(ticket);
@@ -110,12 +112,14 @@ public class TicketService {
         log.debug("Creating new ticket for customer: {}", request.getCustomerId());
 
         // Validate customer exists
-        Customer customer = customerRepository.findById(request.getCustomerId())
+        String customerId = Objects.requireNonNull(request.getCustomerId(), "Customer ID cannot be null");
+        Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Customer not found with id: " + request.getCustomerId()));
 
         // Validate equipment exists
-        Equipment equipment = equipmentRepository.findById(request.getEquipmentId())
+        String equipmentId = Objects.requireNonNull(request.getEquipmentId(), "Equipment ID cannot be null");
+        Equipment equipment = equipmentRepository.findById(equipmentId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Equipment not found with id: " + request.getEquipmentId()));
 
@@ -146,6 +150,7 @@ public class TicketService {
      */
     public TicketResponse updateTicket(String id, UpdateTicketRequest request) {
         log.debug("Updating ticket with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
 
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket not found with id: " + id));
@@ -169,7 +174,7 @@ public class TicketService {
             ticket.setAiDiagnosis(request.getAiDiagnosis());
         }
 
-        Ticket updated = ticketRepository.save(ticket);
+        Ticket updated = ticketRepository.save(Objects.requireNonNull(ticket));
         log.info("Ticket updated: {}", id);
 
         return toResponse(updated);
@@ -180,6 +185,7 @@ public class TicketService {
      */
     public void deleteTicket(String id) {
         log.debug("Deleting ticket with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
 
         if (!ticketRepository.existsById(id)) {
             throw new ResourceNotFoundException("Ticket not found with id: " + id);

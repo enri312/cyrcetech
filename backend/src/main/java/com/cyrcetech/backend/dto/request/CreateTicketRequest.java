@@ -1,8 +1,7 @@
 package com.cyrcetech.backend.dto.request;
 
-import com.cyrcetech.backend.domain.entity.TicketStatus;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import jakarta.validation.constraints.PositiveOrZero;
 
 /**

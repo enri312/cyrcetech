@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +45,7 @@ public class SparePartService {
      */
     public SparePartResponse getSparePartById(String id) {
         log.debug("Fetching spare part with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
         SparePart sparePart = sparePartRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Spare part not found with id: " + id));
         return toResponse(sparePart);
@@ -102,6 +104,7 @@ public class SparePartService {
      */
     public SparePartResponse updateSparePart(String id, UpdateSparePartRequest request) {
         log.debug("Updating spare part with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
 
         SparePart sparePart = sparePartRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Spare part not found with id: " + id));
@@ -119,7 +122,7 @@ public class SparePartService {
             sparePart.setProvider(request.getProvider());
         }
 
-        SparePart updated = sparePartRepository.save(sparePart);
+        SparePart updated = sparePartRepository.save(Objects.requireNonNull(sparePart));
         log.info("Spare part updated: {}", id);
 
         return toResponse(updated);
@@ -130,6 +133,7 @@ public class SparePartService {
      */
     public void deleteSparePart(String id) {
         log.debug("Deleting spare part with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
 
         if (!sparePartRepository.existsById(id)) {
             throw new ResourceNotFoundException("Spare part not found with id: " + id);

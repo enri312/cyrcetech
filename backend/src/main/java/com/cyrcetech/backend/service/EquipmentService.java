@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -49,6 +50,7 @@ public class EquipmentService {
      */
     public EquipmentResponse getEquipmentById(String id) {
         log.debug("Fetching equipment with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
         Equipment equipment = equipmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Equipment not found with id: " + id));
         return toResponse(equipment);
@@ -81,7 +83,8 @@ public class EquipmentService {
         log.debug("Creating new equipment: {} {}", request.getBrand(), request.getModel());
 
         // Validate customer exists
-        Customer customer = customerRepository.findById(request.getCustomerId())
+        String customerId = Objects.requireNonNull(request.getCustomerId(), "Customer ID cannot be null");
+        Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Customer not found with id: " + request.getCustomerId()));
 
@@ -104,6 +107,7 @@ public class EquipmentService {
      */
     public EquipmentResponse updateEquipment(String id, UpdateEquipmentRequest request) {
         log.debug("Updating equipment with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
 
         Equipment equipment = equipmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Equipment not found with id: " + id));
@@ -124,7 +128,7 @@ public class EquipmentService {
             equipment.setPhysicalCondition(request.getPhysicalCondition());
         }
 
-        Equipment updated = equipmentRepository.save(equipment);
+        Equipment updated = equipmentRepository.save(Objects.requireNonNull(equipment));
         log.info("Equipment updated: {}", id);
 
         return toResponse(updated);
@@ -135,6 +139,7 @@ public class EquipmentService {
      */
     public void deleteEquipment(String id) {
         log.debug("Deleting equipment with id: {}", id);
+        Objects.requireNonNull(id, "Id cannot be null");
 
         if (!equipmentRepository.existsById(id)) {
             throw new ResourceNotFoundException("Equipment not found with id: " + id);
