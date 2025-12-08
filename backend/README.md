@@ -12,6 +12,7 @@ Backend API construido con Spring Boot que expone endpoints REST para gestionar 
 - **Spring Data JPA** - ORM y persistencia
 - **Spring Security + JWT** - Seguridad
 - **CyrcePDF 1.0.0** - Generación de PDFs (Librería propia)
+- **Apache POI 5.2.5** - Exportación a Excel
 - **PostgreSQL 18.1** - Base de datos
 - **Swagger/OpenAPI 2.3.0** - Documentación de API
 - **Java 25** - Lenguaje
@@ -66,6 +67,7 @@ POST   /api/customers              - Crear nuevo cliente
 PUT    /api/customers/{id}         - Actualizar cliente
 DELETE /api/customers/{id}         - Eliminar cliente
 GET    /api/customers/search?q=... - Buscar clientes
+GET    /api/customers/export/pdf   - Exportar a PDF con antigüedad
 ```
 
 **Ejemplo de Request (Crear Cliente)**:
@@ -136,6 +138,7 @@ POST   /api/tickets                        - Crear nuevo ticket
 PUT    /api/tickets/{id}                   - Actualizar ticket
 DELETE /api/tickets/{id}                   - Eliminar ticket
 GET    /api/tickets/search?q=...           - Buscar tickets
+GET    /api/tickets/export/excel           - Exportar a Excel
 ```
 
 **Ticket Status**: PENDING, DIAGNOSING, IN_PROGRESS, WAITING_PARTS, READY, DELIVERED, CANCELLED
@@ -152,6 +155,16 @@ Content-Type: application/json
   "observations": "Cliente reporta que dejó de funcionar ayer",
   "estimatedCost": 15000.00
 }
+```
+
+## 📋 Audit API (Solo Admin)
+
+```
+GET    /api/audit                    - Listar todos los logs
+GET    /api/audit/user/{userId}      - Logs de usuario específico
+GET    /api/audit/entity/{type}      - Logs por tipo de entidad
+GET    /api/audit/role/{role}        - Logs por rol de usuario
+GET    /api/audit/today              - Logs del día
 ```
 
 ## 🗂️ Estructura del Proyecto
@@ -270,6 +283,10 @@ Ver guías de testing:
 - [x] Seguridad basada en Roles (Ajuste fino)
 - [x] Generación de PDFs (Tickets y Facturas)
 - [x] Integración Webhooks (n8n)
+- [x] Categoría de Clientes (Nuevo, Regular, VIP, Especial)
+- [x] Sistema de Auditoría completo
+- [x] Exportación a Excel (Tickets)
+- [x] Exportación a PDF con antigüedad (Clientes)
 
 ### En Progreso ⏳
 - [ ] Dockerización completa (opcional)
@@ -279,12 +296,13 @@ Ver guías de testing:
 
 ## 📊 Progreso de Implementación
 
-**Entidades Completadas**: 5/5 (100%)
-- ✅ Customer
+**Entidades Completadas**: 6/6 (100%)
+- ✅ Customer (con categoría y antigüedad)
 - ✅ Equipment
 - ✅ Ticket
 - ✅ SparePart
 - ✅ Invoice
+- ✅ AuditLog (NEW)
 
 ## 📄 Licencia
 
@@ -292,7 +310,7 @@ Proyecto privado - Todos los derechos reservados
 
 ---
 
-**Versión**: 1.0.0  
+**Versión**: 2.3.0  
 **Puerto**: 8080  
 **Base de Datos**: PostgreSQL 18.1 (Docker puerto 5432)  
 **Java**: 25

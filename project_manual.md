@@ -1,4 +1,4 @@
-# Manual del Proyecto Cyrcetech v2.2.0
+# Manual del Proyecto Cyrcetech v2.3.0
 
 ## 1. Introducción
 Cyrcetech es un sistema integral de **Gestión de Taller de Reparación (SaaS / On-Premise)** diseñado para administrar ordenes de servicio, clientes, inventario y facturación. El sistema utiliza una arquitectura híbrida con un Backend centralizado (Spring Boot) y clientes Frontend (JavaFX Desktop y React Web).
@@ -8,7 +8,7 @@ Cyrcetech es un sistema integral de **Gestión de Taller de Reparación (SaaS / 
 - **Frontend Desktop**: JavaFX 21, Modular, Estilos CSS modernos.
 - **Frontend Web**: React (Vite).
 - **Base de Datos**: PostgreSQL 18.
-- **Integraciones**: CyrcePDF (Generación de Reportes), n8n (Automatización), Docker.
+- **Integraciones**: CyrcePDF (Generación de Reportes), Apache POI (Excel), n8n (Automatización), Docker.
 
 ---
 
@@ -54,6 +54,8 @@ erDiagram
         string email
         string phone
         string tax_id
+        date registration_date
+        string category "NUEVO, REGULAR, VIP, ESPECIAL"
     }
 
     EQUIPMENT {
@@ -80,6 +82,15 @@ erDiagram
         double total_amount
         string payment_status "PAID, PENDING"
         string payment_method "CASH, CARD"
+    }
+
+    AUDIT_LOG {
+        string id PK
+        string user_id
+        string username
+        string action "LIST, VIEW, CREATE, UPDATE, DELETE"
+        string entity_type
+        timestamp timestamp
     }
 ```
 
@@ -121,6 +132,8 @@ classDiagram
 
     TicketService --> Ticket : manages
     TicketService --> WebhookService : notifies
+    CustomerService --> CustomerPdfExportService : exports PDF
+    TicketService --> ExcelExportService : exports Excel
     Ticket "*" --> "1" Customer : belongs to
     Ticket "*" --> "1" Equipment : belongs to
 ```
@@ -197,6 +210,27 @@ sequenceDiagram
 ### Integración n8n
 - Acceder a: `http://localhost:5678`
 - Configurar el Workflow para escuchar `POST /webhook/ticket-created`.
+
+---
+
+## 7. Nuevas Funcionalidades v2.3.0
+
+### Categoría de Clientes
+| Categoría | Rango | Descripción |
+|---|---|---|
+| NUEVO | 0-30 días | Cliente reciente |
+| REGULAR | 1-6 meses | Cliente establecido |
+| VIP | 6-12 meses | Cliente fiel |
+| ESPECIAL | 1+ año | Cliente preferencial |
+
+### Sistema de Auditoría
+- Registro automático de todas las acciones (LIST, VIEW, CREATE, UPDATE, DELETE)
+- Filtros por usuario, rol, entidad y fecha
+- Solo accesible por usuarios ADMIN
+
+### Exportaciones
+- **Excel (Tickets)**: `GET /api/tickets/export/excel`
+- **PDF (Clientes)**: `GET /api/customers/export/pdf` (incluye antigüedad y categoría)
 
 ---
 *Generado automáticamente por Antigravity AI - 2025*

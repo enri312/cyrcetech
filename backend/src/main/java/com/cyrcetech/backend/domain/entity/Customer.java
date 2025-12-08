@@ -3,6 +3,9 @@ package com.cyrcetech.backend.domain.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 /**
  * Customer entity representing a client in the system.
  * Migrated from Java record to JPA entity for database persistence.
@@ -26,10 +29,20 @@ public class Customer {
 
     private String phone;
 
+    @Column(name = "registration_date", nullable = false)
+    private LocalDate registrationDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false)
+    private CustomerCategory category;
+
     public Customer() {
+        this.registrationDate = LocalDate.now();
+        this.category = CustomerCategory.NUEVO;
     }
 
     public Customer(String id, String name, String taxId, String address, String phone) {
+        this();
         this.id = id;
         this.name = name;
         this.taxId = taxId;
@@ -77,6 +90,64 @@ public class Customer {
         this.phone = phone;
     }
 
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public CustomerCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(CustomerCategory category) {
+        this.category = category;
+    }
+
+    /**
+     * Calculates the seniority (days since registration).
+     *
+     * @return Number of days since registration
+     */
+    public long getSeniorityDays() {
+        if (registrationDate == null) {
+            return 0;
+        }
+        return ChronoUnit.DAYS.between(registrationDate, LocalDate.now());
+    }
+
+    /**
+     * Returns formatted seniority string (e.g., "3 meses", "1 año 2 meses").
+     *
+     * @return Human-readable seniority string
+     */
+    public String getFormattedSeniority() {
+        long days = getSeniorityDays();
+        if (days < 30) {
+            return days + " días";
+        }
+        long months = days / 30;
+        if (months < 12) {
+            return months + (months == 1 ? " mes" : " meses");
+        }
+        long years = months / 12;
+        long remainingMonths = months % 12;
+        if (remainingMonths == 0) {
+            return years + (years == 1 ? " año" : " años");
+        }
+        return years + (years == 1 ? " año " : " años ") + remainingMonths + (remainingMonths == 1 ? " mes" : " meses");
+    }
+
+    /**
+     * Updates the category based on current seniority.
+     * Should be called periodically or before retrieving category.
+     */
+    public void updateCategory() {
+        this.category = CustomerCategory.fromDays(getSeniorityDays());
+    }
+
     /**
      * Returns formatted phone number for display
      */
@@ -96,13 +167,27 @@ public class Customer {
     }
 
     /**
-     * Normalizes phone number before persisting
+     * Normalizes phone number and sets registration date before persisting
      */
     @PrePersist
-    @PreUpdate
-    private void normalizePhone() {
+    private void prePersist() {
         if (phone != null) {
             phone = phone.replaceAll("[\\s-]", "");
         }
+        if (registrationDate == null) {
+            registrationDate = LocalDate.now();
+        }
+        if (category == null) {
+            category = CustomerCategory.NUEVO;
+        }
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        if (phone != null) {
+            phone = phone.replaceAll("[\\s-]", "");
+        }
+        // Update category based on seniority
+        updateCategory();
     }
 }

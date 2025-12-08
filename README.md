@@ -38,15 +38,17 @@ El servidor estará en `http://localhost:8080`
 .\gradlew.bat run --console=plain
 ```
 
-## 📡 API Endpoints (44 Total)
+## 📡 API Endpoints (50+ Total)
 
 | Entidad | Endpoints | Ruta Base |
 |---|---|---|
-| Customers | 6 | `/api/customers` |
+| Auth | 2 | `/api/auth` |
+| Customers | 7 | `/api/customers` |
 | Equipment | 8 | `/api/equipment` |
-| Tickets | 10 | `/api/tickets` |
+| Tickets | 11 | `/api/tickets` |
 | Spare Parts | 9 | `/api/spare-parts` |
 | Invoices | 11 | `/api/invoices` |
+| Audit Logs | 5 | `/api/audit` |
 
 Documentación completa: `http://localhost:8080/swagger-ui.html`
 
@@ -101,16 +103,31 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 - [x] `Integración Local con n8n (Docker)`
 - [x] `Automatización de flujos de trabajo`/Email
 
+### Etapa 6: Orden de Modificación ✅ COMPLETADO (v2.3.0)
+- [x] `Categoría de Clientes` (Nuevo, Regular, VIP, Especial)
+- [x] `Sistema de Auditoría Completo` (USER, TECHNICIAN, ADMIN)
+- [x] `Exportación a Excel` (Tickets con todos los estados)
+- [x] `Exportación a PDF con Antigüedad` (Clientes)
+
 ---
 
 ## 📊 Estadísticas
 
-- **Entidades JPA**: 5
-- **Enums**: 4 (DeviceType, TicketStatus, PaymentStatus, PaymentMethod)
-- **Endpoints REST**: 44
+- **Entidades JPA**: 6 (incluyendo AuditLog)
+- **Enums**: 6 (DeviceType, TicketStatus, PaymentStatus, PaymentMethod, CustomerCategory, AuditAction)
+- **Endpoints REST**: 50+
 - **API Services JavaFX**: 5
 - **API Services React**: 6 (Auth + 5 entidades)
 - **Controllers JavaFX**: 14 (incluyendo Login)
+
+## ✨ Nuevas Funcionalidades (v2.3.0)
+
+| Funcionalidad | Descripción |
+|---|---|
+| **Categoría de Cliente** | Nuevo, Regular, VIP, Especial (basado en antigüedad) |
+| **Sistema de Auditoría** | Logs completos para todos los roles |
+| **Exportar a Excel** | `GET /api/tickets/export/excel` |
+| **Exportar a PDF** | `GET /api/customers/export/pdf` |
 
 ---
 
@@ -122,6 +139,6 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 
 ---
 
-**Versión**: 2.2.0
-**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅
+**Versión**: 2.3.0
+**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅ | Auditoría ✅
 **Última actualización**: 2025-12-07

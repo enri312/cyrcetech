@@ -68,8 +68,10 @@ public class AuthApiService extends ApiClient {
     }
 
     /**
-     * Inner class for register request
+     * Inner class for register request.
+     * Getters are used by Gson for serialization.
      */
+    @SuppressWarnings("unused")
     private static class RegisterRequestDTO {
         private String fullName;
         private String email;

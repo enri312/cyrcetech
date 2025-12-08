@@ -1,6 +1,5 @@
 package com.cyrcetech.infrastructure.api.service;
 
-import com.cyrcetech.entity.DeviceType;
 import com.cyrcetech.entity.Equipment;
 import com.cyrcetech.infrastructure.api.ApiClient;
 import com.cyrcetech.infrastructure.api.ApiConfig;

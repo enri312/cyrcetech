@@ -1,6 +1,5 @@
 package com.cyrcetech.interface_adapter.controller;
 
-import com.cyrcetech.app.DependencyContainer;
 import com.cyrcetech.app.I18nUtil;
 import com.cyrcetech.entity.Customer;
 import javafx.event.ActionEvent;

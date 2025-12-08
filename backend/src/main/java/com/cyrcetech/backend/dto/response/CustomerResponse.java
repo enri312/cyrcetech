@@ -1,5 +1,7 @@
 package com.cyrcetech.backend.dto.response;
 
+import com.cyrcetech.backend.domain.entity.CustomerCategory;
+
 /**
  * DTO for customer responses
  */
@@ -11,17 +13,13 @@ public class CustomerResponse {
     private String address;
     private String phone;
     private String formattedPhone;
+    private String registrationDate;
+    private CustomerCategory category;
+    private String categoryDisplayName;
+    private long seniorityDays;
+    private String formattedSeniority;
 
     public CustomerResponse() {
-    }
-
-    public CustomerResponse(String id, String name, String taxId, String address, String phone, String formattedPhone) {
-        this.id = id;
-        this.name = name;
-        this.taxId = taxId;
-        this.address = address;
-        this.phone = phone;
-        this.formattedPhone = formattedPhone;
     }
 
     public String getId() {
@@ -70,5 +68,45 @@ public class CustomerResponse {
 
     public void setFormattedPhone(String formattedPhone) {
         this.formattedPhone = formattedPhone;
+    }
+
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public CustomerCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(CustomerCategory category) {
+        this.category = category;
+    }
+
+    public String getCategoryDisplayName() {
+        return categoryDisplayName;
+    }
+
+    public void setCategoryDisplayName(String categoryDisplayName) {
+        this.categoryDisplayName = categoryDisplayName;
+    }
+
+    public long getSeniorityDays() {
+        return seniorityDays;
+    }
+
+    public void setSeniorityDays(long seniorityDays) {
+        this.seniorityDays = seniorityDays;
+    }
+
+    public String getFormattedSeniority() {
+        return formattedSeniority;
+    }
+
+    public void setFormattedSeniority(String formattedSeniority) {
+        this.formattedSeniority = formattedSeniority;
     }
 }

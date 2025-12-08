@@ -13,7 +13,7 @@ repositories {
 dependencies {
     // PDF Generation (CyrcePDF 1.0.0)
     implementation 'io.github.enri312:cyrcepdf:1.0.0'
-    // implementation 'org.apache.pdfbox:pdfbox:3.0.6'
+    
 
     // JSON library for REST API communication
     implementation 'com.google.code.gson:gson:2.13.2'

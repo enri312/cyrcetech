@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -33,15 +34,18 @@ public class TicketService {
     private final CustomerRepository customerRepository;
     private final EquipmentRepository equipmentRepository;
     private final WebhookService webhookService;
+    private final ExcelExportService excelExportService;
 
     public TicketService(TicketRepository ticketRepository,
             CustomerRepository customerRepository,
             EquipmentRepository equipmentRepository,
-            WebhookService webhookService) {
+            WebhookService webhookService,
+            ExcelExportService excelExportService) {
         this.ticketRepository = ticketRepository;
         this.customerRepository = customerRepository;
         this.equipmentRepository = equipmentRepository;
         this.webhookService = webhookService;
+        this.excelExportService = excelExportService;
     }
 
     /**
@@ -203,6 +207,19 @@ public class TicketService {
         return ticketRepository.searchTickets(searchTerm).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Export all tickets to Excel format.
+     *
+     * @return byte array containing the Excel file
+     * @throws IOException if export fails
+     */
+    @Transactional(readOnly = true)
+    public byte[] exportTicketsToExcel() throws IOException {
+        log.info("Exporting all tickets to Excel");
+        List<Ticket> tickets = ticketRepository.findAll();
+        return excelExportService.exportTicketsToExcel(tickets);
     }
 
     /**

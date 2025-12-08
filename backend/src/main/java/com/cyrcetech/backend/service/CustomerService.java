@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +25,11 @@ public class CustomerService {
     private static final Logger log = LoggerFactory.getLogger(CustomerService.class);
 
     private final CustomerRepository customerRepository;
+    private final CustomerPdfExportService pdfExportService;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, CustomerPdfExportService pdfExportService) {
         this.customerRepository = customerRepository;
+        this.pdfExportService = pdfExportService;
     }
 
     /**
@@ -95,7 +98,6 @@ public class CustomerService {
             customer.setPhone(request.getPhone());
         }
 
-        @SuppressWarnings("null")
         Customer updated = customerRepository.save(customer);
         log.info("Customer updated: {}", id);
 
@@ -143,6 +145,28 @@ public class CustomerService {
         response.setAddress(customer.getAddress());
         response.setPhone(customer.getPhone());
         response.setFormattedPhone(customer.getFormattedPhone());
+        response.setRegistrationDate(customer.getRegistrationDate() != null
+                ? customer.getRegistrationDate().toString()
+                : null);
+        response.setCategory(customer.getCategory());
+        response.setCategoryDisplayName(customer.getCategory() != null
+                ? customer.getCategory().getDisplayName()
+                : null);
+        response.setSeniorityDays(customer.getSeniorityDays());
+        response.setFormattedSeniority(customer.getFormattedSeniority());
         return response;
+    }
+
+    /**
+     * Export all customers to PDF format.
+     *
+     * @return byte array containing the PDF file
+     * @throws IOException if export fails
+     */
+    @Transactional(readOnly = true)
+    public byte[] exportCustomersToPdf() throws IOException {
+        log.info("Exporting all customers to PDF");
+        List<Customer> customers = customerRepository.findAll();
+        return pdfExportService.exportCustomersToPdf(customers);
     }
 }
