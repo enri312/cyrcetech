@@ -1,10 +1,10 @@
-# Frontend Web - CyrceTech
+# Front-end - CyrceTech
 
 Cliente web oficial del sistema de gestión CyrceTech, desarrollado con React + Vite y conectado al Backend Spring Boot.
 
 ## 📋 Descripción
 
-Interfaz de usuario moderna y responsiva para la gestión integral del taller. Se conecta a la API REST para realizar operaciones CRUD sobre clientes, equipos, tickets, repuestos y facturas.
+Interfaz de usuario moderna y responsiva para la gestión integral del taller. Se conecta a la API REST para realizar operaciones CRUD sobre clientes, equipos, tickets, repuestos, facturas y auditoría.
 
 ## 🚀 Características
 
@@ -18,6 +18,7 @@ Interfaz de usuario moderna y responsiva para la gestión integral del taller. S
   - 🎫 **Tickets**: Flujo de reparación (Pendiente -> Entregado)
   - 🔧 **Repuestos**: Control de stock e inventario
   - 📄 **Facturación**: Generación de facturas calculadas
+  - 🛡️ **Auditoría**: Visualización de logs del sistema (Solo Admin)
 
 ## 🛠️ Ejecución
 
@@ -52,10 +53,10 @@ npm run build
 ## 📂 Estructura
 
 ```
-frontend-web/
+Front-end/
 ├── components/     # UI Kit (Botones, Inputs, Cards)
 ├── services/       # Cliente HTTP y llamadas API
-├── views/          # Pantallas principales (Dashboard, Clientes, etc.)
+├── views/          # Pantallas principales (Dashboard, Clientes, Auditoría, etc.)
 ├── App.tsx         # Router y Layout principal
 └── types.ts        # Definiciones de tipos TypeScript
 ```

@@ -59,7 +59,7 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 | Backend | Spring Boot 3.4.0, Spring Data JPA, **CyrcePDF** |
 | Database | PostgreSQL 18.1 (Docker) |
 | Frontend Desktop | JavaFX 21, Gson |
-| Frontend Web | React 19 (Vite) |
+| Frontend Web | React 19 (Vite) [Carpeta: `Front-end`] |
 
 ---
 

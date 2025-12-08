@@ -505,7 +505,7 @@ cyrcetech/
 │   ├── infrastructure/api/           # Clientes REST
 │   └── interface_adapter/controller/ # Controllers FXML
 │
-├── frontend-web/                     # React Frontend
+├── Front-end/                        # React Frontend
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
