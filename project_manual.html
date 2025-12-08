@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyrcetech Project Manual</title>
+    <title>Cyrcetech Project Manual v2.3.0</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             color: #333;
+            background: #fafafa;
         }
 
         h1,
@@ -23,7 +24,7 @@
         }
 
         h1 {
-            border-bottom: 2px solid #eaecef;
+            border-bottom: 3px solid #3498db;
             padding-bottom: 0.3em;
         }
 
@@ -36,21 +37,28 @@
             background-color: #f6f8fa;
             padding: 0.2em 0.4em;
             border-radius: 3px;
-            font-family: monospace;
+            font-family: 'Consolas', monospace;
         }
 
         pre {
-            background-color: #f6f8fa;
+            background-color: #2d2d2d;
+            color: #f8f8f2;
             padding: 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: auto;
         }
 
+        pre code {
+            background: none;
+            color: inherit;
+        }
+
         blockquote {
-            border-left: 4px solid #dfe2e5;
+            border-left: 4px solid #3498db;
             color: #6a737d;
             padding: 0 1em;
             margin: 0;
+            background: #f0f7ff;
         }
 
         img {
@@ -61,214 +69,481 @@
             display: flex;
             justify-content: center;
             margin: 20px 0;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .toc {
+            background: #f0f7ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: false });
+        mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
         document.addEventListener('DOMContentLoaded', async () => {
             const markdownContent = `
-# Manual del Proyecto Cyrcetech v2.2.0
+# Manual del Proyecto Cyrcetech v2.3.0
+
+## Tabla de Contenidos
+1. [Introducción](#1-introducción)
+2. [Diagrama de Contexto](#2-diagrama-de-contexto)
+3. [Diagrama de Flujo de Datos (DFD Nivel 1)](#3-diagrama-de-flujo-de-datos-dfd-nivel-1)
+4. [Casos de Uso](#4-casos-de-uso)
+5. [Diagrama de Clases](#5-diagrama-de-clases)
+6. [Diseño del Sistema](#6-diseño-del-sistema)
+7. [Implementación](#7-implementación)
+8. [Nuevas Funcionalidades v2.3.0](#8-nuevas-funcionalidades-v230)
+
+---
 
 ## 1. Introducción
-Cyrcetech es un sistema integral de **Gestión de Taller de Reparación (SaaS / On-Premise)** diseñado para administrar ordenes de servicio, clientes, inventario y facturación. El sistema utiliza una arquitectura híbrida con un Backend centralizado (Spring Boot) y clientes Frontend (JavaFX Desktop y React Web).
+
+Cyrcetech es un sistema integral de **Gestión de Taller de Reparación (SaaS / On-Premise)** diseñado para administrar órdenes de servicio, clientes, inventario y facturación. El sistema utiliza una arquitectura híbrida con un Backend centralizado (Spring Boot) y clientes Frontend (JavaFX Desktop y React Web).
 
 ### Tecnologías Clave
-- **Backend**: Java 25, Spring Boot 3.4.0, Spring Security (JWT).
-- **Frontend Desktop**: JavaFX 21, Modular, Estilos CSS modernos.
-- **Frontend Web**: React (Vite).
-- **Base de Datos**: PostgreSQL 18.
-- **Integraciones**: CyrcePDF (Generación de Reportes), n8n (Automatización), Docker.
+| Componente | Tecnología |
+|------------|------------|
+| Backend | Java 25, Spring Boot 3.4.0, Spring Security (JWT) |
+| Frontend Desktop | JavaFX 21, Modular, CSS |
+| Frontend Web | React 19 (Vite) |
+| Base de Datos | PostgreSQL 18 |
+| Integraciones | CyrcePDF (PDF), Apache POI (Excel), n8n (Automatización) |
 
 ---
 
-## 2. Arquitectura del Sistema
-El sistema sigue una **Clean Architecture** (Arquitectura Limpia) adaptada, separando capas de responsabilidad.
+## 2. Diagrama de Contexto
+
+Representa al sistema como una caja negra mostrando las interacciones con actores externos.
 
 \`\`\`mermaid
-graph TD
-    Client["Cliente JavaFX / Web"] -->|REST API + JWT| Controller["Controladores (API Layer)"]
-    Controller -->|DTOs| Service["Servicios (Business Layer)"]
-    Service -->|Entities| Repo["Repositorios (Data Layer)"]
-    Repo -->|SQL| DB[("PostgreSQL")]
+graph TB
+    subgraph Actores Externos
+        Admin["👨‍💼 Administrador"]
+        Tech["👨‍🔧 Técnico"]
+        User["� Usuario"]
+        Customer["🧑‍� Cliente"]
+        N8N["🔄 n8n Automation"]
+    end
+
+    subgraph Sistema Cyrcetech
+        SYS["🔧 Sistema de Gestión de Taller"]
+    end
+
+    Admin -->|"Gestionar Usuarios y Reportes"| SYS
+    Tech -->|"Crear/Actualizar Tickets"| SYS
+    User -->|"Crear Tickets, Ver Historial"| SYS
+    Customer -->|"Consultar Estado"| SYS
     
-    Service -->|Event| Webhook[WebhookService]
-    Webhook -->|HTTP POST| n8n["n8n Automation"]
+    SYS -->|"Reportes Excel/PDF"| Admin
+    SYS -->|"Orden de Servicio PDF"| Customer
+    SYS -->|"Webhooks"| N8N
+    N8N -->|"Emails Automáticos"| Customer
+\`\`\`
+
+### Entradas del Sistema
+| Entrada | Actor | Descripción |
+|---------|-------|-------------|
+| Datos de Cliente | Técnico/Admin | Nombre, teléfono, dirección, RUC/DNI |
+| Datos de Equipo | Técnico | Marca, modelo, tipo, condición física |
+| Orden de Servicio | Técnico | Descripción del problema, costo estimado |
+| Pagos | Admin | Registro de pagos parciales/totales |
+
+### Salidas del Sistema
+| Salida | Destino | Formato |
+|--------|---------|---------|
+| Orden de Servicio | Cliente | PDF |
+| Factura | Cliente | PDF |
+| Reporte de Tickets | Admin | Excel (.xlsx) |
+| Reporte de Clientes | Admin | PDF (con antigüedad) |
+| Logs de Auditoría | Admin | JSON/Tabla |
+
+---
+
+## 3. Diagrama de Flujo de Datos (DFD Nivel 1)
+
+\`\`\`mermaid
+flowchart TB
+    subgraph Externos
+        E1["👨‍🔧 Técnico"]
+        E2["👨‍💼 Administrador"]
+        E3["👤 Usuario"]
+    end
+
+    subgraph Procesos
+        P1["1.0 Gestión Clientes"]
+        P2["2.0 Gestión Equipos"]
+        P3["3.0 Gestión Tickets"]
+        P4["4.0 Facturación"]
+        P5["5.0 Auditoría"]
+    end
+
+    subgraph Almacenes
+        D1[("customers")]
+        D2[("equipment")]
+        D3[("tickets")]
+        D4[("invoices")]
+        D5[("audit_logs")]
+    end
+
+    E1 --> P1 --> D1
+    E1 --> P2 --> D2
+    E1 --> P3 --> D3
+    E3 --> P3
+    E2 --> P4 --> D4
+    E2 --> P5 --> D5
     
-    Service -->|Library| PDF["CyrcePDF Lib"]
-    PDF -->|Byte Array| Controller
+    P1 & P2 & P3 & P4 --> P5
 \`\`\`
 
 ---
 
-## 3. Modelo de Datos (ERD)
-Diagrama de Entidad-Relación que representa la estructura de la base de datos.
+## 4. Casos de Uso
 
 \`\`\`mermaid
-erDiagram
-    USER ||--o{ TICKET : manages
-    CUSTOMER ||--o{ EQUIPMENT : owns
-    CUSTOMER ||--o{ TICKET : places
-    EQUIPMENT ||--o{ TICKET : "is subject of"
-    TICKET ||--o{ INVOICE : generates
+graph LR
+    subgraph Actores
+        Admin["👨‍💼 Admin"]
+        Tech["👨‍🔧 Técnico"]
+        User["� Usuario"]
+    end
 
-    USER {
-        string id PK
-        string username
-        string role "ADMIN, TECHNICIAN, USER"
-    }
+    subgraph Clientes
+        UC1["Registrar Cliente"]
+        UC2["Buscar Cliente"]
+        UC4["Exportar PDF"]
+    end
 
-    CUSTOMER {
-        string id PK
-        string name
-        string email
-        string phone
-        string tax_id
-    }
+    subgraph Tickets
+        UC8["Crear Ticket"]
+        UC9["Actualizar Estado"]
+        UC11["Exportar Excel"]
+    end
 
-    EQUIPMENT {
-        string id PK
-        string brand
-        string model
-        string serial_number
-        string device_type
-    }
+    subgraph Admin Only
+        UC12["Ver Auditoría"]
+        UC13["Gestionar Usuarios"]
+    end
 
-    TICKET {
-        string id PK
-        string status "PENDING, DIAGNOSING, READY..."
-        string problem_description
-        double estimated_cost
-        double amount_paid
-        string ai_diagnosis
-        date date_created
-    }
-
-    INVOICE {
-        string id PK
-        string invoice_number
-        double total_amount
-        string payment_status "PAID, PENDING"
-        string payment_method "CASH, CARD"
-    }
+    Tech --> UC1 & UC2 & UC8 & UC9
+    User --> UC8
+    Admin --> UC1 & UC4 & UC8 & UC11 & UC12 & UC13
 \`\`\`
+
+### Descripción de Casos de Uso Principales
+
+| ID | Caso de Uso | Actor | Descripción |
+|----|-------------|-------|-------------|
+| UC1 | Registrar Cliente | Técnico/Admin | Crear nuevo cliente con datos de contacto |
+| UC4 | Exportar Clientes PDF | Admin | Generar PDF con lista de clientes y antigüedad |
+| UC8 | Crear Ticket | Técnico | Registrar nueva orden de servicio |
+| UC9 | Actualizar Estado | Técnico | Cambiar estado (PENDING → DIAGNOSING → READY) |
+| UC11 | Exportar Tickets Excel | Admin | Descargar todos los tickets en formato Excel |
+| UC12 | Ver Auditoría | Admin | Consultar logs de acciones del sistema |
+
+### Matriz de Permisos por Rol
+
+| Acción | Usuario | Técnico | Admin |
+|--------|:-------:|:-------:|:-----:|
+| Ver sus propios datos | ✅ | ✅ | ✅ |
+| Editar su perfil | ✅ | ✅ | ✅ |
+| Crear tickets | ✅ | ✅ | ✅ |
+| Ver todos los tickets | ❌ | ✅ | ✅ |
+| Tomar/gestionar tickets | ❌ | ✅ | ✅ |
+| Crear usuarios | ❌ | ❌ | ✅ |
+| Cambiar roles | ❌ | ❌ | ✅ |
+| Ver reportes completos | ❌ | ❌ | ✅ |
+| Configurar el sistema | ❌ | ❌ | ✅ |
+| Ver auditoría | ❌ | ❌ | ✅ |
+| Exportar Excel/PDF | ❌ | ✅ | ✅ |
 
 ---
 
-## 4. Diagrama de Clases (Dominio Principal)
-Vista simplificada de las clases principales del Backend.
+## 5. Diagrama de Clases
 
 \`\`\`mermaid
 classDiagram
-    class Ticket {
-        -String id
-        -TicketStatus status
-        -double estimatedCost
-        -String problemDescription
-        +getRemainingBalance()
-        +isFullyPaid()
-    }
-
     class Customer {
         -String id
         -String name
-        -String email
-        +getInitials()
+        -String taxId
+        -LocalDate registrationDate
+        -CustomerCategory category
+        +getSeniorityDays()
+        +getFormattedSeniority()
+        +updateCategory()
+    }
+
+    class CustomerCategory {
+        <<enumeration>>
+        NUEVO
+        REGULAR
+        VIP
+        ESPECIAL
     }
 
     class Equipment {
         -String id
         -String brand
         -String model
+        -DeviceType deviceType
+        -Customer customer
         +getSummary()
     }
 
-    class TicketService {
-        +createTicket(CreateTicketRequest)
-        +updateTicket(id, UpdateTicketRequest)
-        +getTicketsByStatus(status)
+    class Ticket {
+        -String id
+        -Customer customer
+        -Equipment equipment
+        -TicketStatus status
+        -double estimatedCost
+        -double amountPaid
+        +getRemainingBalance()
+        +isFullyPaid()
     }
 
-    TicketService --> Ticket : manages
-    TicketService --> WebhookService : notifies
-    Ticket "*" --> "1" Customer : belongs to
-    Ticket "*" --> "1" Equipment : belongs to
+    class AuditLog {
+        -String id
+        -String userId
+        -AuditAction action
+        -String entityType
+        -LocalDateTime timestamp
+    }
+
+    Customer "1" --> "*" Equipment : owns
+    Customer "1" --> "*" Ticket : places
+    Customer --> CustomerCategory
+    Equipment "1" --> "*" Ticket : subject of
 \`\`\`
 
 ---
 
-## 5. Diagrama de Secuencia (Creación de Ticket)
-Flujo de interacción cuando un técnico crea una nueva orden de servicio.
+## 6. Diseño del Sistema
+
+### 6.1 Arquitectura Clean Architecture
 
 \`\`\`mermaid
-sequenceDiagram
-    actor Tech as Técnico (JavaFX)
-    participant API as ApiClient
-    participant Ctrl as TicketController
-    participant Svc as TicketService
-    participant Repo as TicketRepository
-    participant DB as PostgreSQL
-    participant WH as WebhookService
-    participant N8N as n8n (External)
-
-    Tech->>API: POST /api/tickets (JSON)
-    API->>Ctrl: createTicket(request)
-    Ctrl->>Svc: createTicket(request)
-    
-    Svc->>Svc: Validar Cliente/Equipo
-    
-    Svc->>Repo: save(ticket)
-    Repo->>DB: INSERT INTO tickets...
-    DB-->>Repo: (Saved Entity)
-    Repo-->>Svc: (Saved Entity)
-
-    par Async Notification
-        Svc->>WH: notifyTicketCreated(response)
-        WH->>N8N: POST /webhook/ticket-created
+graph TB
+    subgraph Presentation
+        JFX["JavaFX Desktop"]
+        React["React Web"]
     end
 
-    Svc-->>Ctrl: TicketResponse
-    Ctrl-->>API: 201 Created (TicketResponse)
-    API-->>Tech: Mostrar éxito
+    subgraph API Layer
+        Auth["AuthController"]
+        Cust["CustomerController"]
+        Tick["TicketController"]
+        Audit["AuditController"]
+    end
+
+    subgraph Business Layer
+        CustS["CustomerService"]
+        TickS["TicketService"]
+        AuditS["AuditLogService"]
+        PdfS["PdfExportService"]
+        ExcelS["ExcelExportService"]
+    end
+
+    subgraph Data Layer
+        Repo["Repositories"]
+    end
+
+    subgraph External
+        DB[("PostgreSQL")]
+        N8N["n8n Webhooks"]
+    end
+
+    JFX & React --> Auth & Cust & Tick & Audit
+    Cust --> CustS --> Repo --> DB
+    Tick --> TickS --> Repo
+    TickS --> ExcelS
+    TickS --> N8N
+    CustS --> PdfS
+    Audit --> AuditS --> Repo
+\`\`\`
+
+### 6.2 Modelo de Datos (ERD)
+
+\`\`\`mermaid
+erDiagram
+    users ||--o{ audit_logs : generates
+    customers ||--o{ equipment : owns
+    customers ||--o{ tickets : places
+    equipment ||--o{ tickets : subject_of
+    tickets ||--o{ invoices : generates
+
+    customers {
+        uuid id PK
+        varchar name
+        varchar tax_id UK
+        date registration_date
+        varchar category
+    }
+
+    equipment {
+        uuid id PK
+        varchar brand
+        varchar model
+        varchar device_type
+        uuid customer_id FK
+    }
+
+    tickets {
+        uuid id PK
+        uuid customer_id FK
+        uuid equipment_id FK
+        varchar status
+        decimal estimated_cost
+        decimal amount_paid
+        date date_created
+    }
+
+    audit_logs {
+        uuid id PK
+        uuid user_id
+        varchar action
+        varchar entity_type
+        timestamp timestamp
+    }
+\`\`\`
+
+### 6.3 APIs / Módulos Internos
+
+| Módulo | Función | Entradas | Salidas |
+|--------|---------|----------|---------|
+| AuthService | Autenticación JWT | email, password | JWT Token |
+| CustomerService | CRUD Clientes | CustomerRequest | CustomerResponse |
+| TicketService | Gestión Tickets | TicketRequest | TicketResponse |
+| AuditLogService | Registro de acciones | action, entity | void |
+| ExcelExportService | Exportar a Excel | List<Ticket> | byte[] (xlsx) |
+| CustomerPdfExportService | Exportar a PDF | List<Customer> | byte[] (pdf) |
+
+---
+
+## 7. Implementación
+
+### 7.1 Lenguaje y Librerías
+
+| Componente | Tecnología | Versión |
+|------------|------------|---------|
+| Lenguaje | Java | 25 |
+| Framework Backend | Spring Boot | 3.4.0 |
+| ORM | Spring Data JPA | 6.x |
+| Seguridad | Spring Security + JWT | 6.x |
+| PDF | CyrcePDF | 1.0.0 |
+| Excel | Apache POI | 5.2.5 |
+| Base de Datos | PostgreSQL | 18.1 |
+| Frontend Desktop | JavaFX | 21 |
+| Frontend Web | React + Vite | 19 |
+
+### 7.2 Requisitos del Sistema
+
+| Requisito | Mínimo | Recomendado |
+|-----------|--------|-------------|
+| JDK | 21 | 25 |
+| RAM | 4 GB | 8 GB |
+| Disco | 500 MB | 2 GB |
+| Docker | 20.x | 24.x |
+
+### 7.3 Estructura del Proyecto
+
+\`\`\`
+cyrcetech/
+├── backend/                          # Spring Boot Backend
+│   ├── src/main/java/.../
+│   │   ├── config/                   # Configuraciones
+│   │   ├── controller/               # REST Controllers
+│   │   ├── domain/entity/            # Entidades JPA
+│   │   ├── dto/                      # Request/Response DTOs
+│   │   ├── repository/               # Repositories
+│   │   └── service/                  # Lógica de negocio
+│   └── build.gradle
+│
+├── src/main/java/                    # JavaFX Frontend
+│   ├── app/
+│   ├── entity/
+│   ├── infrastructure/api/
+│   └── interface_adapter/controller/
+│
+├── frontend-web/                     # React Frontend
+│   └── src/
+│
+└── docker-compose.yml
+\`\`\`
+
+### 7.4 Fragmentos de Código
+
+**Categorización Automática de Clientes:**
+\`\`\`java
+public static CustomerCategory fromDays(long days) {
+    if (days <= 30) return NUEVO;
+    if (days <= 180) return REGULAR;
+    if (days <= 365) return VIP;
+    return ESPECIAL;
+}
 \`\`\`
 
 ---
 
-## 6. Guía de Instalación y Uso
+## 8. Nuevas Funcionalidades v2.3.0
 
-### Requisitos Previos
-- Docker Desktop instalado.
-- Java JDK 25 (para desarrollo).
+### Categoría de Clientes
+| Categoría | Rango | Descripción |
+|-----------|-------|-------------|
+| NUEVO | 0-30 días | Cliente reciente |
+| REGULAR | 1-6 meses | Cliente establecido |
+| VIP | 6-12 meses | Cliente fiel |
+| ESPECIAL | 1+ año | Cliente preferencial |
 
-### Pasos para Ejecutar
-1. **Despliegue con Docker**:
-   Ejecuta el siguiente comando en la raíz del proyecto para iniciar Base de Datos y n8n:
-   \`\`\`bash
-   docker-compose up -d
-   \`\`\`
+### Sistema de Auditoría
+- Registro automático de todas las acciones (LIST, VIEW, CREATE, UPDATE, DELETE)
+- Filtros por usuario, rol, entidad y fecha
+- Solo accesible por usuarios ADMIN
 
-2. **Iniciar Backend**:
-   Desde la carpeta \`/backend\` o raíz:
-   \`\`\`bash
-   ./gradlew :backend:bootRun
-   \`\`\`
+### Exportaciones
+- **Excel (Tickets)**: \`GET /api/tickets/export/excel\`
+- **PDF (Clientes)**: \`GET /api/customers/export/pdf\`
 
-3. **Iniciar Cliente Desktop (JavaFX)**:
-   Desde la raíz:
-   \`\`\`bash
-   ./gradlew :run
-   \`\`\`
+---
 
-### Credenciales por Defecto (Base de Datos)
-- **Login**: \`postgres\`
-- **Password**: \`password\`
-- **Host**: \`localhost:5432 / db\`
-
-### Integración n8n
-- Acceder a: \`http://localhost:5678\`
-- Configurar el Workflow para escuchar \`POST /webhook/ticket-created\`.
+*Generado automáticamente por Antigravity AI - Diciembre 2025*
             `;
 
             // Render Markdown

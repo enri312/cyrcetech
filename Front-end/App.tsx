@@ -24,7 +24,8 @@ import {
   Globe,
   Trash2,
   Edit,
-  BrainCircuit
+  BrainCircuit,
+  ClipboardList
 } from 'lucide-react';
 
 import { DeviceType, DeviceTypeDisplay, TicketStatus, TicketStatusDisplay, Ticket, ViewState, Language, Customer, SparePart, Equipment, Invoice, PaymentStatus } from './types';
@@ -37,6 +38,7 @@ import { NewTicketView } from './views/NewTicketView';
 import { ClientsView } from './views/ClientsView';
 import { EquipmentView } from './views/EquipmentView';
 import { InvoicesView } from './views/InvoicesView';
+import { AuditView } from './views/AuditView';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // --- I18N CONFIGURATION ---
@@ -101,7 +103,9 @@ const TRANSLATIONS = {
     noInvoices: "No hay facturas.",
     actions: "Acciones",
     delete: "Eliminar",
-    status: "Estado"
+    status: "Estado",
+    menuAudit: "Auditoría",
+    auditTitle: "Auditoría del Sistema"
   },
   en: {
     loginTitle: "System Login",
@@ -163,7 +167,9 @@ const TRANSLATIONS = {
     noInvoices: "No invoices.",
     actions: "Actions",
     delete: "Delete",
-    status: "Status"
+    status: "Status",
+    menuAudit: "Audit",
+    auditTitle: "System Audit"
   }
 };
 
@@ -177,18 +183,18 @@ interface TicketSystemHook {
   formData: Partial<Ticket>;
   loading: boolean;
   error: string | null;
-  createTicket: () => boolean;
+  createTicket: () => Promise<boolean> | boolean;
   updateForm: (updates: Partial<Ticket>) => void;
   updateCustomer: (updates: Partial<Customer>) => void;
-  refreshData: () => Promise<void>;
+  refreshData: () => void;
   deleteCustomer: (id: string) => Promise<void>;
   deleteEquipment: (id: string) => Promise<void>;
-  createCustomer: (customer: Omit<Customer, 'id'>) => Promise<Customer>;
-  updateCustomerData: (id: string, customer: Partial<Customer>) => Promise<Customer>;
-  createEquipment: (equipment: Omit<Equipment, 'id'>) => Promise<Equipment>;
-  updateEquipmentData: (id: string, equipment: Partial<Equipment>) => Promise<Equipment>;
-  createInvoice: (invoice: Omit<Invoice, 'id'>) => Promise<Invoice>;
-  updateInvoiceData: (id: string, invoice: Partial<Invoice>) => Promise<Invoice>;
+  createCustomer: (customer: Partial<Customer>) => Promise<any>;
+  updateCustomerData: (id: string, customer: Partial<Customer>) => Promise<any>;
+  createEquipment: (equipment: Partial<Equipment>) => Promise<any>;
+  updateEquipmentData: (id: string, equipment: Partial<Equipment>) => Promise<any>;
+  createInvoice: (invoice: Partial<Invoice>) => Promise<any>;
+  updateInvoiceData: (id: string, invoice: Partial<Invoice>) => Promise<any>;
 }
 
 function useTicketSystem(): TicketSystemHook {
@@ -628,6 +634,11 @@ const Sidebar = ({ view, setView, t, user }: any) => (
       <NavButton active={view === 'INVOICES'} onClick={() => setView('INVOICES')} icon={<FileText size={20} />}>
         {t('menuInvoices')}
       </NavButton>
+      {user?.role === 'ADMIN' && (
+        <NavButton active={view === 'AUDIT_LOGS'} onClick={() => setView('AUDIT_LOGS')} icon={<ClipboardList size={20} />}>
+          {t('menuAudit')}
+        </NavButton>
+      )}
     </nav>
 
     <div className="p-4 border-t border-white/5">
@@ -952,6 +963,7 @@ function AppContent() {
         {view === 'EQUIPMENT' && <EquipmentView equipment={equipment} customers={customers} createEquipment={createEquipment} updateEquipmentData={updateEquipmentData} deleteEquipment={deleteEquipment} t={t} />}
         {view === 'INVOICES' && <InvoicesView invoices={invoices} tickets={tickets} createInvoice={createInvoice} updateInvoiceData={updateInvoiceData} t={t} />}
         {view === 'SPARE_PARTS' && <PartsView />}
+        {view === 'AUDIT_LOGS' && user?.role === 'ADMIN' && <AuditView lang={lang} t={t} />}
       </main>
     </div>
   );

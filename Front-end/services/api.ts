@@ -235,3 +235,29 @@ export const invoiceApi = {
     delete: (id: string) =>
         fetchApi<void>(`/invoices/${id}`, { method: 'DELETE' }),
 };
+
+// === AUDIT LOGS ===
+export interface AuditLogDTO {
+    id: string;
+    userId: string;
+    username: string;
+    userRole: string;
+    userRoleDisplayName?: string;
+    action: string;
+    actionDisplayName?: string;
+    entityType: string;
+    entityId?: string;
+    timestamp: string;
+    details: string;
+    ipAddress?: string;
+}
+
+export const auditApi = {
+    getAll: () => fetchApi<AuditLogDTO[]>('/audit'),
+    getByUser: (userId: string) => fetchApi<AuditLogDTO[]>(`/audit/user/${userId}`),
+    getByEntityType: (entityType: string) => fetchApi<AuditLogDTO[]>(`/audit/entity/${entityType}`),
+    getByRole: (role: string) => fetchApi<AuditLogDTO[]>(`/audit/role/${role}`),
+    getByDateRange: (startDate: string, endDate: string) =>
+        fetchApi<AuditLogDTO[]>(`/audit/date-range?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`),
+};
+

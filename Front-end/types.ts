@@ -57,6 +57,48 @@ export enum PaymentMethod {
   OTHER = 'OTHER'
 }
 
+// === AUDIT ENUMS ===
+
+export enum AuditAction {
+  LIST = 'LIST',
+  VIEW = 'VIEW',
+  SEARCH = 'SEARCH',
+  EXPORT_PDF = 'EXPORT_PDF',
+  EXPORT_EXCEL = 'EXPORT_EXCEL',
+  CREATE = 'CREATE',
+  UPDATE = 'UPDATE',
+  DELETE = 'DELETE',
+  LOGIN = 'LOGIN',
+  LOGOUT = 'LOGOUT',
+  REGISTER = 'REGISTER'
+}
+
+export const AuditActionDisplay: Record<AuditAction, { es: string; en: string; color: string }> = {
+  [AuditAction.LIST]: { es: 'Listar', en: 'List', color: '#2196F3' },
+  [AuditAction.VIEW]: { es: 'Ver', en: 'View', color: '#03A9F4' },
+  [AuditAction.SEARCH]: { es: 'Buscar', en: 'Search', color: '#00BCD4' },
+  [AuditAction.EXPORT_PDF]: { es: 'Exportar PDF', en: 'Export PDF', color: '#9C27B0' },
+  [AuditAction.EXPORT_EXCEL]: { es: 'Exportar Excel', en: 'Export Excel', color: '#673AB7' },
+  [AuditAction.CREATE]: { es: 'Crear', en: 'Create', color: '#4CAF50' },
+  [AuditAction.UPDATE]: { es: 'Actualizar', en: 'Update', color: '#FF9800' },
+  [AuditAction.DELETE]: { es: 'Eliminar', en: 'Delete', color: '#F44336' },
+  [AuditAction.LOGIN]: { es: 'Iniciar sesión', en: 'Login', color: '#8BC34A' },
+  [AuditAction.LOGOUT]: { es: 'Cerrar sesión', en: 'Logout', color: '#607D8B' },
+  [AuditAction.REGISTER]: { es: 'Registrar', en: 'Register', color: '#009688' }
+};
+
+export enum Role {
+  ADMIN = 'ADMIN',
+  TECHNICIAN = 'TECHNICIAN',
+  RECEPTIONIST = 'RECEPTIONIST'
+}
+
+export const RoleDisplay: Record<Role, { es: string; en: string }> = {
+  [Role.ADMIN]: { es: 'Administrador', en: 'Admin' },
+  [Role.TECHNICIAN]: { es: 'Técnico', en: 'Technician' },
+  [Role.RECEPTIONIST]: { es: 'Usuario', en: 'User' }
+};
+
 // === INTERFACES (matching backend) ===
 
 export interface Customer {
@@ -125,8 +167,23 @@ export interface Invoice {
   notes?: string;
 }
 
+export interface AuditLog {
+  id: string;
+  userId: string;
+  username: string;
+  userRole: Role;
+  userRoleDisplayName?: string;
+  action: AuditAction;
+  actionDisplayName?: string;
+  entityType: string;
+  entityId?: string;
+  timestamp: string;
+  details: string;
+  ipAddress?: string;
+}
+
 // === VIEW TYPES ===
 
-export type ViewState = 'LOGIN' | 'DASHBOARD' | 'NEW_TICKET' | 'LIST_TICKETS' | 'INVENTORY_PARTS' | 'HISTORY' | 'CLIENTS' | 'EQUIPMENT' | 'INVOICES';
+export type ViewState = 'LOGIN' | 'DASHBOARD' | 'NEW_TICKET' | 'LIST_TICKETS' | 'INVENTORY_PARTS' | 'HISTORY' | 'CLIENTS' | 'EQUIPMENT' | 'INVOICES' | 'SPARE_PARTS' | 'AUDIT_LOGS';
 
 export type Language = 'es' | 'en';
