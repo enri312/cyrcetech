@@ -107,7 +107,12 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 - [x] `Categoría de Clientes` (Nuevo, Regular, VIP, Especial)
 - [x] `Sistema de Auditoría Completo` (USER, TECHNICIAN, ADMIN)
 - [x] `Exportación a Excel` (Tickets con todos los estados)
-- [x] `Exportación a PDF con Antigüedad` (Clientes)
+- [x] `Exportación a PDF con antigüedad` (Clientes)
+
+### Etapa 7: DevOps / CI/CD ✅ COMPLETADO
+- [x] **GitHub Actions Workflow** para Backend (Java 25/Gradle)
+- [x] **GitHub Actions Workflow** para Frontend (React/Vite)
+- [x] Configuración de triggers automáticos por push/PR
 
 ---
 
@@ -128,6 +133,7 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 | **Sistema de Auditoría** | Logs completos para todos los roles |
 | **Exportar a Excel** | `GET /api/tickets/export/excel` |
 | **Exportar a PDF** | `GET /api/customers/export/pdf` |
+| **CI/CD** | Pipelines automáticos para Backend y Frontend |
 
 ---
 
@@ -140,5 +146,5 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 ---
 
 **Versión**: 2.3.0
-**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅ | Auditoría ✅
+**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅ | Auditoría ✅ | CI/CD ✅
 **Última actualización**: 2025-12-07

@@ -287,12 +287,13 @@ Ver guías de testing:
 - [x] Sistema de Auditoría completo
 - [x] Exportación a Excel (Tickets)
 - [x] Exportación a PDF con antigüedad (Clientes)
+- [x] CI/CD Pipeline (GitHub Actions)
 
 ### En Progreso ⏳
 - [ ] Dockerización completa (opcional)
 
 ### Planificado 📋
-- [ ] CI/CD Pipeline
+
 
 ## 📊 Progreso de Implementación
 
