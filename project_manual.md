@@ -516,7 +516,55 @@ cyrcetech/
 └── README.md
 ```
 
-### 7.4 Fragmentos de Código Relevantes
+
+
+### 7.4 Arquitectura del Frontend Web (React)
+
+El cliente web es una SPA (Single Page Application) construida con **React 19** y **Vite**, diseñada con un enfoque modular y estilizada con **Tailwind CSS**.
+
+#### Diagrama de Componentes
+```mermaid
+graph TD
+    App[App.tsx<br/>Manejo de Estado Global] --> AuthProvider[AuthProvider<br/>Contexto de Sesión]
+    AuthProvider --> Layout[Layout Principal]
+    Layout --> Sidebar[Sidebar de Navegación]
+    Layout --> Main[Área de Contenido]
+    
+    Main -->|Rutas Condicionales| Views
+    
+    subgraph Views [Vistas Principales]
+        Dash[DashboardView]
+        Tickets[TicketListView]
+        Clients[ClientsView]
+        Equip[EquipmentView]
+        Inv[InvoicesView]
+        Audit[AuditView<br/>(Admin Only)]
+    end
+    
+    subgraph Shared [Componentes UI Reutilizables]
+        Card[GlassCard]
+        Badge[StatusBadge]
+        Input[Input/Button]
+    end
+    
+    subgraph Logic [Servicios & Hooks]
+        Api[api.ts<br/>Cliente Axios/Fetch]
+        Hooks[useTicketSystem<br/>useAuth]
+    end
+    
+    Views --> Shared
+    Views --> Hooks
+    Hooks --> Api
+```
+
+#### Organización del Código
+- **`components/ui`**: Elementos base con diseño "Glassmorphism" (Botones, Tarjetas, Inputs).
+- **`views/`**: Pantallas completas que consumen hooks y componen la interfaz.
+  - *AuditView*: Nueva vista para monitoreo de seguridad.
+- **`services/api.ts`**: Capa de abstracción HTTP. Centraliza todas las llamadas al backend (Auth, Customers, Audit, etc.).
+- **`types.ts`**: Definiciones TypeScript compartidas (DTOs, Enums) para mantener consistencia con el Backend.
+
+### 7.5 Fragmentos de Código Relevantes
 
 #### Categorización Automática de Clientes
 ```java

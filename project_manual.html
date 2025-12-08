@@ -508,7 +508,42 @@ cyrcetech/
 └── docker-compose.yml
 \`\`\`
 
-### 7.4 Fragmentos de Código
+\`\`\`
+
+### 7.4 Arquitectura del Frontend Web (React)
+
+El cliente web es una SPA (Single Page Application) construida con **React 19** y **Vite**.
+
+#### Diagrama de Componentes
+\`\`\`mermaid
+graph TD
+    App[App.tsx] --> Auth[AuthProvider]
+    Auth --> Layout
+    Layout --> Sidebar
+    Layout --> Main
+    Main --> Views
+    
+    subgraph Views
+        Dash[DashboardView]
+        Tickets[TicketListView]
+        Clients[ClientsView]
+        Audit[AuditView]
+    end
+    
+    subgraph Services
+        Api[api.ts]
+        Hooks[useTicketSystem]
+    end
+    
+    Views --> Services
+\`\`\`
+
+#### Organización
+- **\`components/ui\`**: Elementos Glassmorphism (Cards, Buttons).
+- **\`views/\`**: Pantallas (AuditView, ClientsView).
+- **\`services/\`**: API Client (Axios/Fetch).
+
+### 7.5 Fragmentos de Código
 
 **Categorización Automática de Clientes:**
 \`\`\`java
