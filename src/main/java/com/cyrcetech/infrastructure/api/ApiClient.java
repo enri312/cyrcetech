@@ -73,6 +73,8 @@ public class ApiClient {
      */
     public <T> T post(String url, Object requestBody, Class<T> responseType) throws Exception {
         String jsonBody = gson.toJson(requestBody);
+        System.out.println("DEBUG POST: URL=" + url);
+        System.out.println("DEBUG POST: JSON=" + jsonBody);
 
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -143,6 +145,27 @@ public class ApiClient {
 
     protected Gson getGson() {
         return gson;
+    }
+
+    /**
+     * Perform GET request and return binary data (for file downloads like
+     * PDF/Excel)
+     */
+    public byte[] getBytes(String url) throws Exception {
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET();
+
+        addAuthHeader(requestBuilder);
+
+        HttpRequest request = requestBuilder.build();
+        HttpResponse<byte[]> response = httpClient.send(request, HttpResponse.BodyHandlers.ofByteArray());
+
+        if (response.statusCode() >= 200 && response.statusCode() < 300) {
+            return response.body();
+        } else {
+            throw new RuntimeException("HTTP Error " + response.statusCode());
+        }
     }
 
     /**

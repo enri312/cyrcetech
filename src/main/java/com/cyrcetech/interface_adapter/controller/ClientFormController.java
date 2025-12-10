@@ -47,7 +47,7 @@ public class ClientFormController {
     private void handleSave(ActionEvent event) {
         if (validateInput()) {
             String id = existingCustomer != null ? existingCustomer.id() : "";
-            Customer customer = new Customer(
+            Customer customer = Customer.create(
                     id,
                     nameField.getText(),
                     taxIdField.getText(),

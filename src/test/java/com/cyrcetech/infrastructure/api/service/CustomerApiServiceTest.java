@@ -41,7 +41,7 @@ public class CustomerApiServiceTest {
     @DisplayName("Should create a new customer")
     void testCreateCustomer() {
         try {
-            Customer newCustomer = new Customer(
+            Customer newCustomer = Customer.create(
                     null,
                     "Test Customer " + System.currentTimeMillis(),
                     "0981-TEST-123",
@@ -81,7 +81,7 @@ public class CustomerApiServiceTest {
         Assumptions.assumeTrue(createdCustomerId != null, "Requires created customer");
 
         try {
-            Customer updated = new Customer(
+            Customer updated = Customer.create(
                     createdCustomerId,
                     "Updated Test Customer",
                     "0981-UPDATED",

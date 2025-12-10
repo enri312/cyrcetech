@@ -1,0 +1,125 @@
+[DEBUG] Testing Login with USERNAME...
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:8080...
+* Established connection to localhost (::1 port 8080) from ::1 port 57480 
+* using HTTP/1.x
+> POST /api/auth/login HTTP/1.1
+
+> Host: localhost:8080
+
+> User-Agent: curl/8.16.0
+
+> Accept: */*
+
+> Content-Type: application/json
+
+> Content-Length: 43
+
+> 
+
+} [43 bytes data]
+* upload completely sent off: 43 bytes
+< HTTP/1.1 400 
+
+< Vary: Origin
+
+< Vary: Access-Control-Request-Method
+
+< Vary: Access-Control-Request-Headers
+
+< X-Content-Type-Options: nosniff
+
+< X-XSS-Protection: 0
+
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+< Pragma: no-cache
+
+< Expires: 0
+
+< X-Frame-Options: DENY
+
+< Content-Type: application/json
+
+< Transfer-Encoding: chunked
+
+< Date: Wed, 10 Dec 2025 12:44:30 GMT
+
+< Connection: close
+
+< 
+
+{ [162 bytes data]
+
+100   199    0   156  100    43   4486   1236 --:--:-- --:--:-- --:--:--  5852
+* shutting down connection #0
+{"timestamp":"2025-12-10T12:44:30.486001092","status":400,"error":"Validation Error","message":"email: Email/username is required","path":"/api/auth/login"}
+
+[DEBUG] Testing Login with EMAIL (Legacy)...
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:8080...
+* Established connection to localhost (::1 port 8080) from ::1 port 57481 
+* using HTTP/1.x
+> POST /api/auth/login HTTP/1.1
+
+> Host: localhost:8080
+
+> User-Agent: curl/8.16.0
+
+> Accept: */*
+
+> Content-Type: application/json
+
+> Content-Length: 40
+
+> 
+
+} [40 bytes data]
+* upload completely sent off: 40 bytes
+< HTTP/1.1 500 
+
+< Vary: Origin
+
+< Vary: Access-Control-Request-Method
+
+< Vary: Access-Control-Request-Headers
+
+< X-Content-Type-Options: nosniff
+
+< X-XSS-Protection: 0
+
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+< Pragma: no-cache
+
+< Expires: 0
+
+< X-Frame-Options: DENY
+
+< Content-Type: application/json
+
+< Transfer-Encoding: chunked
+
+< Date: Wed, 10 Dec 2025 12:44:30 GMT
+
+< Connection: close
+
+< 
+
+{ [148 bytes data]
+
+100   182    0   142  100    40   1208    340 --:--:-- --:--:-- --:--:--  1555
+* shutting down connection #0
+{"timestamp":"2025-12-10T12:44:30.65918105","status":500,"error":"Internal Server Error","message":"Bad credentials","path":"/api/auth/login"}

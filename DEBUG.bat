@@ -10,7 +10,7 @@ if %ERRORLEVEL% EQU 0 (
     echo Backend FOUND on port 8080.
 ) else (
     echo Backend NOT FOUND. Attempting start...
-    start /min cmd /c "cd backend && ..\gradlew.bat bootRun"
+    start "Cyrcetech Backend" cmd /k "cd backend && ..\gradlew.bat bootRun"
     timeout /t 10
 )
 

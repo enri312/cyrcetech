@@ -1,14 +1,20 @@
 package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
+import com.cyrcetech.app.I18nUtil;
 import com.cyrcetech.entity.Ticket;
 import com.cyrcetech.infrastructure.api.service.TicketApiService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class OrdersController {
@@ -53,7 +59,7 @@ public class OrdersController {
             ordersTable.setItems(FXCollections.observableArrayList(ticketApiService.getAllTickets()));
         } catch (Exception e) {
             e.printStackTrace();
-            // Optionally show error alert here
+            showError("Error loading orders: " + e.getMessage());
         }
     }
 
@@ -65,5 +71,44 @@ public class OrdersController {
     @FXML
     private void handleNewOrder(ActionEvent event) throws IOException {
         CyrcetechApp.setRoot("view/NewTicketView");
+    }
+
+    @FXML
+    private void handleExportExcel(ActionEvent event) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(I18nUtil.getBundle().getString("reports.save.title"));
+            fileChooser.setInitialFileName("tickets.xlsx");
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+
+            Stage stage = (Stage) ordersTable.getScene().getWindow();
+            File file = fileChooser.showSaveDialog(stage);
+
+            if (file != null) {
+                byte[] excelData = ticketApiService.exportTicketsToExcel();
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    fos.write(excelData);
+                }
+                showInfo(I18nUtil.getBundle().getString("orders.export.success"));
+            }
+        } catch (Exception e) {
+            showError(I18nUtil.getBundle().getString("orders.export.error") + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    private void showInfo(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 }

@@ -32,7 +32,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        createUserIfNotExists("admin", "Administrador", "admin123", Role.ROLE_ADMIN);
+
         createUserIfNotExists("CENV", "Administrador CENV", "8994C", Role.ROLE_ADMIN);
         createUserIfNotExists("NMNV", "Técnico NMNV", "8994N", Role.ROLE_TECHNICIAN);
         createUserIfNotExists("LENV", "Usuario LENV", "8994L", Role.ROLE_USER);

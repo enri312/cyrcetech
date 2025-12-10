@@ -109,6 +109,14 @@ public class TicketApiService extends ApiClient {
     }
 
     /**
+     * Export tickets to Excel
+     */
+    public byte[] exportTicketsToExcel() throws Exception {
+        String url = ApiConfig.getTicketsUrl() + "/export/excel";
+        return getBytes(url);
+    }
+
+    /**
      * Convert DTO to Entity
      * Note: This involves fetching Customer and Equipment details, which might be
      * slow for large lists.

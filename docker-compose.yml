@@ -3,7 +3,7 @@ services:
   # DATABASE (PostgreSQL)
   # ----------------------------
   db:
-    image: postgres:18-alpine
+    image: postgres:18.1
     container_name: cyrcetech_db_docker
     environment:
       POSTGRES_DB: cyrcetech_db
@@ -12,7 +12,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql
     networks:
       - cyrcetech-network
     healthcheck:

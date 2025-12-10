@@ -86,6 +86,14 @@ public class CustomerApiService extends ApiClient {
     }
 
     /**
+     * Export customers to PDF
+     */
+    public byte[] exportCustomersToPdf() throws Exception {
+        String url = ApiConfig.getCustomersUrl() + "/export/pdf";
+        return getBytes(url);
+    }
+
+    /**
      * Convert DTO to Entity
      */
     private Customer toEntity(CustomerResponseDTO dto) {
@@ -94,7 +102,12 @@ public class CustomerApiService extends ApiClient {
                 dto.getName(),
                 dto.getTaxId(),
                 dto.getAddress(),
-                dto.getPhone());
+                dto.getPhone(),
+                dto.getRegistrationDate(),
+                dto.getCategory(),
+                dto.getCategoryDisplayName(),
+                dto.getSeniorityDays(),
+                dto.getFormattedSeniority());
     }
 
     /**

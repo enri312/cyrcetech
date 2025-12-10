@@ -66,7 +66,7 @@ goto end
 
 :login
 echo [LOGIN] Authenticating...
-curl -s -X POST http://localhost:8080/api/auth/login -H "Content-Type: application/json" -d "{\"email\":\"CENV\", \"password\":\"8994C\"}" > login_unified.json
+curl -s -X POST http://localhost:8080/api/auth/login -H "Content-Type: application/json" -d "{\"username\":\"CENV\", \"password\":\"8994C\"}" > login_unified.json
 for /f "tokens=*" %%a in ('powershell -Command "Get-Content login_unified.json | ConvertFrom-Json | Select-Object -ExpandProperty token"') do set TOKEN=%%a
 if "%TOKEN%"=="" (
     echo [ERROR] Login failed.

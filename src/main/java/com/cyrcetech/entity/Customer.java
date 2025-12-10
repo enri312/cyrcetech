@@ -11,7 +11,13 @@ public record Customer(
         String name,
         String taxId,
         String address,
-        String phone) {
+        String phone,
+        String registrationDate,
+        String category,
+        String categoryDisplayName,
+        long seniorityDays,
+        String formattedSeniority) {
+
     /**
      * Compact constructor with validation
      */
@@ -31,7 +37,15 @@ public record Customer(
      * Creates an empty customer (for form initialization)
      */
     public static Customer empty() {
-        return new Customer("", "", "", "", "");
+        return new Customer("", "", "", "", "", null, null, null, 0, null);
+    }
+
+    /**
+     * Constructor for backwards compatibility (creating new customers without
+     * category)
+     */
+    public static Customer create(String id, String name, String taxId, String address, String phone) {
+        return new Customer(id, name, taxId, address, phone, null, null, null, 0, null);
     }
 
     /**

@@ -10,6 +10,11 @@ public class CustomerResponseDTO {
     private String address;
     private String phone;
     private String formattedPhone;
+    private String registrationDate;
+    private String category;
+    private String categoryDisplayName;
+    private long seniorityDays;
+    private String formattedSeniority;
 
     // Constructors
     public CustomerResponseDTO() {
@@ -62,5 +67,45 @@ public class CustomerResponseDTO {
 
     public void setFormattedPhone(String formattedPhone) {
         this.formattedPhone = formattedPhone;
+    }
+
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategoryDisplayName() {
+        return categoryDisplayName;
+    }
+
+    public void setCategoryDisplayName(String categoryDisplayName) {
+        this.categoryDisplayName = categoryDisplayName;
+    }
+
+    public long getSeniorityDays() {
+        return seniorityDays;
+    }
+
+    public void setSeniorityDays(long seniorityDays) {
+        this.seniorityDays = seniorityDays;
+    }
+
+    public String getFormattedSeniority() {
+        return formattedSeniority;
+    }
+
+    public void setFormattedSeniority(String formattedSeniority) {
+        this.formattedSeniority = formattedSeniority;
     }
 }

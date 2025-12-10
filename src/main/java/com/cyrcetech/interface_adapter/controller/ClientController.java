@@ -11,10 +11,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.cyrcetech.app.I18nUtil;
@@ -35,6 +38,10 @@ public class ClientController {
     private TableColumn<Customer, String> phoneColumn;
     @FXML
     private TableColumn<Customer, String> addressColumn;
+    @FXML
+    private TableColumn<Customer, String> categoryColumn;
+    @FXML
+    private TableColumn<Customer, String> seniorityColumn;
 
     private final CustomerApiService customerApiService = new CustomerApiService();
 
@@ -54,6 +61,16 @@ public class ClientController {
                 cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().phone()));
         addressColumn.setCellValueFactory(
                 cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().address()));
+        categoryColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(
+                        cellData.getValue().categoryDisplayName() != null
+                                ? cellData.getValue().categoryDisplayName()
+                                : ""));
+        seniorityColumn.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(
+                        cellData.getValue().formattedSeniority() != null
+                                ? cellData.getValue().formattedSeniority()
+                                : cellData.getValue().seniorityDays() + " días"));
 
         loadClients();
     }
@@ -135,6 +152,31 @@ public class ClientController {
         }
     }
 
+    @FXML
+    private void handleExportPdf(ActionEvent event) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(I18nUtil.getBundle().getString("reports.save.title"));
+            fileChooser.setInitialFileName("clientes.pdf");
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+            Stage stage = (Stage) clientTable.getScene().getWindow();
+            File file = fileChooser.showSaveDialog(stage);
+
+            if (file != null) {
+                byte[] pdfData = customerApiService.exportCustomersToPdf();
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    fos.write(pdfData);
+                }
+                showInfo(I18nUtil.getBundle().getString("clients.export.success"));
+            }
+        } catch (Exception e) {
+            showError(I18nUtil.getBundle().getString("clients.export.error") + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void openClientForm(Customer customer) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cyrcetech/app/view/ClientFormView.fxml"));
@@ -165,6 +207,13 @@ public class ClientController {
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    private void showInfo(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.show();

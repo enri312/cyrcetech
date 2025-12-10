@@ -76,7 +76,6 @@ public class CustomerService {
     /**
      * Update existing customer
      */
-    @SuppressWarnings("null")
     public CustomerResponse updateCustomer(String id, UpdateCustomerRequest request) {
         if (id == null) {
             throw new IllegalArgumentException("Customer ID cannot be null");

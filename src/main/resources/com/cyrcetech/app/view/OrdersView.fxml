@@ -28,6 +28,8 @@
                     </font>
                 </Label>
                 <HBox HBox.hgrow="ALWAYS" />
+                <Button text="%orders.exportExcel" onAction="#handleExportExcel"
+                    styleClass="button-secondary" />
                 <Button text="%orders.newOrder" onAction="#handleNewOrder"
                     styleClass="button-primary" />
             </HBox>

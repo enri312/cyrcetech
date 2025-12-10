@@ -32,7 +32,9 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Login user", description = "Authenticate user and return JWT token")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+        System.out.println("DEBUG LOGIN: Username=" + request.getUsername());
+        System.out.println("DEBUG LOGIN: Password=" + request.getPassword());
         return ResponseEntity.ok(authService.login(request));
     }
 }

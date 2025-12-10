@@ -1,0 +1,29 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources
+> Task :testClasses
+
+> Task :test
+
+AuthIntegrationTest > initializationError FAILED
+    org.springframework.beans.factory.BeanDefinitionStoreException at ClassPathScanningCandidateComponentProvider.java:504
+        Caused by: org.springframework.core.type.classreading.ClassFormatException at SimpleMetadataReader.java:59
+            Caused by: java.lang.IllegalArgumentException at ClassReader.java:200
+
+1 test completed, 1 failed
+
+> Task :test FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///C:/Users/enri3/OneDrive/Desktop/Projectos/Cyrcetech/backend/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to generate a Build Scan (powered by Develocity).
+
+BUILD FAILED in 7s
+5 actionable tasks: 2 executed, 3 up-to-date

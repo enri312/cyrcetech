@@ -1,6 +1,6 @@
 @echo off
 echo [STEP 1] Logging in...
-curl -v -X POST http://localhost:8080/api/auth/login -H "Content-Type: application/json" -d "{\"email\":\"CENV\", \"password\":\"8994C\"}" > login_res.json 2> login_err.txt
+curl -v -X POST http://localhost:8080/api/auth/login -H "Content-Type: application/json" -d "{\"username\":\"CENV\", \"password\":\"8994C\"}" > login_res.json 2> login_err.txt
 for /f "tokens=*" %%a in ('powershell -Command "Get-Content login_res.json | ConvertFrom-Json | Select-Object -ExpandProperty token"') do set TOKEN=%%a
 
 if "%TOKEN%"=="" (

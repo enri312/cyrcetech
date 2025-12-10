@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 public class LoginRequest {
 
     @NotBlank(message = "Username is required")
+    @com.fasterxml.jackson.annotation.JsonProperty("username")
     private String username;
 
     @NotBlank(message = "Password is required")
+    @com.fasterxml.jackson.annotation.JsonProperty("password")
     private String password;
 
     public LoginRequest() {
