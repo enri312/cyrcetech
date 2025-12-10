@@ -12,16 +12,16 @@ import com.cyrcetech.infrastructure.session.SessionManager;
 public class AuthApiService extends ApiClient {
 
     /**
-     * Login with email and password
+     * Login with username and password
      * 
-     * @param email    User email (or username)
+     * @param username User username
      * @param password User password
      * @return AuthResponseDTO with token and user info
      * @throws Exception if login fails
      */
-    public AuthResponseDTO login(String email, String password) throws Exception {
+    public AuthResponseDTO login(String username, String password) throws Exception {
         String url = ApiConfig.getAuthUrl() + "/login";
-        LoginRequestDTO request = new LoginRequestDTO(email, password);
+        LoginRequestDTO request = new LoginRequestDTO(username, password);
         AuthResponseDTO response = post(url, request, AuthResponseDTO.class);
 
         // Store session

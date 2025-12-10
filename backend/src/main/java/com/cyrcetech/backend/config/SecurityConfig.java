@@ -4,7 +4,6 @@ import com.cyrcetech.backend.security.JwtAuthenticationFilter;
 import com.cyrcetech.backend.security.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,20 +13,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Security configuration for Spring Security 7.
+ * AuthenticationProvider is auto-configured by Spring Security
+ * based on UserDetailsService and PasswordEncoder beans.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
         private final JwtTokenProvider jwtTokenProvider;
-        private final AuthenticationProvider authenticationProvider;
         private final UserDetailsService userDetailsService;
 
         public SecurityConfig(JwtTokenProvider jwtTokenProvider,
-                        AuthenticationProvider authenticationProvider,
                         UserDetailsService userDetailsService) {
                 this.jwtTokenProvider = jwtTokenProvider;
-                this.authenticationProvider = authenticationProvider;
                 this.userDetailsService = userDetailsService;
         }
 
@@ -50,13 +51,21 @@ public class SecurityConfig {
                                                 .permitAll()
                                                 // Public Endpoints (if any, e.g. status check)
 
-                                                // User/Tech/Admin
+                                                // User/Tech/Admin - Customers (User needs to register clients)
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/customers/**")
-                                                .hasAnyRole("TECHNICIAN", "ADMIN")
+                                                .hasAnyRole("USER", "TECHNICIAN", "ADMIN")
+                                                .requestMatchers(org.springframework.http.HttpMethod.POST,
+                                                                "/api/customers/**")
+                                                .hasAnyRole("USER", "TECHNICIAN", "ADMIN")
+                                                // User/Tech/Admin - Equipment (User needs to register equipment)
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/equipment/**")
-                                                .hasAnyRole("TECHNICIAN", "ADMIN")
+                                                .hasAnyRole("USER", "TECHNICIAN", "ADMIN")
+                                                .requestMatchers(org.springframework.http.HttpMethod.POST,
+                                                                "/api/equipment/**")
+                                                .hasAnyRole("USER", "TECHNICIAN", "ADMIN")
+                                                // Tech/Admin only - Spare parts
                                                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                                                                 "/api/spare-parts/**")
                                                 .hasAnyRole("TECHNICIAN", "ADMIN")
@@ -77,7 +86,6 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated())
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                                .authenticationProvider(authenticationProvider)
                                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();

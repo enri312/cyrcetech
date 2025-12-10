@@ -32,7 +32,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Get all customers", description = "Retrieve a list of all customers")
     public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
         List<CustomerResponse> customers = customerService.getAllCustomers();
@@ -41,7 +41,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Get customer by ID", description = "Retrieve a specific customer by their ID")
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable String id) {
         CustomerResponse customer = customerService.getCustomerById(id);
@@ -50,7 +50,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Create new customer", description = "Create a new customer in the system")
     public ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CreateCustomerRequest request) {
         CustomerResponse created = customerService.createCustomer(request);
@@ -79,7 +79,7 @@ public class CustomerController {
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Search customers", description = "Search customers by name, tax ID, or phone")
     public ResponseEntity<List<CustomerResponse>> searchCustomers(@RequestParam String q) {
         List<CustomerResponse> customers = customerService.searchCustomers(q);

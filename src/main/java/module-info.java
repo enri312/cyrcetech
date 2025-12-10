@@ -11,7 +11,7 @@ module com.cyrcetech {
     opens com.cyrcetech.usecase to javafx.fxml;
     opens com.cyrcetech.infrastructure to javafx.fxml;
     opens com.cyrcetech.interface_adapter.controller to javafx.fxml;
-    opens com.cyrcetech.infrastructure.api.dto to com.google.gson;
+    opens com.cyrcetech.infrastructure.api.dto;
 
     exports com.cyrcetech.app;
     exports com.cyrcetech.usecase;

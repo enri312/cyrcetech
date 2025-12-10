@@ -6,6 +6,7 @@ public class AuthResponse {
     private String userId;
     private String email;
     private String role;
+    private String fullName;
 
     public AuthResponse() {
     }
@@ -15,6 +16,14 @@ public class AuthResponse {
         this.userId = userId;
         this.email = email;
         this.role = role;
+    }
+
+    public AuthResponse(String token, String userId, String email, String role, String fullName) {
+        this.token = token;
+        this.userId = userId;
+        this.email = email;
+        this.role = role;
+        this.fullName = fullName;
     }
 
     public String getToken() {
@@ -47,5 +56,13 @@ public class AuthResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

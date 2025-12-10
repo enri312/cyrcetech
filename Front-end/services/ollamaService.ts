@@ -6,7 +6,7 @@ export const getRepairDiagnosis = async (deviceType: string, problem: string): P
   try {
     // URL default for local Ollama
     const OLLAMA_URL = 'http://localhost:11434/api/generate';
-    
+
     // Construct the prompt
     const promptText = `
       Actúa como un técnico experto en reparaciones de hardware.
@@ -27,7 +27,7 @@ export const getRepairDiagnosis = async (deviceType: string, problem: string): P
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'deepseek-r1:8b', // Make sure this matches your 'ollama list' model name
+        model: 'phi4-mini', // Microsoft Phi-4 mini model
         prompt: promptText,
         stream: false, // False to get the full response at once
         options: {
@@ -43,7 +43,7 @@ export const getRepairDiagnosis = async (deviceType: string, problem: string): P
     const data = await response.json();
     let rawText = data.response;
 
-    // Deepseek-R1 often includes <think> tags for its reasoning process.
+    // Some models include <think> tags for reasoning. We remove them.
     // We remove them to show only the final result to the user.
     const cleanText = rawText.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
 
@@ -51,6 +51,6 @@ export const getRepairDiagnosis = async (deviceType: string, problem: string): P
 
   } catch (error) {
     console.error("AI Service Error:", error);
-    return "Error de conexión con Ollama local. \n\n1. Asegúrate de que Ollama esté corriendo (ollama serve). \n2. Verifica que tengas el modelo (ollama pull deepseek-r1:8b). \n3. Importante: Configura OLLAMA_ORIGINS='*' para permitir conexiones del navegador.";
+    return "Error de conexión con Ollama local. \n\n1. Asegúrate de que Ollama esté corriendo (ollama serve). \n2. Verifica que tengas el modelo (ollama pull phi4-mini). \n3. Importante: Configura OLLAMA_ORIGINS='*' para permitir conexiones del navegador.";
   }
 };

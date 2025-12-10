@@ -30,13 +30,14 @@ public class ApiClient {
      * Perform GET request
      */
     public <T> T get(String url, Class<T> responseType) throws Exception {
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET()
-                .header("Content-Type", "application/json")
-                .headers(getAuthHeaders())
-                .build();
+                .header("Content-Type", "application/json");
 
+        addAuthHeader(requestBuilder);
+
+        HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
@@ -50,13 +51,14 @@ public class ApiClient {
      * Perform GET request and return raw JSON string (for lists)
      */
     public String getString(String url) throws Exception {
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET()
-                .header("Content-Type", "application/json")
-                .headers(getAuthHeaders())
-                .build();
+                .header("Content-Type", "application/json");
 
+        addAuthHeader(requestBuilder);
+
+        HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
@@ -72,13 +74,14 @@ public class ApiClient {
     public <T> T post(String url, Object requestBody, Class<T> responseType) throws Exception {
         String jsonBody = gson.toJson(requestBody);
 
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                .header("Content-Type", "application/json")
-                .headers(getAuthHeaders())
-                .build();
+                .header("Content-Type", "application/json");
 
+        addAuthHeader(requestBuilder);
+
+        HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
@@ -94,12 +97,14 @@ public class ApiClient {
     public <T> T put(String url, Object requestBody, Class<T> responseType) throws Exception {
         String jsonBody = gson.toJson(requestBody);
 
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
-                .header("Content-Type", "application/json")
-                .build();
+                .header("Content-Type", "application/json");
 
+        addAuthHeader(requestBuilder);
+
+        HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
@@ -113,13 +118,14 @@ public class ApiClient {
      * Perform DELETE request
      */
     public void delete(String url) throws Exception {
-        HttpRequest request = HttpRequest.newBuilder()
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .DELETE()
-                .header("Content-Type", "application/json")
-                .headers(getAuthHeaders())
-                .build();
+                .header("Content-Type", "application/json");
 
+        addAuthHeader(requestBuilder);
+
+        HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
@@ -127,15 +133,27 @@ public class ApiClient {
         }
     }
 
+    /**
+     * Perform GET request for a list
+     */
+    public <T> T getList(String url, java.lang.reflect.Type listType) throws Exception {
+        String json = getString(url);
+        return gson.fromJson(json, listType);
+    }
+
     protected Gson getGson() {
         return gson;
     }
 
-    private String[] getAuthHeaders() {
+    /**
+     * Adds authorization header to request builder if token exists.
+     * This avoids the "wrong number of parameters" error when calling
+     * headers() with an empty array.
+     */
+    private void addAuthHeader(HttpRequest.Builder requestBuilder) {
         String token = com.cyrcetech.infrastructure.session.SessionManager.getInstance().getToken();
         if (token != null && !token.isEmpty()) {
-            return new String[] { "Authorization", "Bearer " + token };
+            requestBuilder.header("Authorization", "Bearer " + token);
         }
-        return new String[] {};
     }
 }

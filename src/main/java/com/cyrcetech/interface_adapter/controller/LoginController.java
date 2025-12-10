@@ -65,7 +65,9 @@ public class LoginController {
             CyrcetechApp.setRoot("view/MainView");
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (errorMessage.contains("401") || errorMessage.contains("403")) {
+            if (errorMessage == null) {
+                showError("Error: " + e.getClass().getSimpleName());
+            } else if (errorMessage.contains("401") || errorMessage.contains("403")) {
                 showError(I18nUtil.getBundle().getString("login.error.message"));
             } else if (errorMessage.contains("Connection refused")) {
                 showError("Error de conexión: El servidor no está disponible");

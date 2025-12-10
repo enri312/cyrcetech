@@ -128,10 +128,10 @@
             </VBox>
 
             <!-- AI Diagnosis (Read-only suggestion) -->
-            <VBox spacing="10">
+            <VBox spacing="10" VBox.vgrow="ALWAYS">
                 <Label text="%ticket.aiDiagnosis"
                     style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #d500f9;" />
-                <TextArea fx:id="aiDiagnosisArea" prefHeight="120.0" editable="false"
+                <TextArea fx:id="aiDiagnosisArea" prefHeight="250.0" VBox.vgrow="ALWAYS" editable="false" wrapText="true"
                     style="-fx-background-color: rgba(213, 0, 249, 0.1); -fx-border-color: rgba(213, 0, 249, 0.3); -fx-text-fill: #e0e0e0;"
                     promptText="%ticket.aiPlaceholder" />
             </VBox>

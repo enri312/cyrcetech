@@ -376,3 +376,37 @@
 .table-view .filler {
     -fx-background-color: #e8e8e8;
 }
+
+/* PieChart Styles - Dark text for legend on light background */
+.chart {
+    -fx-background-color: transparent;
+}
+
+.chart-legend {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #333333;
+}
+
+.chart-legend-item-symbol {
+    -fx-background-radius: 50%;
+}
+
+.chart-pie-label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 12px;
+}
+
+.default-color0.chart-pie { -fx-pie-color: #ff6b6b; }
+.default-color1.chart-pie { -fx-pie-color: #ffa94d; }
+.default-color2.chart-pie { -fx-pie-color: #69db7c; }
+.default-color3.chart-pie { -fx-pie-color: #74c0fc; }
+
+.default-color0.chart-legend-item-symbol { -fx-background-color: #ff6b6b; }
+.default-color1.chart-legend-item-symbol { -fx-background-color: #ffa94d; }
+.default-color2.chart-legend-item-symbol { -fx-background-color: #69db7c; }
+.default-color3.chart-legend-item-symbol { -fx-background-color: #74c0fc; }

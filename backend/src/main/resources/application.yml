@@ -3,8 +3,8 @@ spring:
     name: cyrcetech-backend
   
   datasource:
-    url: jdbc:postgresql://localhost:5433/cyrcetech
-    username: admin
+    url: jdbc:postgresql://localhost:5433/cyrcetech_db
+    username: postgres
     password: ${DB_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
   

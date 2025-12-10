@@ -20,10 +20,13 @@ public class User implements UserDetails {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password", nullable = false)
@@ -42,9 +45,9 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String fullName, String email, String password, Role role) {
+    public User(String username, String fullName, String password, Role role) {
+        this.username = username;
         this.fullName = fullName;
-        this.email = email;
         this.password = password;
         this.role = role;
     }
@@ -77,7 +80,11 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

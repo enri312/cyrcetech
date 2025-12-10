@@ -88,6 +88,13 @@
                         strokeLineJoin="ROUND" />
                 </graphic>
             </Button>
+            <Button fx:id="auditButton" text="Auditoría" onAction="#handleAudit" styleClass="sidebar-button" maxWidth="Infinity">
+                <graphic>
+                    <SVGPath content="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+                        fill="TRANSPARENT" stroke="WHITE" strokeWidth="2" strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND" />
+                </graphic>
+            </Button>
 
             <!-- Spacer -->
             <VBox VBox.vgrow="ALWAYS" />

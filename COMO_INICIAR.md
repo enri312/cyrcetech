@@ -26,7 +26,7 @@ Para usar el diagnóstico de IA, **antes de ejecutar `INICIAR.bat`**:
 
 2. **Verifica que el modelo esté disponible**:
    ```bash
-   ollama pull deepseek-r1:8b
+   ollama pull phi4-mini
    ```
 
 > **Nota**: Si Ollama no está corriendo, la aplicación funcionará igual pero sin diagnóstico de IA.

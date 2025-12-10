@@ -41,8 +41,8 @@ class AuthControllerUnitTest {
 
     @Test
     void login_ShouldReturnToken() {
-        LoginRequest request = new LoginRequest("admin@test.com", "password");
-        AuthResponse response = new AuthResponse("token123", "id1", "admin@test.com", "ROLE_ADMIN");
+        LoginRequest request = new LoginRequest("admin", "password");
+        AuthResponse response = new AuthResponse("token123", "id1", "admin", "ROLE_ADMIN");
 
         when(authService.login(request)).thenReturn(response);
 

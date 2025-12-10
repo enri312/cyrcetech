@@ -43,6 +43,8 @@ public class MainController {
     private Button sparePartsButton;
     @FXML
     private Button technicalHistoryButton;
+    @FXML
+    private Button auditButton;
 
     private final TicketApiService ticketApiService = new TicketApiService();
 
@@ -53,22 +55,30 @@ public class MainController {
     }
 
     private void applyRolePermissions() {
+        // Audit button is only for admins
+        setButtonVisible(auditButton, SessionManager.getInstance().isAdmin());
+
         if (SessionManager.getInstance().isUser()) {
-            // User only sees Home + My Tickets (New/Orders)
-            setButtonVisible(clientsButton, false);
-            setButtonVisible(equipmentButton, false);
-            setButtonVisible(sparePartsButton, false);
-            setButtonVisible(technicalHistoryButton, false);
+            // 📞 Usuario/User (Atención Cliente)
+            // ✅ Registrar clientes y equipos
+            // ✅ Crear órdenes al recibir equipos
+            // ✅ Entregar equipos (marcar como entregado)
+            // ❌ NO ve reportes financieros / historial técnico
+            setButtonVisible(clientsButton, true); // Registrar clientes
+            setButtonVisible(equipmentButton, true); // Registrar equipos
+            setButtonVisible(sparePartsButton, false); // NO ve inventario técnico
+            setButtonVisible(technicalHistoryButton, false); // NO ve reportes
         } else if (SessionManager.getInstance().isTechnician()) {
-            // Technician sees almost everything except detailed admin stuff if any
-            // Based on requirement: View Clients, Equipment, Spare Parts = Checked.
-            // Assuming Technical History is for everyone or Tech+
-            setButtonVisible(clientsButton, true);
-            setButtonVisible(equipmentButton, true);
-            setButtonVisible(sparePartsButton, true);
-            setButtonVisible(technicalHistoryButton, true);
+            // 🔧 Técnico/Technician (Reparador)
+            // ✅ Ver inventario y alertas
+            // ✅ Agregar repuestos a sus órdenes
+            // ❌ NO ve finanzas / NO gestiona usuarios
+            setButtonVisible(clientsButton, true); // Ver clientes
+            setButtonVisible(equipmentButton, true); // Ver equipos
+            setButtonVisible(sparePartsButton, true); // Ver inventario
+            setButtonVisible(technicalHistoryButton, true); // Ver historial técnico
         }
-        // Admin sees everything (default)
+        // 👔 Admin sees everything (default) - including Audit
     }
 
     private void setButtonVisible(Button button, boolean visible) {
@@ -225,6 +235,15 @@ public class MainController {
     private void handleTechnicalHistory(ActionEvent event) {
         try {
             CyrcetechApp.setRoot("view/TechnicalHistoryView");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleAudit(ActionEvent event) {
+        try {
+            CyrcetechApp.setRoot("view/AuditView");
         } catch (IOException e) {
             e.printStackTrace();
         }

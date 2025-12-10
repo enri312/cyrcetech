@@ -11,6 +11,7 @@ Cyrcetech es una solución completa que permite gestionar:
 - 🎫 **Órdenes de Reparación** - Seguimiento del estado de reparaciones
 - 🧰 **Inventario de Repuestos** - Control de stock y proveedores
 - 💰 **Facturación** - Generación de facturas y seguimiento de pagos
+- 🤖 **IA Local (Phi4-mini)** - Diagnóstico asistido por Ollama
 
 ---
 
@@ -60,6 +61,7 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 | Database | PostgreSQL 18.1 (Docker) |
 | Frontend Desktop | JavaFX 21, Gson |
 | Frontend Web | React 19 (Vite) [Carpeta: `Front-end`] |
+| IA Local | Ollama + **Phi4-mini** (Microsoft) |
 
 ---
 
@@ -134,6 +136,8 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 | **Exportar a Excel** | `GET /api/tickets/export/excel` |
 | **Exportar a PDF** | `GET /api/customers/export/pdf` |
 | **CI/CD** | Pipelines automáticos para Backend y Frontend |
+| **IA Local (Phi4-mini)** | Diagnóstico asistido con Ollama (tiempo de respuesta ~10-30s) |
+| **Permisos por Rol** | Usuario puede ver/crear Clientes y Equipos |
 
 ---
 
@@ -145,6 +149,6 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 
 ---
 
-**Versión**: 2.3.0
-**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅ | Auditoría ✅ | CI/CD ✅
-**Última actualización**: 2025-12-07
+**Versión**: 2.4.0
+**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅ | Auditoría ✅ | CI/CD ✅ | IA Local ✅
+**Última actualización**: 2025-12-10

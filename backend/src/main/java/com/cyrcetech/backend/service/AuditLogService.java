@@ -53,10 +53,11 @@ public class AuditLogService {
                 userRole = auth.getAuthorities().stream()
                         .filter(a -> a.getAuthority().startsWith("ROLE_"))
                         .map(a -> {
-                            String roleName = a.getAuthority().replace("ROLE_", "");
+                            String roleName = a.getAuthority(); // Keep full ROLE_ADMIN format
                             try {
                                 return Role.valueOf(roleName);
                             } catch (IllegalArgumentException e) {
+                                log.debug("Could not parse role: {}", roleName);
                                 return null;
                             }
                         })
@@ -71,6 +72,24 @@ public class AuditLogService {
         } catch (Exception e) {
             log.error("Failed to create audit log: {}", e.getMessage());
             // Don't throw - audit logging should not break main functionality
+        }
+    }
+
+    /**
+     * Log a login action - special case since SecurityContext is not yet available.
+     *
+     * @param username The username that logged in
+     * @param role     The user's role
+     * @param userId   The user's ID
+     */
+    public void logLogin(String username, Role role, String userId) {
+        try {
+            AuditLog auditLog = new AuditLog(userId, username, role, AuditAction.LOGIN, "User", userId,
+                    "Inicio de sesión exitoso");
+            auditLogRepository.save(auditLog);
+            log.info("Login audit log created for user: {}", username);
+        } catch (Exception e) {
+            log.error("Failed to create login audit log: {}", e.getMessage());
         }
     }
 

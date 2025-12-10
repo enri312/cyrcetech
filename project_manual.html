@@ -4,10 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyrcetech Project Manual v2.3.0</title>
+    <title>Cyrcetech Project Manual v2.4.0</title>
+    <!-- Add Roboto Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             line-height: 1.6;
             max-width: 1000px;
             margin: 0 auto;
@@ -116,11 +120,11 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+        mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
 
         document.addEventListener('DOMContentLoaded', async () => {
             const markdownContent = `
-# Manual del Proyecto Cyrcetech v2.3.0
+# Manual del Proyecto Cyrcetech v2.4.0
 
 ## Tabla de Contenidos
 1. [Introducción](#1-introducción)
@@ -128,24 +132,25 @@
 3. [Diagrama de Flujo de Datos (DFD Nivel 1)](#3-diagrama-de-flujo-de-datos-dfd-nivel-1)
 4. [Casos de Uso](#4-casos-de-uso)
 5. [Diagrama de Clases](#5-diagrama-de-clases)
-6. [Diseño del Sistema](#6-diseño-del-sistema)
+6. [Diseño y Arquitectura](#6-diseño-y-arquitectura)
 7. [Implementación](#7-implementación)
-8. [Nuevas Funcionalidades v2.3.0](#8-nuevas-funcionalidades-v230)
+8. [Nuevas Funcionalidades v2.4.0](#8-nuevas-funcionalidades-v240)
 
 ---
 
 ## 1. Introducción
 
-Cyrcetech es un sistema integral de **Gestión de Taller de Reparación (SaaS / On-Premise)** diseñado para administrar órdenes de servicio, clientes, inventario y facturación. El sistema utiliza una arquitectura híbrida con un Backend centralizado (Spring Boot) y clientes Frontend (JavaFX Desktop y React Web).
+Cyrcetech es un sistema integral de **Gestión de Taller de Reparación (SaaS / On-Premise)** diseñado para administrar órdenes de servicio, clientes, inventario y facturación. El sistema utiliza una arquitectura híbrida con un Backend centralizado (Spring Boot), un cliente Desktop (JavaFX con Clean Architecture) y un cliente Web (React).
 
 ### Tecnologías Clave
 | Componente | Tecnología |
 |------------|------------|
-| Backend | Java 25, Spring Boot 3.4.0, Spring Security (JWT) |
-| Frontend Desktop | JavaFX 21, Modular, CSS |
-| Frontend Web | React 19 (Vite) |
-| Base de Datos | PostgreSQL 18 |
+| Backend | Java 25, Spring Boot 4.0.0, Spring Security (JWT) |
+| Frontend Desktop | JavaFX 25, **Clean Architecture**, Modular |
+| Frontend Web | React 19.2 (Vite), Google GenAI SDK |
+| Base de Datos | PostgreSQL 18.1 |
 | Integraciones | CyrcePDF (PDF), Apache POI (Excel), n8n (Automatización) |
+| Inteligencia Artificial | **Ollama (Phi4-mini)** (Desktop) / **Google Gemini** (Web) |
 
 ---
 
@@ -158,42 +163,29 @@ graph TB
     subgraph Actores Externos
         Admin["👨‍💼 Administrador"]
         Tech["👨‍🔧 Técnico"]
-        User["� Usuario"]
-        Customer["🧑‍� Cliente"]
+        User["👤 Usuario"]
+        Customer["🧑‍🤝‍🧑 Cliente"]
         N8N["🔄 n8n Automation"]
+        AI_Local["🧠 Ollama (Phi4-mini)"]
+        AI_Cloud["🌩️ Google Gemini API"]
     end
 
     subgraph Sistema Cyrcetech
         SYS["🔧 Sistema de Gestión de Taller"]
     end
 
-    Admin -->|"Gestionar Usuarios y Reportes"| SYS
-    Tech -->|"Crear/Actualizar Tickets"| SYS
-    User -->|"Crear Tickets, Ver Historial"| SYS
-    Customer -->|"Consultar Estado"| SYS
+    Admin -->|"Gestionar Usuarios, Auditoría, Reportes"| SYS
+    Tech -->|"Gestionar Tickets, Clientes, Equipos"| SYS
+    User -->|"Crear Tickets, Ver Clientes/Equipos"| SYS
+    Customer -->|"Recibir Notificaciones"| SYS
     
     SYS -->|"Reportes Excel/PDF"| Admin
     SYS -->|"Orden de Servicio PDF"| Customer
     SYS -->|"Webhooks"| N8N
+    SYS <-->|"Diagnóstico Local"| AI_Local
+    SYS <-->|"Asistencia Web"| AI_Cloud
     N8N -->|"Emails Automáticos"| Customer
 \`\`\`
-
-### Entradas del Sistema
-| Entrada | Actor | Descripción |
-|---------|-------|-------------|
-| Datos de Cliente | Técnico/Admin | Nombre, teléfono, dirección, RUC/DNI |
-| Datos de Equipo | Técnico | Marca, modelo, tipo, condición física |
-| Orden de Servicio | Técnico | Descripción del problema, costo estimado |
-| Pagos | Admin | Registro de pagos parciales/totales |
-
-### Salidas del Sistema
-| Salida | Destino | Formato |
-|--------|---------|---------|
-| Orden de Servicio | Cliente | PDF |
-| Factura | Cliente | PDF |
-| Reporte de Tickets | Admin | Excel (.xlsx) |
-| Reporte de Clientes | Admin | PDF (con antigüedad) |
-| Logs de Auditoría | Admin | JSON/Tabla |
 
 ---
 
@@ -202,9 +194,8 @@ graph TB
 \`\`\`mermaid
 flowchart TB
     subgraph Externos
-        E1["👨‍🔧 Técnico"]
+        E1["👨‍🔧 Técnico / 👤 Usuario"]
         E2["👨‍💼 Administrador"]
-        E3["👤 Usuario"]
     end
 
     subgraph Procesos
@@ -221,14 +212,15 @@ flowchart TB
         D3[("tickets")]
         D4[("invoices")]
         D5[("audit_logs")]
+        D6[("users")]
     end
 
     E1 --> P1 --> D1
     E1 --> P2 --> D2
     E1 --> P3 --> D3
-    E3 --> P3
     E2 --> P4 --> D4
     E2 --> P5 --> D5
+    D6 --> P5
     
     P1 & P2 & P3 & P4 --> P5
 \`\`\`
@@ -242,55 +234,44 @@ graph LR
     subgraph Actores
         Admin["👨‍💼 Admin"]
         Tech["👨‍🔧 Técnico"]
-        User["� Usuario"]
+        User["👤 Usuario"]
     end
 
-    subgraph Clientes
-        UC1["Registrar Cliente"]
-        UC2["Buscar Cliente"]
-        UC4["Exportar PDF"]
+    subgraph Clientes_Equipos
+        UC1["Registrar/Ver Cliente"]
+        UC2["Registrar/Ver Equipo"]
+        UC3["Exportar Clientes PDF"]
     end
 
     subgraph Tickets
         UC8["Crear Ticket"]
         UC9["Actualizar Estado"]
-        UC11["Exportar Excel"]
+        UC11["Exportar Tickets Excel"]
     end
 
-    subgraph Admin Only
+    subgraph Admin_Only
         UC12["Ver Auditoría"]
         UC13["Gestionar Usuarios"]
+        UC14["Configuración Sistema"]
     end
 
     Tech --> UC1 & UC2 & UC8 & UC9
-    User --> UC8
-    Admin --> UC1 & UC4 & UC8 & UC11 & UC12 & UC13
+    User --> UC1 & UC2 & UC8
+    Admin --> UC1 & UC2 & UC3 & UC8 & UC9 & UC11 & UC12 & UC13 & UC14
 \`\`\`
 
-### Descripción de Casos de Uso Principales
-
-| ID | Caso de Uso | Actor | Descripción |
-|----|-------------|-------|-------------|
-| UC1 | Registrar Cliente | Técnico/Admin | Crear nuevo cliente con datos de contacto |
-| UC4 | Exportar Clientes PDF | Admin | Generar PDF con lista de clientes y antigüedad |
-| UC8 | Crear Ticket | Técnico | Registrar nueva orden de servicio |
-| UC9 | Actualizar Estado | Técnico | Cambiar estado (PENDING → DIAGNOSING → READY) |
-| UC11 | Exportar Tickets Excel | Admin | Descargar todos los tickets en formato Excel |
-| UC12 | Ver Auditoría | Admin | Consultar logs de acciones del sistema |
-
-### Matriz de Permisos por Rol
+### Matriz de Permisos por Rol (Actualizado v2.4.0)
 
 | Acción | Usuario | Técnico | Admin |
 |--------|:-------:|:-------:|:-----:|
 | Ver sus propios datos | ✅ | ✅ | ✅ |
-| Editar su perfil | ✅ | ✅ | ✅ |
-| Crear tickets | ✅ | ✅ | ✅ |
+| **Ver/Crear Clientes** | ✅ | ✅ | ✅ |
+| **Ver/Crear Equipos** | ✅ | ✅ | ✅ |
+| **Crear Tickets** | ✅ | ✅ | ✅ |
+| Editar Tickets (Estado/Diagnóstico) | ❌ | ✅ | ✅ |
 | Ver todos los tickets | ❌ | ✅ | ✅ |
-| Tomar/gestionar tickets | ❌ | ✅ | ✅ |
+| Ver repuestos/inventario | ❌ | ✅ | ✅ |
 | Crear usuarios | ❌ | ❌ | ✅ |
-| Cambiar roles | ❌ | ❌ | ✅ |
-| Ver reportes completos | ❌ | ❌ | ✅ |
-| Configurar el sistema | ❌ | ❌ | ✅ |
 | Ver auditoría | ❌ | ❌ | ✅ |
 | Exportar Excel/PDF | ❌ | ✅ | ✅ |
 
@@ -300,15 +281,24 @@ graph LR
 
 \`\`\`mermaid
 classDiagram
+    class User {
+        -String id
+        -String username
+        -String fullName
+        -String email
+        -String password
+        -Role role
+    }
+
     class Customer {
         -String id
         -String name
         -String taxId
+        -String phone
         -LocalDate registrationDate
         -CustomerCategory category
         +getSeniorityDays()
         +getFormattedSeniority()
-        +updateCategory()
     }
 
     class CustomerCategory {
@@ -325,81 +315,100 @@ classDiagram
         -String model
         -DeviceType deviceType
         -Customer customer
-        +getSummary()
-    }
-
-    class Ticket {
-        -String id
-        -Customer customer
-        -Equipment equipment
-        -TicketStatus status
-        -double estimatedCost
-        -double amountPaid
-        +getRemainingBalance()
-        +isFullyPaid()
     }
 
     class AuditLog {
         -String id
         -String userId
+        -String username
+        -Role userRole
         -AuditAction action
         -String entityType
+        -String details
+        -String ipAddress
         -LocalDateTime timestamp
     }
 
-    Customer "1" --> "*" Equipment : owns
-    Customer "1" --> "*" Ticket : places
-    Customer --> CustomerCategory
-    Equipment "1" --> "*" Ticket : subject of
+    User "1" -- "*" AuditLog : generates
+    Customer "1" *-- "*" Equipment : owns
+    Customer "1" -- "*" Ticket : places
+    Equipment "1" -- "*" Ticket : subject of
 \`\`\`
 
 ---
 
-## 6. Diseño del Sistema
+## 6. Diseño y Arquitectura
 
-### 6.1 Arquitectura Clean Architecture
+### 6.1 Arquitectura Backend (Spring Boot Layers)
+El Backend sigue una arquitectura en capas tradicional, robusta y escalable.
 
 \`\`\`mermaid
 graph TB
-    subgraph Presentation
-        JFX["JavaFX Desktop"]
-        React["React Web"]
+    subgraph "API Layer (Controller)"
+        AC[AuthController]
+        CC[CustomerController]
+        TC[TicketController]
     end
 
-    subgraph API Layer
-        Auth["AuthController"]
-        Cust["CustomerController"]
-        Tick["TicketController"]
-        Audit["AuditController"]
+    subgraph "Business Layer (Service)"
+        AS[AuthService]
+        CS[CustomerService]
+        TS[TicketService]
     end
 
-    subgraph Business Layer
-        CustS["CustomerService"]
-        TickS["TicketService"]
-        AuditS["AuditLogService"]
-        PdfS["PdfExportService"]
-        ExcelS["ExcelExportService"]
-    end
-
-    subgraph Data Layer
-        Repo["Repositories"]
-    end
-
-    subgraph External
+    subgraph "Data Layer (Repository & Entity)"
+        AR[UserRepository]
+        CR[CustomerRepository]
+        TR[TicketRepository]
         DB[("PostgreSQL")]
-        N8N["n8n Webhooks"]
     end
 
-    JFX & React --> Auth & Cust & Tick & Audit
-    Cust --> CustS --> Repo --> DB
-    Tick --> TickS --> Repo
-    TickS --> ExcelS
-    TickS --> N8N
-    CustS --> PdfS
-    Audit --> AuditS --> Repo
+    AC --> AS
+    CC --> CS
+    TC --> TS
+    AS --> AR
+    CS --> CR
+    TS --> TR
+    AR & CR & TR --> DB
 \`\`\`
 
-### 6.2 Modelo de Datos (ERD)
+### 6.2 Arquitectura Frontend Desktop (**Clean Architecture**)
+El cliente JavaFX ha sido refactorizado para seguir **Clean Architecture**, desacoplando la UI de la lógica de negocio y la infraestructura.
+
+\`\`\`mermaid
+graph TB
+    subgraph "Presentation Layer"
+        View["JavaFX Views (.fxml)"]
+        ViewModel["View Models"]
+    end
+
+    subgraph "Interface Adapter Layer"
+        Controller["Controllers"]
+        Presenter["Presenters"]
+    end
+
+    subgraph "Application Layer (Use Cases)"
+        UC_Auth["AuthUseCase"]
+        UC_Ticket["CreateTicketUseCase"]
+    end
+
+    subgraph "Domain Layer"
+        Entity["Entidades del Dominio"]
+    end
+
+    subgraph "Infrastructure Layer"
+        API["ApiService (Http Client)"]
+        Storage["LocalStorage"]
+    end
+
+    View --> Controller
+    Controller --> UC_Auth & UC_Ticket
+    UC_Auth --> Entity
+    UC_Auth --> API
+    API --> Entity
+\`\`\`
+
+### 6.3 Modelo de Datos (ERD)
 
 \`\`\`mermaid
 erDiagram
@@ -409,172 +418,96 @@ erDiagram
     equipment ||--o{ tickets : subject_of
     tickets ||--o{ invoices : generates
 
+    users {
+        uuid id PK
+        varchar username UK
+        varchar full_name
+        varchar email
+        varchar password
+        varchar role
+    }
+
     customers {
         uuid id PK
         varchar name
         varchar tax_id UK
+        varchar phone
         date registration_date
-        varchar category
-    }
-
-    equipment {
-        uuid id PK
-        varchar brand
-        varchar model
-        varchar device_type
-        uuid customer_id FK
-    }
-
-    tickets {
-        uuid id PK
-        uuid customer_id FK
-        uuid equipment_id FK
-        varchar status
-        decimal estimated_cost
-        decimal amount_paid
-        date date_created
+        enum category
     }
 
     audit_logs {
         uuid id PK
         uuid user_id
-        varchar action
+        varchar username
+        enum user_role
+        enum action
         varchar entity_type
+        text details
         timestamp timestamp
     }
 \`\`\`
-
-### 6.3 APIs / Módulos Internos
-
-| Módulo | Función | Entradas | Salidas |
-|--------|---------|----------|---------|
-| AuthService | Autenticación JWT | email, password | JWT Token |
-| CustomerService | CRUD Clientes | CustomerRequest | CustomerResponse |
-| TicketService | Gestión Tickets | TicketRequest | TicketResponse |
-| AuditLogService | Registro de acciones | action, entity | void |
-| ExcelExportService | Exportar a Excel | List<Ticket> | byte[] (xlsx) |
-| CustomerPdfExportService | Exportar a PDF | List<Customer> | byte[] (pdf) |
 
 ---
 
 ## 7. Implementación
 
-### 7.1 Lenguaje y Librerías
+### 7.1 Lenguaje y Librerías Actualizadas
 
 | Componente | Tecnología | Versión |
 |------------|------------|---------|
-| Lenguaje | Java | 25 |
-| Framework Backend | Spring Boot | 3.4.0 |
-| ORM | Spring Data JPA | 6.x |
-| Seguridad | Spring Security + JWT | 6.x |
-| PDF | CyrcePDF | 1.0.0 |
-| Excel | Apache POI | 5.2.5 |
-| Base de Datos | PostgreSQL | 18.1 |
-| Frontend Desktop | JavaFX | 21 |
-| Frontend Web | React + Vite | 19 |
+| **Lenguaje** | Java | 25 |
+| **Framework Backend** | Spring Boot | 4.0.0 |
+| **PDF Engine** | CyrcePDF (Propia) | 1.0.0 |
+| **Frontend Web** | React | 19.2.0 |
+| **Web AI SDK** | Google GenAI | 1.30.0 |
+| **Desktop AI** | Ollama (Phi4-mini) | Latest |
+| **Build Tool** | Gradle | 9.2.1 |
 
-### 7.2 Requisitos del Sistema
+### 7.2 Estructura del Proyecto
 
-| Requisito | Mínimo | Recomendado |
-|-----------|--------|-------------|
-| JDK | 21 | 25 |
-| RAM | 4 GB | 8 GB |
-| Disco | 500 MB | 2 GB |
-| Docker | 20.x | 24.x |
-
-### 7.3 Estructura del Proyecto
-
-\`\`\`
+\`\`\`text
 cyrcetech/
-├── backend/                          # Spring Boot Backend
-│   ├── src/main/java/.../
-│   │   ├── config/                   # Configuraciones
-│   │   ├── controller/               # REST Controllers
-│   │   ├── domain/entity/            # Entidades JPA
-│   │   ├── dto/                      # Request/Response DTOs
-│   │   ├── repository/               # Repositories
-│   │   └── service/                  # Lógica de negocio
-│   └── build.gradle
+├── backend/                       # Spring Boot (Layered Arch)
+│   ├── config/
+│   ├── controller/
+│   ├── domain/entity/
+│   ├── repository/
+│   └── service/
 │
-├── src/main/java/                    # JavaFX Frontend
-│   ├── app/
-│   ├── entity/
-│   ├── infrastructure/api/
-│   └── interface_adapter/controller/
+├── src/main/java/com/cyrcetech/   # JavaFX Client (Clean Arch)
+│   ├── app/                       # Entry Point
+│   ├── entity/                    # Domain Entities
+│   ├── infrastructure/            # API Implementation
+│   ├── interface_adapter/         # Controllers
+│   └── usecase/                   # Business Logic
 │
-├── Front-end/                        # React Frontend
-│   └── src/
-│
-└── docker-compose.yml
-\`\`\`
-
-\`\`\`
-
-### 7.4 Arquitectura del Frontend Web (React)
-
-El cliente web es una SPA (Single Page Application) construida con **React 19** y **Vite**.
-
-#### Diagrama de Componentes
-\`\`\`mermaid
-graph TD
-    App[App.tsx] --> Auth[AuthProvider]
-    Auth --> Layout
-    Layout --> Sidebar
-    Layout --> Main
-    Main --> Views
-    
-    subgraph Views
-        Dash[DashboardView]
-        Tickets[TicketListView]
-        Clients[ClientsView]
-        Audit[AuditView]
-    end
-    
-    subgraph Services
-        Api[api.ts]
-        Hooks[useTicketSystem]
-    end
-    
-    Views --> Services
-\`\`\`
-
-#### Organización
-- **\`components/ui\`**: Elementos Glassmorphism (Cards, Buttons).
-- **\`views/\`**: Pantallas (AuditView, ClientsView).
-- **\`services/\`**: API Client (Axios/Fetch).
-
-### 7.5 Fragmentos de Código
-
-**Categorización Automática de Clientes:**
-\`\`\`java
-public static CustomerCategory fromDays(long days) {
-    if (days <= 30) return NUEVO;
-    if (days <= 180) return REGULAR;
-    if (days <= 365) return VIP;
-    return ESPECIAL;
-}
+└── Front-end/                     # React Web App
+    ├── src/components/
+    ├── src/views/
+    └── package.json
 \`\`\`
 
 ---
 
-## 8. Nuevas Funcionalidades v2.3.0
+## 8. Nuevas Funcionalidades v2.4.0
 
-### Categoría de Clientes
-| Categoría | Rango | Descripción |
-|-----------|-------|-------------|
-| NUEVO | 0-30 días | Cliente reciente |
-| REGULAR | 1-6 meses | Cliente establecido |
-| VIP | 6-12 meses | Cliente fiel |
-| ESPECIAL | 1+ año | Cliente preferencial |
+### ✅ Autenticación Mejorada
+- Migración de login por **Username** en lugar de Email.
+- Entidad \`User\` actualizada con campo \`username\` único.
 
-### Sistema de Auditoría
-- Registro automático de todas las acciones (LIST, VIEW, CREATE, UPDATE, DELETE)
-- Filtros por usuario, rol, entidad y fecha
-- Solo accesible por usuarios ADMIN
+### ✅ Permisos de Usuario (Role: USER)
+- Acceso habilitado para **Ver y Crear Clientes**.
+- Acceso habilitado para **Ver y Crear Equipos**.
+- *Nota: Los usuarios estándar siguen restringidos para editar tickets avanzados o ver auditoría.*
 
-### Exportaciones
-- **Excel (Tickets)**: \`GET /api/tickets/export/excel\`
-- **PDF (Clientes)**: \`GET /api/customers/export/pdf\`
+### ✅ Arquitectura Limpia (Frontend Desktop)
+- Implementación de **Clean Architecture** en el cliente JavaFX.
+- Separación clara entre \`interface_adapter\`, \`usecase\`, \`infrastructure\` y \`entity\`.
+
+### ✅ Integración de IA Híbrida
+- **Desktop**: Uso de **Ollama** con modelo **Phi4-mini** para diagnósticos locales offline.
+- **Web**: Integración con **Google Gemini API** para asistencia en la nube.
 
 ---
 

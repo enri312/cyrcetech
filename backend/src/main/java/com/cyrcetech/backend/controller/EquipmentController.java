@@ -33,7 +33,7 @@ public class EquipmentController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Get all equipment", description = "Retrieve a list of all equipment")
     public ResponseEntity<List<EquipmentResponse>> getAllEquipment() {
         List<EquipmentResponse> equipment = equipmentService.getAllEquipment();
@@ -42,7 +42,7 @@ public class EquipmentController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Get equipment by ID", description = "Retrieve equipment by its ID")
     public ResponseEntity<EquipmentResponse> getEquipmentById(@PathVariable String id) {
         EquipmentResponse equipment = equipmentService.getEquipmentById(id);
@@ -51,7 +51,7 @@ public class EquipmentController {
     }
 
     @GetMapping("/customer/{customerId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Get equipment by customer", description = "Retrieve all equipment for a specific customer")
     public ResponseEntity<List<EquipmentResponse>> getEquipmentByCustomerId(@PathVariable String customerId) {
         List<EquipmentResponse> equipment = equipmentService.getEquipmentByCustomerId(customerId);
@@ -69,7 +69,7 @@ public class EquipmentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Create new equipment", description = "Create a new equipment entry")
     public ResponseEntity<EquipmentResponse> createEquipment(@Valid @RequestBody CreateEquipmentRequest request) {
         EquipmentResponse created = equipmentService.createEquipment(request);
@@ -98,7 +98,7 @@ public class EquipmentController {
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TECHNICIAN', 'USER')")
     @Operation(summary = "Search equipment", description = "Search equipment by brand, model, or serial number")
     public ResponseEntity<List<EquipmentResponse>> searchEquipment(@RequestParam String q) {
         List<EquipmentResponse> equipment = equipmentService.searchEquipment(q);
