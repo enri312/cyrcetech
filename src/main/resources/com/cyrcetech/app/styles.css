@@ -3,8 +3,8 @@
     background-color: #0f0f1a;
     -fx-background-color: #0f0f1a;
     /* Deep dark background */
-    font-family: 'Segoe UI', sans-serif;
-    -fx-font-family: 'Segoe UI', sans-serif;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    -fx-font-family: 'Roboto', 'Segoe UI', sans-serif;
     -fx-text-fill: white;
 }
 
@@ -320,6 +320,7 @@
 
 /* TableView Styles - Dark text on light background */
 .table-view {
+    background-color: #f5f5f5;
     -fx-background-color: #f5f5f5;
     -fx-control-inner-background: #ffffff;
     -fx-control-inner-background-alt: #f9f9f9;
@@ -328,35 +329,44 @@
 }
 
 .table-view .column-header-background {
+    background-color: #e8e8e8;
     -fx-background-color: #e8e8e8;
 }
 
 .table-view .column-header {
+    background-color: #e8e8e8;
     -fx-background-color: #e8e8e8;
+    border-color: #d0d0d0;
     -fx-border-color: #d0d0d0;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: #333333;
+    font-weight: bold;
     -fx-font-weight: bold;
 }
 
 .table-view .table-cell {
     -fx-text-fill: #333333;
     -fx-alignment: CENTER-LEFT;
+    padding: 5px 10px;
     -fx-padding: 5 10;
 }
 
 .table-view .table-row-cell {
+    background-color: #ffffff;
     -fx-background-color: #ffffff;
+    border-color: transparent;
     -fx-border-color: transparent;
 }
 
 .table-view .table-row-cell:odd {
+    background-color: #f5f5f5;
     -fx-background-color: #f5f5f5;
 }
 
 .table-view .table-row-cell:selected {
+    background-color: #00d4ff;
     -fx-background-color: #00d4ff;
     -fx-background-insets: 0;
 }
@@ -366,6 +376,7 @@
 }
 
 .table-view .table-row-cell:hover {
+    background-color: #e0f7ff;
     -fx-background-color: #e0f7ff;
 }
 
@@ -374,17 +385,21 @@
 }
 
 .table-view .filler {
+    background-color: #e8e8e8;
     -fx-background-color: #e8e8e8;
 }
 
 /* PieChart Styles - Dark text for legend on light background */
 .chart {
+    background-color: transparent;
     -fx-background-color: transparent;
 }
 
 .chart-legend {
+    background-color: #ffffff;
     -fx-background-color: #ffffff;
     -fx-background-radius: 8;
+    padding: 10px;
     -fx-padding: 10;
 }
 
@@ -398,15 +413,42 @@
 
 .chart-pie-label {
     -fx-text-fill: #333333;
+    font-size: 12px;
     -fx-font-size: 12px;
 }
 
-.default-color0.chart-pie { -fx-pie-color: #ff6b6b; }
-.default-color1.chart-pie { -fx-pie-color: #ffa94d; }
-.default-color2.chart-pie { -fx-pie-color: #69db7c; }
-.default-color3.chart-pie { -fx-pie-color: #74c0fc; }
+.default-color0.chart-pie {
+    -fx-pie-color: #ff6b6b;
+}
 
-.default-color0.chart-legend-item-symbol { -fx-background-color: #ff6b6b; }
-.default-color1.chart-legend-item-symbol { -fx-background-color: #ffa94d; }
-.default-color2.chart-legend-item-symbol { -fx-background-color: #69db7c; }
-.default-color3.chart-legend-item-symbol { -fx-background-color: #74c0fc; }
+.default-color1.chart-pie {
+    -fx-pie-color: #ffa94d;
+}
+
+.default-color2.chart-pie {
+    -fx-pie-color: #69db7c;
+}
+
+.default-color3.chart-pie {
+    -fx-pie-color: #74c0fc;
+}
+
+.default-color0.chart-legend-item-symbol {
+    background-color: #ff6b6b;
+    -fx-background-color: #ff6b6b;
+}
+
+.default-color1.chart-legend-item-symbol {
+    background-color: #ffa94d;
+    -fx-background-color: #ffa94d;
+}
+
+.default-color2.chart-legend-item-symbol {
+    background-color: #69db7c;
+    -fx-background-color: #69db7c;
+}
+
+.default-color3.chart-legend-item-symbol {
+    background-color: #74c0fc;
+    -fx-background-color: #74c0fc;
+}

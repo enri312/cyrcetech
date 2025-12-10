@@ -57,6 +57,26 @@ public class CyrcetechApp extends Application {
             System.err.println("ERROR: app_icon.png not found in resources!");
         }
 
+        // Load Roboto Fonts
+        try {
+            URL fontRegular = getClass().getResource("fonts/Roboto-Regular.ttf");
+            URL fontItalic = getClass().getResource("fonts/Roboto-Italic.ttf");
+
+            if (fontRegular != null) {
+                javafx.scene.text.Font.loadFont(fontRegular.toExternalForm(), 12);
+                System.out.println("Loaded Roboto Regular");
+            } else {
+                System.err.println("Could not find Roboto Regular font");
+            }
+
+            if (fontItalic != null) {
+                javafx.scene.text.Font.loadFont(fontItalic.toExternalForm(), 12);
+                System.out.println("Loaded Roboto Italic");
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading fonts: " + e.getMessage());
+        }
+
         // System.out.println("Showing stage...");
         stage.show();
         // System.out.println("Application started successfully!");
