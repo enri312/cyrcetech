@@ -43,8 +43,8 @@ dependencies {
     // PostgreSQL
     runtimeOnly 'org.postgresql:postgresql'
     
-    // PDF Generation (CyrcePDF 1.0.0)
-    implementation 'io.github.enri312:cyrcepdf:1.0.0'
+    // PDF Generation (CyrcePDF 2.0.0 - with PDF/A, encryption, digital signatures)
+    implementation 'io.github.enri312:cyrcepdf:2.0.0'
     
     // Excel Export (Apache POI)
     implementation 'org.apache.poi:poi-ooxml:5.2.5'

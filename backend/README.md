@@ -11,7 +11,7 @@ Backend API construido con Spring Boot que expone endpoints REST para gestionar 
 - **Spring Boot 3.4.0** - Framework principal
 - **Spring Data JPA** - ORM y persistencia
 - **Spring Security + JWT** - Seguridad
-- **CyrcePDF 1.0.0** - Generación de PDFs (Librería propia)
+- **CyrcePDF 2.0.0** - Generación de PDFs (PDF/A, Encriptación, Firmas Digitales)
 - **Apache POI 5.2.5** - Exportación a Excel
 - **PostgreSQL 18.1** - Base de datos
 - **Swagger/OpenAPI 2.3.0** - Documentación de API
