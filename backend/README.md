@@ -8,13 +8,13 @@ Backend API construido con Spring Boot que expone endpoints REST para gestionar 
 
 ## 🛠️ Tecnologías
 
-- **Spring Boot 3.4.0** - Framework principal
+- **Spring Boot 4.0.0** - Framework principal
 - **Spring Data JPA** - ORM y persistencia
 - **Spring Security + JWT** - Seguridad
 - **CyrcePDF 2.0.0** - Generación de PDFs (PDF/A, Encriptación, Firmas Digitales)
 - **Apache POI 5.2.5** - Exportación a Excel
 - **PostgreSQL 18.1** - Base de datos
-- **Swagger/OpenAPI 2.3.0** - Documentación de API
+- **Swagger/OpenAPI 2.7.0** - Documentación de API
 - **Java 25** - Lenguaje
 
 ## 🚀 Inicio Rápido
@@ -171,48 +171,59 @@ GET    /api/audit/today              - Logs del día
 
 ```
 backend/
+├── logs/ (NEW)
 ├── src/main/java/com/cyrcetech/backend/
 │   ├── CyrcetechBackendApplication.java
 │   ├── config/
 │   │   ├── ApplicationConfig.java
 │   │   ├── CorsConfig.java
+│   │   ├── DataLoader.java
 │   │   ├── OpenApiConfig.java
 │   │   └── SecurityConfig.java
 │   ├── controller/
+│   │   ├── AuditLogController.java
 │   │   ├── AuthController.java
 │   │   ├── CustomerController.java
 │   │   ├── EquipmentController.java
-│   │   ├── TicketController.java
+│   │   ├── InvoiceController.java
+│   │   ├── PdfController.java
+│   │   ├── SparePartController.java
+│   │   └── TicketController.java
 │   ├── domain/entity/
+│   │   ├── AuditLog.java
 │   │   ├── Customer.java
 │   │   ├── Equipment.java
+│   │   ├── Invoice.java
 │   │   ├── Ticket.java
 │   │   ├── DeviceType.java
 │   │   └── TicketStatus.java
 │   ├── dto/
 │   │   ├── request/
-│   │   │   ├── CreateCustomerRequest.java
-│   │   │   ├── UpdateCustomerRequest.java
-│   │   │   ├── CreateEquipmentRequest.java
-│   │   │   ├── UpdateEquipmentRequest.java
-│   │   │   ├── CreateTicketRequest.java
-│   │   │   └── UpdateTicketRequest.java
 │   │   └── response/
-│   │       ├── CustomerResponse.java
-│   │       ├── EquipmentResponse.java
-│   │       └── TicketResponse.java
 │   ├── exception/
 │   │   ├── GlobalExceptionHandler.java
 │   │   ├── ResourceNotFoundException.java
 │   │   └── ErrorResponse.java
 │   ├── repository/
+│   │   ├── AuditLogRepository.java
 │   │   ├── CustomerRepository.java
 │   │   ├── EquipmentRepository.java
 │   │   └── TicketRepository.java
+│   ├── security/
+│   │   ├── JwtAuthenticationFilter.java
+│   │   └── JwtTokenProvider.java
 │   └── service/
+│       ├── AuditLogService.java
+│       ├── AuthService.java
+│       ├── CustomerPdfExportService.java
 │       ├── CustomerService.java
 │       ├── EquipmentService.java
-│       └── TicketService.java
+│       ├── ExcelExportService.java
+│       ├── InvoiceService.java
+│       ├── PdfService.java
+│       ├── SparePartService.java
+│       ├── TicketService.java
+│       └── WebhookService.java
 └── src/main/resources/
     └── application.yml
 ```
@@ -311,7 +322,7 @@ Proyecto privado - Todos los derechos reservados
 
 ---
 
-**Versión**: 2.3.0  
+**Versión**: 2.4.0  
 **Puerto**: 8080  
 **Base de Datos**: PostgreSQL 18.1 (Docker puerto 5432)  
 **Java**: 25
