@@ -33,4 +33,5 @@ bin/
 build_output.txt
 dir_check.txt
 version_cmd.txt
+*.txt
 

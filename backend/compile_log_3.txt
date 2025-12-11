@@ -1,9 +1,0 @@
-> Task :clean
-> Task :compileJava
-> Task :processResources
-> Task :classes
-> Task :compileTestJava
-
-BUILD SUCCESSFUL in 9s
-4 actionable tasks: 4 executed
-Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html

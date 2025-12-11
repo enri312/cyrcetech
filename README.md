@@ -57,7 +57,7 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 
 | Capa | Tecnología |
 |---|---|
-| Backend | Spring Boot 3.4.0, Spring Data JPA, **CyrcePDF** |
+| Backend | Spring Boot 4.0.0, Spring Data JPA, **CyrcePDF 2.0.0** |
 | Database | PostgreSQL 18.1 (Docker) |
 | Frontend Desktop | JavaFX 21, Gson |
 | Frontend Web | React 19 (Vite) [Carpeta: `Front-end`] |
@@ -151,4 +151,4 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 
 **Versión**: 2.4.0
 **Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅ | Auditoría ✅ | CI/CD ✅ | IA Local ✅
-**Última actualización**: 2025-12-10
+**Última actualización**: 2025-12-11
