@@ -36,9 +36,13 @@ public class Customer {
     @Column(name = "category", nullable = false)
     private CustomerCategory category;
 
+    @Column(name = "manual_category", nullable = false)
+    private boolean manualCategory;
+
     public Customer() {
         this.registrationDate = LocalDate.now();
         this.category = CustomerCategory.NUEVO;
+        this.manualCategory = false;
     }
 
     public Customer(String id, String name, String taxId, String address, String phone) {
@@ -140,12 +144,18 @@ public class Customer {
         return years + (years == 1 ? " año " : " años ") + remainingMonths + (remainingMonths == 1 ? " mes" : " meses");
     }
 
-    /**
-     * Updates the category based on current seniority.
-     * Should be called periodically or before retrieving category.
-     */
     public void updateCategory() {
-        this.category = CustomerCategory.fromDays(getSeniorityDays());
+        if (!manualCategory) {
+            this.category = CustomerCategory.fromDays(getSeniorityDays());
+        }
+    }
+
+    public boolean isManualCategory() {
+        return manualCategory;
+    }
+
+    public void setManualCategory(boolean manualCategory) {
+        this.manualCategory = manualCategory;
     }
 
     /**

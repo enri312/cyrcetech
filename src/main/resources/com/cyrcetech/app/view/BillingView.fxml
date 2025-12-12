@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cyrcetech.interface_adapter.controller.BillingController" styleClass="root">
+
+    <center>
+        <VBox spacing="20" style="-fx-background-color: #0f0f1a;">
+            <padding>
+                <Insets top="30.0" left="30.0" right="30.0" bottom="30.0" />
+            </padding>
+
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Button text="%billing.back" onAction="#handleBack" styleClass="button-secondary" />
+                <Label text="%billing.title" styleClass="title-label">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+            </HBox>
+
+            <!-- Filters -->
+            <HBox spacing="15" alignment="CENTER_LEFT" styleClass="glass-pane" style="-fx-padding: 15;">
+                <Label text="%billing.type" style="-fx-text-fill: white;" />
+                <ComboBox fx:id="reportTypeCombo" prefWidth="150" />
+                
+                <HBox fx:id="dayFilterBox" spacing="10" alignment="CENTER_LEFT">
+                    <Label text="%billing.date" style="-fx-text-fill: white;" />
+                    <DatePicker fx:id="datePicker" />
+                </HBox>
+
+                <HBox fx:id="monthFilterBox" spacing="10" alignment="CENTER_LEFT" visible="false" managed="false">
+                    <Label text="%billing.month" style="-fx-text-fill: white;" />
+                    <ComboBox fx:id="monthCombo" prefWidth="120" />
+                    <Label text="%billing.year" style="-fx-text-fill: white;" />
+                    <ComboBox fx:id="yearCombo" prefWidth="100" />
+                </HBox>
+
+                <Button text="%billing.search" onAction="#handleSearch" styleClass="button-primary" />
+            </HBox>
+
+            <!-- Summary Cards -->
+            <HBox spacing="20">
+                <VBox spacing="5" styleClass="stat-card, stat-card-blue" HBox.hgrow="ALWAYS">
+                    <Label text="%billing.totalInvoiced" styleClass="stat-label" />
+                    <Label fx:id="totalInvoicedLabel" text="0 ₲" styleClass="stat-number" />
+                </VBox>
+                <VBox spacing="5" styleClass="stat-card, stat-card-green" HBox.hgrow="ALWAYS">
+                    <Label text="%billing.totalCollected" styleClass="stat-label" />
+                    <Label fx:id="totalCollectedLabel" text="0 ₲" styleClass="stat-number" />
+                </VBox>
+                 <VBox spacing="5" styleClass="stat-card, stat-card-yellow" HBox.hgrow="ALWAYS">
+                    <Label text="%billing.pendingBalance" styleClass="stat-label" />
+                    <Label fx:id="pendingBalanceLabel" text="0 ₲" styleClass="stat-number" />
+                </VBox>
+            </HBox>
+
+            <!-- Table -->
+            <TableView fx:id="invoicesTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="numberColumn" text="%billing.invoiceNumber" prefWidth="120" />
+                    <TableColumn fx:id="dateColumn" text="%billing.date" prefWidth="100" />
+                    <TableColumn fx:id="totalColumn" text="%billing.total" prefWidth="120" />
+                    <TableColumn fx:id="paidColumn" text="%billing.paid" prefWidth="120" />
+                    <TableColumn fx:id="balanceColumn" text="%billing.balance" prefWidth="120" />
+                    <TableColumn fx:id="statusColumn" text="%billing.status" prefWidth="100" />
+                    <TableColumn fx:id="methodColumn" text="%billing.method" prefWidth="120" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

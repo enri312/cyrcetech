@@ -35,6 +35,8 @@ public class InvoiceFormController {
     @FXML
     private TextField totalAmountField;
     @FXML
+    private TextField paidAmountField;
+    @FXML
     private ComboBox<PaymentStatus> paymentStatusCombo;
     @FXML
     private ComboBox<PaymentMethod> paymentMethodCombo;
@@ -68,6 +70,7 @@ public class InvoiceFormController {
             subtotalField.setText(String.valueOf(invoice.subtotal()));
             taxAmountField.setText(String.valueOf(invoice.taxAmount()));
             totalAmountField.setText(String.valueOf(invoice.totalAmount()));
+            paidAmountField.setText(String.valueOf(invoice.paidAmount()));
             paymentStatusCombo.setValue(invoice.paymentStatus());
             paymentMethodCombo.setValue(invoice.paymentMethod());
             paymentDatePicker.setValue(invoice.paymentDate());
@@ -99,6 +102,8 @@ public class InvoiceFormController {
             double subtotal = Double.parseDouble(subtotalField.getText());
             double taxAmount = Double.parseDouble(taxAmountField.getText());
             double totalAmount = Double.parseDouble(totalAmountField.getText());
+            double paidAmount = Double
+                    .parseDouble(paidAmountField.getText().isEmpty() ? "0" : paidAmountField.getText());
 
             Invoice invoice = new Invoice(
                     currentInvoice != null ? currentInvoice.id() : "",
@@ -109,6 +114,7 @@ public class InvoiceFormController {
                     subtotal,
                     taxAmount,
                     totalAmount,
+                    paidAmount,
                     paymentStatusCombo.getValue(),
                     paymentDatePicker.getValue(),
                     paymentMethodCombo.getValue(),

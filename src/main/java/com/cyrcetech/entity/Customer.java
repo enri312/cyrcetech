@@ -16,7 +16,8 @@ public record Customer(
         String category,
         String categoryDisplayName,
         long seniorityDays,
-        String formattedSeniority) {
+        String formattedSeniority,
+        boolean manualCategory) {
 
     /**
      * Compact constructor with validation
@@ -37,7 +38,7 @@ public record Customer(
      * Creates an empty customer (for form initialization)
      */
     public static Customer empty() {
-        return new Customer("", "", "", "", "", null, null, null, 0, null);
+        return new Customer("", "", "", "", "", null, null, null, 0, null, false);
     }
 
     /**
@@ -45,7 +46,12 @@ public record Customer(
      * category)
      */
     public static Customer create(String id, String name, String taxId, String address, String phone) {
-        return new Customer(id, name, taxId, address, phone, null, null, null, 0, null);
+        return new Customer(id, name, taxId, address, phone, null, null, null, 0, null, false);
+    }
+
+    public static Customer create(String id, String name, String taxId, String address, String phone, String category,
+            boolean manualCategory) {
+        return new Customer(id, name, taxId, address, phone, null, category, null, 0, null, manualCategory);
     }
 
     /**

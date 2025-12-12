@@ -12,6 +12,7 @@ public class InvoiceRequestDTO {
     private Double subtotal;
     private Double taxAmount;
     private Double totalAmount;
+    private Double paidAmount;
     private String notes;
 
     public InvoiceRequestDTO() {
@@ -26,6 +27,20 @@ public class InvoiceRequestDTO {
         this.subtotal = subtotal;
         this.taxAmount = taxAmount;
         this.totalAmount = totalAmount;
+        this.paidAmount = 0.0;
+        this.notes = notes;
+    }
+
+    public InvoiceRequestDTO(String ticketId, String invoiceNumber, String issueDate, String dueDate,
+            Double subtotal, Double taxAmount, Double totalAmount, Double paidAmount, String notes) {
+        this.ticketId = ticketId;
+        this.invoiceNumber = invoiceNumber;
+        this.issueDate = issueDate;
+        this.dueDate = dueDate;
+        this.subtotal = subtotal;
+        this.taxAmount = taxAmount;
+        this.totalAmount = totalAmount;
+        this.paidAmount = paidAmount;
         this.notes = notes;
     }
 
@@ -83,6 +98,14 @@ public class InvoiceRequestDTO {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public Double getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(Double paidAmount) {
+        this.paidAmount = paidAmount;
     }
 
     public String getNotes() {

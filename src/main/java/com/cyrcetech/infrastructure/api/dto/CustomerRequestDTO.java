@@ -13,11 +13,12 @@ public class CustomerRequestDTO {
     public CustomerRequestDTO() {
     }
 
-    public CustomerRequestDTO(String name, String taxId, String address, String phone) {
+    public CustomerRequestDTO(String name, String taxId, String address, String phone, boolean manualCategory) {
         this.name = name;
         this.taxId = taxId;
         this.address = address;
         this.phone = phone;
+        this.manualCategory = manualCategory;
     }
 
     // Getters and Setters
@@ -51,5 +52,15 @@ public class CustomerRequestDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    private boolean manualCategory;
+
+    public boolean isManualCategory() {
+        return manualCategory;
+    }
+
+    public void setManualCategory(boolean manualCategory) {
+        this.manualCategory = manualCategory;
     }
 }

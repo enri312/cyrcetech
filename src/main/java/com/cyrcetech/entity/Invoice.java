@@ -16,11 +16,15 @@ public record Invoice(
         double subtotal,
         double taxAmount,
         double totalAmount,
+        double paidAmount,
         PaymentStatus paymentStatus,
         LocalDate paymentDate,
         PaymentMethod paymentMethod,
         String notes) {
 
+    /**
+     * Compact constructor with validation
+     */
     /**
      * Compact constructor with validation
      */
@@ -39,13 +43,16 @@ public record Invoice(
         if (totalAmount < 0) {
             throw new IllegalArgumentException("Total amount cannot be negative");
         }
+        if (paidAmount < 0) {
+            throw new IllegalArgumentException("Paid amount cannot be negative");
+        }
     }
 
     /**
      * Creates an empty invoice for form initialization
      */
     public static Invoice empty() {
-        return new Invoice("", "", "", LocalDate.now(), null, 0.0, 0.0, 0.0,
+        return new Invoice("", "", "", LocalDate.now(), null, 0.0, 0.0, 0.0, 0.0,
                 PaymentStatus.PENDING, null, null, "");
     }
 
@@ -67,7 +74,14 @@ public record Invoice(
      * Returns formatted total with currency
      */
     public String getFormattedTotal() {
-        return String.format("₲%.2f", totalAmount);
+        return String.format("₲%.0f", totalAmount);
+    }
+
+    /**
+     * Returns the pending balance.
+     */
+    public double balance() {
+        return Math.max(0, totalAmount - paidAmount);
     }
 
     /**
@@ -75,7 +89,7 @@ public record Invoice(
      */
     public Invoice markAsPaid(LocalDate paymentDate, PaymentMethod method) {
         return new Invoice(id, ticketId, invoiceNumber, issueDate, dueDate,
-                subtotal, taxAmount, totalAmount, PaymentStatus.PAID,
+                subtotal, taxAmount, totalAmount, totalAmount, PaymentStatus.PAID,
                 paymentDate, method, notes);
     }
 }

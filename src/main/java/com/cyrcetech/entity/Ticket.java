@@ -16,6 +16,7 @@ public class Ticket {
     private String observations;
     private TicketStatus status;
     private double amountPaid;
+    private double downPayment;
     private double estimatedCost;
     private LocalDate dateCreated;
     private String aiDiagnosis;
@@ -86,6 +87,18 @@ public class Ticket {
             throw new IllegalArgumentException("Amount paid cannot be negative");
         }
         this.amountPaid = amountPaid;
+        this.amountPaid = amountPaid;
+    }
+
+    public double getDownPayment() {
+        return downPayment;
+    }
+
+    public void setDownPayment(double downPayment) {
+        if (downPayment < 0) {
+            throw new IllegalArgumentException("Down payment cannot be negative");
+        }
+        this.downPayment = downPayment;
     }
 
     public double getEstimatedCost() {

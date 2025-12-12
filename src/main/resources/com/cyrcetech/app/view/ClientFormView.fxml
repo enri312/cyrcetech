@@ -46,6 +46,13 @@
             GridPane.columnIndex="0" />
         <TextField fx:id="addressField" styleClass="text-field" GridPane.rowIndex="3"
             GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" maxWidth="Infinity" />
+
+        <Label text="%clients.category" textFill="#a0a0b0" GridPane.rowIndex="4"
+            GridPane.columnIndex="0" />
+        <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="4" GridPane.columnIndex="1">
+            <ComboBox fx:id="categoryCombo" prefWidth="150" />
+            <javafx.scene.control.CheckBox fx:id="manualCategoryCheck" text="%clients.manualCategory" textFill="#a0a0b0" />
+        </HBox>
     </GridPane>
 
     <HBox spacing="10" alignment="CENTER_RIGHT">

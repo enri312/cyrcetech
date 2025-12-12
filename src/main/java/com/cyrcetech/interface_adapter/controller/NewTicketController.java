@@ -42,6 +42,10 @@ public class NewTicketController {
     private TextArea observationsArea;
     @FXML
     private TextArea aiDiagnosisArea;
+    @FXML
+    private TextField downPaymentField;
+    @FXML
+    private TextField estimatedCostField;
 
     private final AIService aiService = DependencyContainer.getAiService();
     private final TicketApiService ticketApiService = new TicketApiService();
@@ -72,6 +76,27 @@ public class NewTicketController {
     @FXML
     private void handleSave(ActionEvent event) throws IOException {
         Ticket ticket = new Ticket();
+
+        try {
+            double downPayment = 0;
+            if (downPaymentField.getText() != null && !downPaymentField.getText().isEmpty()) {
+                downPayment = Double.parseDouble(downPaymentField.getText());
+            }
+            double estimatedCost = 0;
+            if (estimatedCostField.getText() != null && !estimatedCostField.getText().isEmpty()) {
+                estimatedCost = Double.parseDouble(estimatedCostField.getText());
+            }
+
+            ticket.setDownPayment(downPayment);
+            ticket.setAmountPaid(downPayment); // Initial payment is the down payment
+            ticket.setEstimatedCost(estimatedCost);
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Monto inválido en Seña o Costo. Use solo números.");
+            alert.show();
+            return;
+        }
 
         // Create and save customer
         Customer customer = Customer.create(

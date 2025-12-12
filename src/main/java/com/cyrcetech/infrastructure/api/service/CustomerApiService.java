@@ -107,7 +107,8 @@ public class CustomerApiService extends ApiClient {
                 dto.getCategory(),
                 dto.getCategoryDisplayName(),
                 dto.getSeniorityDays(),
-                dto.getFormattedSeniority());
+                dto.getFormattedSeniority(),
+                dto.isManualCategory());
     }
 
     /**
@@ -118,6 +119,7 @@ public class CustomerApiService extends ApiClient {
                 customer.name(),
                 customer.taxId(),
                 customer.address(),
-                customer.phone());
+                customer.phone(),
+                customer.manualCategory());
     }
 }

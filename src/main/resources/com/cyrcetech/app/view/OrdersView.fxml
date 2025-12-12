@@ -41,8 +41,11 @@
                     <TableColumn fx:id="customerColumn" text="%orders.customer" prefWidth="150" />
                     <TableColumn fx:id="deviceColumn" text="%orders.device" prefWidth="200" />
                     <TableColumn fx:id="problemColumn" text="%orders.problem" prefWidth="200" />
+                    <TableColumn fx:id="downPaymentColumn" text="%orders.downPayment" prefWidth="100" />
+                    <TableColumn fx:id="costColumn" text="%orders.cost" prefWidth="100" />
                     <TableColumn fx:id="statusColumn" text="%orders.status" prefWidth="120" />
                     <TableColumn fx:id="dateColumn" text="%orders.date" prefWidth="100" />
+                    <TableColumn fx:id="actionsColumn" text="%orders.actions" prefWidth="200" />
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -138,6 +138,11 @@ public class TicketService {
             ticket.setEstimatedCost(request.getEstimatedCost());
         }
 
+        if (request.getAmountPaid() != null) {
+            ticket.setAmountPaid(request.getAmountPaid());
+            ticket.setDownPayment(request.getAmountPaid()); // Initial payment is down payment
+        }
+
         Ticket saved = ticketRepository.save(ticket);
         log.info("Ticket created with id: {}", saved.getId());
 

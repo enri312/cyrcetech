@@ -106,6 +106,28 @@
                 </GridPane>
             </VBox>
 
+
+
+            <!-- Financial Data Section -->
+            <VBox spacing="15">
+                <Label text="%ticket.financial" 
+                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #00d4ff;" />
+                <GridPane hgap="15.0" vgap="12.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50" />
+                    </columnConstraints>
+                     <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="Seña / Abono (Gs.)" styleClass="subtitle-label" />
+                        <TextField fx:id="downPaymentField" promptText="0" />
+                    </VBox>
+                     <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="Costo Estimado (Gs.)" styleClass="subtitle-label" />
+                        <TextField fx:id="estimatedCostField" promptText="0" />
+                    </VBox>
+                </GridPane>
+            </VBox>
+
             <!-- Problem Description -->
             <VBox spacing="10">
                 <HBox alignment="CENTER_LEFT" spacing="10">

@@ -1,6 +1,7 @@
 package com.cyrcetech.interface_adapter.controller;
 
 import com.cyrcetech.app.CyrcetechApp;
+import com.cyrcetech.app.I18nUtil;
 import com.cyrcetech.entity.Ticket;
 import com.cyrcetech.entity.TicketStatus;
 import com.cyrcetech.infrastructure.api.service.TicketApiService;
@@ -17,6 +18,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainController {
+
+    @FXML
+    private Label roleLabel;
 
     @FXML
     private Label pendingCountLabel;
@@ -45,6 +49,8 @@ public class MainController {
     private Button technicalHistoryButton;
     @FXML
     private Button auditButton;
+    @FXML
+    private Button billingButton;
 
     private final TicketApiService ticketApiService = new TicketApiService();
 
@@ -57,6 +63,10 @@ public class MainController {
     private void applyRolePermissions() {
         // Audit button is only for admins
         setButtonVisible(auditButton, SessionManager.getInstance().isAdmin());
+        setButtonVisible(billingButton, SessionManager.getInstance().isAdmin());
+
+        // Update Role Label
+        updateRoleLabel();
 
         if (SessionManager.getInstance().isUser()) {
             // 📞 Usuario/User (Atención Cliente)
@@ -79,6 +89,25 @@ public class MainController {
             setButtonVisible(technicalHistoryButton, true); // Ver historial técnico
         }
         // 👔 Admin sees everything (default) - including Audit
+    }
+
+    private void updateRoleLabel() {
+        if (roleLabel != null) {
+            String role = SessionManager.getInstance().getRole(); // ROLE_ADMIN, ROLE_TECHNICIAN, ROLE_USER
+            String lang = I18nUtil.getCurrentLanguageCode(); // "es" or "en"
+
+            String displayText = "";
+            if (role.equals("ROLE_ADMIN")) {
+                displayText = lang.equals("es") ? "Administrador" : "Admin";
+            } else if (role.equals("ROLE_TECHNICIAN")) {
+                displayText = lang.equals("es") ? "Técnico" : "TECHNICIAN";
+            } else if (role.equals("ROLE_USER")) {
+                displayText = lang.equals("es") ? "Usuario" : "User";
+            } else {
+                displayText = role;
+            }
+            roleLabel.setText(displayText);
+        }
     }
 
     private void setButtonVisible(Button button, boolean visible) {
@@ -244,6 +273,15 @@ public class MainController {
     private void handleAudit(ActionEvent event) {
         try {
             CyrcetechApp.setRoot("view/AuditView");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleBilling(ActionEvent event) {
+        try {
+            CyrcetechApp.setRoot("view/BillingView");
         } catch (IOException e) {
             e.printStackTrace();
         }

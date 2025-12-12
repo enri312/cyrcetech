@@ -57,17 +57,21 @@
         <ComboBox fx:id="paymentStatusCombo" GridPane.columnIndex="1" GridPane.rowIndex="7"
             prefWidth="300" />
 
-        <Label text="%invoice.paymentMethod" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-        <ComboBox fx:id="paymentMethodCombo" GridPane.columnIndex="1" GridPane.rowIndex="8"
+        <Label text="%invoice.paidAmount" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+        <TextField fx:id="paidAmountField" promptText="0.00" GridPane.columnIndex="1" 
+            GridPane.rowIndex="8" prefWidth="300" />
+
+        <Label text="%invoice.paymentMethod" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+        <ComboBox fx:id="paymentMethodCombo" GridPane.columnIndex="1" GridPane.rowIndex="9"
             prefWidth="300" />
 
-        <Label text="%invoice.paymentDate" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-        <DatePicker fx:id="paymentDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="9"
+        <Label text="%invoice.paymentDate" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+        <DatePicker fx:id="paymentDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="10"
             prefWidth="300" />
 
-        <Label text="%invoice.notes" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+        <Label text="%invoice.notes" GridPane.columnIndex="0" GridPane.rowIndex="11" />
         <TextArea fx:id="notesArea" promptText="%invoice.notes" GridPane.columnIndex="1"
-            GridPane.rowIndex="10" prefWidth="300" prefHeight="80" />
+            GridPane.rowIndex="11" prefWidth="300" prefHeight="80" />
     </GridPane>
 
     <!-- Buttons -->

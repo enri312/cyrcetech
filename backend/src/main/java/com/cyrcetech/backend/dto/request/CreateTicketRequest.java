@@ -84,4 +84,15 @@ public class CreateTicketRequest {
     public void setAiDiagnosis(String aiDiagnosis) {
         this.aiDiagnosis = aiDiagnosis;
     }
+
+    @PositiveOrZero(message = "Amount paid must be zero or positive")
+    private Double amountPaid;
+
+    public Double getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(Double amountPaid) {
+        this.amountPaid = amountPaid;
+    }
 }

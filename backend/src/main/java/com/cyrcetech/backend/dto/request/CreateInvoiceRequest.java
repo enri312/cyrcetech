@@ -32,6 +32,9 @@ public class CreateInvoiceRequest {
     @PositiveOrZero(message = "Total amount must be zero or positive")
     private Double totalAmount;
 
+    @PositiveOrZero(message = "Paid amount must be zero or positive")
+    private Double paidAmount;
+
     private String notes;
 
     // Constructors
@@ -93,6 +96,14 @@ public class CreateInvoiceRequest {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public Double getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(Double paidAmount) {
+        this.paidAmount = paidAmount;
     }
 
     public String getNotes() {

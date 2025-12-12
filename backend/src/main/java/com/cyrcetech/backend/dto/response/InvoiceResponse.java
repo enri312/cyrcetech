@@ -17,6 +17,7 @@ public class InvoiceResponse {
     private double subtotal;
     private double taxAmount;
     private double totalAmount;
+    private double paidAmount;
     private String formattedTotal;
     private PaymentStatus paymentStatus;
     private String paymentStatusDisplayName;
@@ -102,6 +103,14 @@ public class InvoiceResponse {
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public double getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(double paidAmount) {
+        this.paidAmount = paidAmount;
     }
 
     public String getFormattedTotal() {

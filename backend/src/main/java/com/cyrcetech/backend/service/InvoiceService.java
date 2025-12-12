@@ -137,7 +137,17 @@ public class InvoiceService {
         invoice.setDueDate(request.getDueDate());
         invoice.setSubtotal(request.getSubtotal());
         invoice.setTaxAmount(request.getTaxAmount() != null ? request.getTaxAmount() : 0.0);
+        invoice.setTaxAmount(request.getTaxAmount() != null ? request.getTaxAmount() : 0.0);
         invoice.setTotalAmount(request.getTotalAmount());
+        invoice.setPaidAmount(request.getPaidAmount() != null ? request.getPaidAmount() : 0.0);
+        // Automatically set status if PAID
+        if (invoice.getPaidAmount() >= invoice.getTotalAmount()) {
+            invoice.setPaymentStatus(PaymentStatus.PAID);
+        } else if (invoice.getPaidAmount() > 0) {
+            invoice.setPaymentStatus(PaymentStatus.PARTIAL);
+        } else {
+            invoice.setPaymentStatus(PaymentStatus.PENDING);
+        }
         invoice.setNotes(request.getNotes());
 
         Invoice saved = invoiceRepository.save(invoice);
@@ -167,6 +177,17 @@ public class InvoiceService {
         }
         if (request.getTotalAmount() != null) {
             invoice.setTotalAmount(request.getTotalAmount());
+        }
+        if (request.getPaidAmount() != null) {
+            invoice.setPaidAmount(request.getPaidAmount());
+            // Update status logic
+            if (invoice.getPaidAmount() >= invoice.getTotalAmount()) {
+                invoice.setPaymentStatus(PaymentStatus.PAID);
+            } else if (invoice.getPaidAmount() > 0) {
+                invoice.setPaymentStatus(PaymentStatus.PARTIAL);
+            } else {
+                invoice.setPaymentStatus(PaymentStatus.PENDING);
+            }
         }
         if (request.getPaymentStatus() != null) {
             invoice.setPaymentStatus(request.getPaymentStatus());
@@ -216,6 +237,7 @@ public class InvoiceService {
         response.setSubtotal(invoice.getSubtotal());
         response.setTaxAmount(invoice.getTaxAmount());
         response.setTotalAmount(invoice.getTotalAmount());
+        response.setPaidAmount(invoice.getPaidAmount());
         response.setFormattedTotal(invoice.getFormattedTotal());
         response.setPaymentStatus(invoice.getPaymentStatus());
         response.setPaymentStatusDisplayName(invoice.getPaymentStatus().getDisplayName());

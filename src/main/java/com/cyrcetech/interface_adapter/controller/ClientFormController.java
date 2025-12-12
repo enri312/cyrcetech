@@ -21,6 +21,10 @@ public class ClientFormController {
     private TextField phoneField;
     @FXML
     private TextField addressField;
+    @FXML
+    private javafx.scene.control.ComboBox<String> categoryCombo;
+    @FXML
+    private javafx.scene.control.CheckBox manualCategoryCheck;
 
     private final com.cyrcetech.infrastructure.api.service.CustomerApiService customerApiService = new com.cyrcetech.infrastructure.api.service.CustomerApiService();
     private Customer existingCustomer;
@@ -33,14 +37,37 @@ public class ClientFormController {
             nameField.setText(customer.name());
             taxIdField.setText(customer.taxId());
             phoneField.setText(customer.phone());
+            phoneField.setText(customer.phone());
             addressField.setText(customer.address());
+            if (customer.category() != null) {
+                categoryCombo.setValue(customer.category());
+            }
+            manualCategoryCheck.setSelected(customer.manualCategory());
         } else {
             titleLabel.setText(I18nUtil.getBundle().getString("client.form.title.new"));
+            manualCategoryCheck.setSelected(false);
         }
+
+        setupCategoryAccess();
     }
 
     public void setOnSaveCallback(Runnable callback) {
         this.onSaveCallback = callback;
+    }
+
+    @FXML
+    public void initialize() {
+        // Init categories
+        categoryCombo.getItems().addAll("NUEVO", "REGULAR", "FRECUENTE", "VIP");
+    }
+
+    private void setupCategoryAccess() {
+        boolean isAdmin = com.cyrcetech.infrastructure.session.SessionManager.getInstance().isAdmin();
+        categoryCombo.setDisable(!isAdmin);
+        manualCategoryCheck.setDisable(!isAdmin);
+        // If not admin, maybe hide? The requirement says "Enable only ADMIN to manually
+        // assign... Ensure all roles can view".
+        // Use opacity or just disable.
     }
 
     @FXML
@@ -52,7 +79,9 @@ public class ClientFormController {
                     nameField.getText(),
                     taxIdField.getText(),
                     addressField.getText(),
-                    phoneField.getText());
+                    phoneField.getText(),
+                    categoryCombo.getValue(),
+                    manualCategoryCheck.isSelected());
 
             try {
                 if (existingCustomer != null) {

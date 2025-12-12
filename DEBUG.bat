@@ -1,20 +1,36 @@
 @echo off
+setlocal
+title Cyrcetech Launcher (Debug)
 echo ========================================
-echo   DEBUG MODE - CYRCETECH
+echo   DEBUG MODE - SINGLE TERMINAL
 echo ========================================
 echo.
 
-echo [1/3] Backend Check...
-netstat -ano | findstr :8080
+echo [1/3] Checking Backend (Port 8080)...
+netstat -ano | findstr :8080 | findstr LISTEN >nul
 if %ERRORLEVEL% EQU 0 (
-    echo Backend FOUND on port 8080.
+    echo Backend is already running.
 ) else (
-    echo Backend NOT FOUND. Attempting start...
-    start "Cyrcetech Backend" cmd /k "cd backend && ..\gradlew.bat bootRun"
-    timeout /t 10
+    echo Backend NOT detected. Starting in MINIMIZED window...
+    
+    REM Start backend in a MINIMIZED window to keep desktop clean
+    start /MIN "Cyrcetech Backend" cmd /k "cd backend && ..\gradlew.bat bootRun"
+    
+    echo Waiting for Backend to initialize...
+    
+    REM Loop to wait for port 8080
+    :WAIT_LOOP
+    timeout /t 3 >nul
+    netstat -ano | findstr :8080 | findstr LISTEN >nul
+    if %ERRORLEVEL% NEQ 0 (
+        echo ... waiting for backend ...
+        goto WAIT_LOOP
+    )
+    echo Backend is UP!
 )
 
-echo [2/3] Building Client (capturing output)...
+echo.
+echo [2/3] Building Client...
 call "%~dp0gradlew.bat" build -x test > build_log.txt 2>&1
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: Build failed. See build_log.txt
@@ -25,19 +41,14 @@ if %ERRORLEVEL% NEQ 0 (
     echo Build SUCCESS.
 )
 
-echo [3/3] Running Client (Forwarding Output)...
 echo.
-echo Launching... please wait. Window should appear.
-echo.
-
-call "%~dp0gradlew.bat" run --info
-
-if %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo ERROR: Run command failed with code %ERRORLEVEL%
-    pause
-)
+echo [3/3] Running Client...
+echo Launching Application...
+call "%~dp0gradlew.bat" run --console=plain
 
 echo.
 echo Application Closed.
+echo.
+echo NOTE: The Backend might still be running in the background.
+echo To stop it, close this window or use Task Manager.
 pause

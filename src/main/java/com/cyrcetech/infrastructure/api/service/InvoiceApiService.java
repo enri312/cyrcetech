@@ -89,6 +89,7 @@ public class InvoiceApiService extends ApiClient {
                 dto.getSubtotal(),
                 dto.getTaxAmount(),
                 dto.getTotalAmount(),
+                dto.getPaidAmount(),
                 dto.getPaymentStatus(),
                 paymentDate,
                 dto.getPaymentMethod(),
@@ -110,6 +111,7 @@ public class InvoiceApiService extends ApiClient {
                 invoice.subtotal(),
                 invoice.taxAmount(),
                 invoice.totalAmount(),
+                invoice.paidAmount(),
                 invoice.notes());
     }
 

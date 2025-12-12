@@ -108,4 +108,14 @@ public class CustomerResponseDTO {
     public void setFormattedSeniority(String formattedSeniority) {
         this.formattedSeniority = formattedSeniority;
     }
+
+    private boolean manualCategory;
+
+    public boolean isManualCategory() {
+        return manualCategory;
+    }
+
+    public void setManualCategory(boolean manualCategory) {
+        this.manualCategory = manualCategory;
+    }
 }

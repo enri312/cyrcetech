@@ -41,6 +41,9 @@ public class Ticket {
     @Column(name = "amount_paid")
     private double amountPaid;
 
+    @Column(name = "down_payment")
+    private double downPayment;
+
     @Column(name = "estimated_cost")
     private double estimatedCost;
 
@@ -61,6 +64,7 @@ public class Ticket {
         this.dateCreated = LocalDate.now();
         this.status = TicketStatus.PENDING;
         this.amountPaid = 0.0;
+        this.downPayment = 0.0;
         this.estimatedCost = 0.0;
     }
 
@@ -150,6 +154,17 @@ public class Ticket {
             throw new IllegalArgumentException("Amount paid cannot be negative");
         }
         this.amountPaid = amountPaid;
+    }
+
+    public double getDownPayment() {
+        return downPayment;
+    }
+
+    public void setDownPayment(double downPayment) {
+        if (downPayment < 0) {
+            throw new IllegalArgumentException("Down payment cannot be negative");
+        }
+        this.downPayment = downPayment;
     }
 
     public double getEstimatedCost() {

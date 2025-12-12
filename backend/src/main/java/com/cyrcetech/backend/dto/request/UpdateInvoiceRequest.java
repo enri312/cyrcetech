@@ -22,6 +22,9 @@ public class UpdateInvoiceRequest {
     @PositiveOrZero(message = "Total amount must be zero or positive")
     private Double totalAmount;
 
+    @PositiveOrZero(message = "Paid amount must be zero or positive")
+    private Double paidAmount;
+
     private PaymentStatus paymentStatus;
     private LocalDate paymentDate;
     private PaymentMethod paymentMethod;
@@ -62,6 +65,14 @@ public class UpdateInvoiceRequest {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public Double getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(Double paidAmount) {
+        this.paidAmount = paidAmount;
     }
 
     public PaymentStatus getPaymentStatus() {

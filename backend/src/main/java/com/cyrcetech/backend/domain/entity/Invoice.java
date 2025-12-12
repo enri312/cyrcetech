@@ -41,6 +41,9 @@ public class Invoice {
     @Column(name = "total_amount", nullable = false)
     private double totalAmount;
 
+    @Column(name = "paid_amount")
+    private double paidAmount;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus;
@@ -68,6 +71,7 @@ public class Invoice {
         this.subtotal = 0.0;
         this.taxAmount = 0.0;
         this.totalAmount = 0.0;
+        this.paidAmount = 0.0;
     }
 
     public Invoice(Ticket ticket, String invoiceNumber) {
@@ -171,6 +175,38 @@ public class Invoice {
         this.totalAmount = totalAmount;
     }
 
+    public double getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(double paidAmount) {
+        if (paidAmount < 0) {
+            throw new IllegalArgumentException("Paid amount cannot be negative");
+        }
+        this.paidAmount = paidAmount;
+        updatePaymentStatus();
+    }
+
+    /**
+     * Calculates the remaining balance to be paid.
+     */
+    /**
+     * Calculates the remaining balance to be paid.
+     */
+    public double getBalance() {
+        return Math.max(0, totalAmount - paidAmount);
+    }
+
+    private void updatePaymentStatus() {
+        if (paidAmount >= totalAmount && totalAmount > 0) {
+            this.paymentStatus = PaymentStatus.PAID;
+        } else if (paidAmount > 0) {
+            this.paymentStatus = PaymentStatus.PARTIAL;
+        } else {
+            this.paymentStatus = PaymentStatus.PENDING;
+        }
+    }
+
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
@@ -229,12 +265,14 @@ public class Invoice {
     }
 
     public String getFormattedTotal() {
-        return String.format("₲%.2f", totalAmount);
+        return String.format("₲%.0f", totalAmount);
     }
 
     public void markAsPaid(LocalDate paymentDate, PaymentMethod method) {
+        this.paidAmount = this.totalAmount; // Set full amount paid
         this.paymentStatus = PaymentStatus.PAID;
         this.paymentDate = paymentDate;
         this.paymentMethod = method;
+        this.updatedAt = LocalDateTime.now();
     }
 }
