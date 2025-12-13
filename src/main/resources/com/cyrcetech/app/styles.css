@@ -115,6 +115,107 @@
     -fx-background-color: #1a1a2e;
 }
 
+/* DatePicker Styles for Dark Theme */
+.date-picker {
+    -fx-background-color: #1a1a2e;
+    -fx-border-color: #2a2a40;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.date-picker .text-field {
+    -fx-background-color: #1a1a2e;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #6c757d;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #007bff;
+    -fx-background-radius: 0 8 8 0;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+.date-picker-popup {
+    -fx-background-color: #1e1e2e;
+    -fx-border-color: #2a2a40;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.date-picker-popup>.month-year-pane {
+    -fx-background-color: #1a1a2e;
+}
+
+.date-picker-popup>.month-year-pane>.spinner>.button {
+    -fx-background-color: #007bff;
+}
+
+.date-picker-popup>.month-year-pane>.spinner>.button>.left-arrow,
+.date-picker-popup>.month-year-pane>.spinner>.button>.right-arrow {
+    -fx-background-color: white;
+}
+
+.date-picker-popup>.month-year-pane>.spinner>.label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.date-picker-popup .calendar-grid {
+    -fx-background-color: #1e1e2e;
+}
+
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #808090;
+    -fx-font-weight: bold;
+}
+
+.date-picker-popup .day-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: rgba(0, 212, 255, 0.3);
+}
+
+.date-picker-popup .day-cell.today {
+    -fx-background-color: rgba(0, 212, 255, 0.2);
+    -fx-border-color: #00d4ff;
+}
+
+.date-picker-popup .day-cell.selected {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup .day-cell.outside-month {
+    -fx-text-fill: #505060;
+}
+
+/* ComboBox Popup Styles */
+.combo-box-popup .list-view {
+    -fx-background-color: #1e1e2e;
+    -fx-border-color: #2a2a40;
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: #1e1e2e;
+    -fx-text-fill: white;
+    -fx-padding: 8 12;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: rgba(0, 212, 255, 0.2);
+}
+
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+}
+
 /* ScrollPane */
 .scroll-pane {
     background-color: transparent;
@@ -387,6 +488,86 @@
 .table-view .filler {
     background-color: #e8e8e8;
     -fx-background-color: #e8e8e8;
+}
+
+/* Dark Table Styles - For Audit View */
+.table-dark {
+    -fx-background-color: #1e1e2e;
+    -fx-control-inner-background: #1e1e2e;
+    -fx-control-inner-background-alt: #1e1e2e;
+    -fx-table-cell-border-color: rgba(255, 255, 255, 0.05);
+    -fx-table-header-border-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+}
+
+.table-dark .column-header-background {
+    -fx-background-color: #1e1e2e;
+    -fx-background-radius: 12 12 0 0;
+}
+
+.table-dark .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent rgba(255, 255, 255, 0.1) transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-dark .column-header .label {
+    -fx-text-fill: #808090;
+    -fx-font-weight: normal;
+    -fx-font-size: 12px;
+}
+
+.table-dark .table-cell {
+    -fx-text-fill: #a0a0b0;
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 12 16;
+}
+
+.table-dark .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent rgba(255, 255, 255, 0.05) transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-dark .table-row-cell:odd {
+    -fx-background-color: transparent;
+}
+
+.table-dark .table-row-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table-dark .table-row-cell:selected {
+    -fx-background-color: rgba(0, 212, 255, 0.15);
+    -fx-background-insets: 0;
+}
+
+.table-dark .table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+}
+
+.table-dark .placeholder .label {
+    -fx-text-fill: #808090;
+}
+
+.table-dark .filler {
+    -fx-background-color: #1e1e2e;
+}
+
+/* Audit specific column styles */
+.audit-timestamp {
+    -fx-font-family: 'Consolas', 'Courier New', monospace;
+    -fx-text-fill: #808090;
+}
+
+.audit-user {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.audit-details {
+    -fx-text-fill: #b0b0c0;
 }
 
 /* PieChart Styles - Dark text for legend on light background */

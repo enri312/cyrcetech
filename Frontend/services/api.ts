@@ -261,3 +261,32 @@ export const auditApi = {
         fetchApi<AuditLogDTO[]>(`/audit/date-range?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`),
 };
 
+// === BILLING ===
+export interface BillingInvoiceDTO {
+    id: string;
+    invoiceNumber: string;
+    issueDate: string;
+    totalAmount: number;
+    paidAmount: number;
+    balance: number;
+    paymentStatus: string;
+    paymentMethod?: string;
+}
+
+export interface BillingSummary {
+    totalInvoiced: number;
+    totalCollected: number;
+    pendingBalance: number;
+    invoices: BillingInvoiceDTO[];
+}
+
+export const billingApi = {
+    // Get daily billing report
+    getDaily: (date: string) => fetchApi<BillingInvoiceDTO[]>(`/billing/daily/${date}`),
+
+    // Get monthly billing report
+    getMonthly: (year: number, month: number) => fetchApi<BillingInvoiceDTO[]>(`/billing/monthly/${year}/${month}`),
+
+    // Get yearly billing report
+    getYearly: (year: number) => fetchApi<BillingInvoiceDTO[]>(`/billing/yearly/${year}`),
+};

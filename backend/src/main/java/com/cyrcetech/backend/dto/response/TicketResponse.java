@@ -18,6 +18,7 @@ public class TicketResponse {
     private String statusDisplayName;
     private String statusColorCode;
     private double amountPaid;
+    private double downPayment;
     private double estimatedCost;
     private double remainingBalance;
     private boolean fullyPaid;
@@ -115,6 +116,14 @@ public class TicketResponse {
 
     public void setAmountPaid(double amountPaid) {
         this.amountPaid = amountPaid;
+    }
+
+    public double getDownPayment() {
+        return downPayment;
+    }
+
+    public void setDownPayment(double downPayment) {
+        this.downPayment = downPayment;
     }
 
     public double getEstimatedCost() {

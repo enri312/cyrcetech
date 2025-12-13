@@ -39,6 +39,7 @@ import { ClientsView } from './views/ClientsView';
 import { EquipmentView } from './views/EquipmentView';
 import { InvoicesView } from './views/InvoicesView';
 import { AuditView } from './views/AuditView';
+import { BillingView } from './views/BillingView';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // --- I18N CONFIGURATION ---
@@ -105,7 +106,9 @@ const TRANSLATIONS = {
     delete: "Eliminar",
     status: "Estado",
     menuAudit: "Auditoría",
-    auditTitle: "Auditoría del Sistema"
+    auditTitle: "Auditoría del Sistema",
+    menuBilling: "Facturación",
+    billingTitle: "Facturación"
   },
   en: {
     loginTitle: "System Login",
@@ -169,7 +172,9 @@ const TRANSLATIONS = {
     delete: "Delete",
     status: "Status",
     menuAudit: "Audit",
-    auditTitle: "System Audit"
+    auditTitle: "System Audit",
+    menuBilling: "Billing",
+    billingTitle: "Billing"
   }
 };
 
@@ -635,9 +640,14 @@ const Sidebar = ({ view, setView, t, user }: any) => (
         {t('menuInvoices')}
       </NavButton>
       {user?.role === 'ADMIN' && (
-        <NavButton active={view === 'AUDIT_LOGS'} onClick={() => setView('AUDIT_LOGS')} icon={<ClipboardList size={20} />}>
-          {t('menuAudit')}
-        </NavButton>
+        <>
+          <NavButton active={view === 'BILLING'} onClick={() => setView('BILLING')} icon={<CreditCard size={20} />}>
+            {t('menuBilling')}
+          </NavButton>
+          <NavButton active={view === 'AUDIT_LOGS'} onClick={() => setView('AUDIT_LOGS')} icon={<ClipboardList size={20} />}>
+            {t('menuAudit')}
+          </NavButton>
+        </>
       )}
     </nav>
 
@@ -963,6 +973,7 @@ function AppContent() {
         {view === 'EQUIPMENT' && <EquipmentView equipment={equipment} customers={customers} createEquipment={createEquipment} updateEquipmentData={updateEquipmentData} deleteEquipment={deleteEquipment} t={t} />}
         {view === 'INVOICES' && <InvoicesView invoices={invoices} tickets={tickets} createInvoice={createInvoice} updateInvoiceData={updateInvoiceData} t={t} />}
         {view === 'SPARE_PARTS' && <PartsView />}
+        {view === 'BILLING' && user?.role === 'ADMIN' && <BillingView lang={lang} t={t} />}
         {view === 'AUDIT_LOGS' && user?.role === 'ADMIN' && <AuditView lang={lang} t={t} />}
       </main>
     </div>

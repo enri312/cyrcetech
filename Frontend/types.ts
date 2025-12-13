@@ -184,6 +184,6 @@ export interface AuditLog {
 
 // === VIEW TYPES ===
 
-export type ViewState = 'LOGIN' | 'DASHBOARD' | 'NEW_TICKET' | 'LIST_TICKETS' | 'INVENTORY_PARTS' | 'HISTORY' | 'CLIENTS' | 'EQUIPMENT' | 'INVOICES' | 'SPARE_PARTS' | 'AUDIT_LOGS';
+export type ViewState = 'LOGIN' | 'DASHBOARD' | 'NEW_TICKET' | 'LIST_TICKETS' | 'INVENTORY_PARTS' | 'HISTORY' | 'CLIENTS' | 'EQUIPMENT' | 'INVOICES' | 'SPARE_PARTS' | 'BILLING' | 'AUDIT_LOGS';
 
 export type Language = 'es' | 'en';

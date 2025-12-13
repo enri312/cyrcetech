@@ -4,12 +4,13 @@ Cliente web oficial del sistema de gestión CyrceTech, desarrollado con React + 
 
 ## 📋 Descripción
 
-Interfaz de usuario moderna y responsiva para la gestión integral del taller. Se conecta a la API REST para realizar operaciones CRUD sobre clientes, equipos, tickets, repuestos, facturas y auditoría.
+Interfaz de usuario moderna y responsiva para la gestión integral del taller. Se conecta a la API REST para realizar operaciones CRUD sobre clientes, equipos, tickets, repuestos, facturas, facturación y auditoría.
 
 ## 🚀 Características
 
 - **Stack Moderno**: React 19 + TypeScript + Vite
 - **Diseño Premium**: Interfaz "Glassmorphism" con Tailwind CSS
+- **Estilos Sincronizados**: Paleta de colores idéntica al JavaFX Desktop
 - **Conexión Real**: Integrado con Backend Spring Boot (`http://localhost:8080`)
 - **Funcionalidades Completas**:
   - 📊 **Dashboard**: Métricas en tiempo real
@@ -18,6 +19,7 @@ Interfaz de usuario moderna y responsiva para la gestión integral del taller. S
   - 🎫 **Tickets**: Flujo de reparación (Pendiente -> Entregado)
   - 🔧 **Repuestos**: Control de stock e inventario
   - 📄 **Facturación**: Generación de facturas calculadas
+  - 💰 **Billing**: Reportes por día/mes/año (Solo Admin)
   - 🛡️ **Auditoría**: Visualización de logs del sistema (Solo Admin)
 
 ## 🛠️ Ejecución
@@ -53,10 +55,21 @@ npm run build
 ## 📂 Estructura
 
 ```
-Front-end/
+Frontend/
 ├── components/     # UI Kit (Botones, Inputs, Cards)
 ├── services/       # Cliente HTTP y llamadas API
-├── views/          # Pantallas principales (Dashboard, Clientes, Auditoría, etc.)
+├── views/          # Pantallas principales (Dashboard, Clientes, Billing, Auditoría)
 ├── App.tsx         # Router y Layout principal
+├── index.css       # Variables CSS sincronizadas con JavaFX
 └── types.ts        # Definiciones de tipos TypeScript
 ```
+
+## 🎨 Paleta de Colores (Sincronizada con JavaFX)
+
+| Variable | Color | Uso |
+|---|---|---|
+| `--bg-primary` | `#0f0f1a` | Fondo principal |
+| `--bg-sidebar` | `#161625` | Sidebar |
+| `--bg-card` | `#1e1e2e` | Cards |
+| `--neon-blue` | `#00d4ff` | Acento principal |
+| `--neon-purple` | `#bc13fe` | Acento secundario |

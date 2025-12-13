@@ -2,12 +2,18 @@ package com.cyrcetech.infrastructure.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Base HTTP client for REST API calls
@@ -23,7 +29,33 @@ public class ApiClient {
                 .build();
         this.gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd")
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .create();
+    }
+
+    /**
+     * TypeAdapter for LocalDate to handle JSON serialization/deserialization
+     */
+    private static class LocalDateAdapter extends TypeAdapter<LocalDate> {
+        private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
+        @Override
+        public void write(JsonWriter out, LocalDate value) throws IOException {
+            if (value == null) {
+                out.nullValue();
+            } else {
+                out.value(value.format(formatter));
+            }
+        }
+
+        @Override
+        public LocalDate read(JsonReader in) throws IOException {
+            String dateStr = in.nextString();
+            if (dateStr == null || dateStr.isEmpty()) {
+                return null;
+            }
+            return LocalDate.parse(dateStr, formatter);
+        }
     }
 
     /**

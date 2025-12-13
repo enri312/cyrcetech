@@ -41,14 +41,14 @@
             </padding>
 
             <!-- Audit Table -->
-            <TableView fx:id="auditTable" VBox.vgrow="ALWAYS" styleClass="glass-pane"
+            <TableView fx:id="auditTable" VBox.vgrow="ALWAYS" styleClass="table-dark"
                 style="-fx-background-color: #1e1e2e; -fx-background-radius: 12;">
 
                 <columns>
-                    <TableColumn fx:id="dateColumn" text="FECHA" prefWidth="180" />
-                    <TableColumn fx:id="userColumn" text="USUARIO" prefWidth="180" />
-                    <TableColumn fx:id="actionColumn" text="ACCIÓN" prefWidth="180" />
-                    <TableColumn fx:id="detailsColumn" text="DETALLES" prefWidth="400" />
+                    <TableColumn fx:id="dateColumn" text="Fecha" prefWidth="180" />
+                    <TableColumn fx:id="userColumn" text="Usuario" prefWidth="180" />
+                    <TableColumn fx:id="actionColumn" text="Acciones" prefWidth="180" />
+                    <TableColumn fx:id="detailsColumn" text="Detalles" prefWidth="400" />
                 </columns>
             </TableView>
 

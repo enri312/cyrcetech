@@ -1,4 +1,4 @@
-# Manual del Proyecto Cyrcetech v2.4.0
+# Manual del Proyecto Cyrcetech v2.5.0
 
 ## Tabla de Contenidos
 1. [Introducción](#1-introducción)
@@ -8,7 +8,7 @@
 5. [Diagrama de Clases](#5-diagrama-de-clases)
 6. [Diseño y Arquitectura](#6-diseño-y-arquitectura)
 7. [Implementación](#7-implementación)
-8. [Nuevas Funcionalidades v2.4.0](#8-nuevas-funcionalidades-v240)
+8. [Nuevas Funcionalidades v2.5.0](#8-nuevas-funcionalidades-v250)
 
 ---
 
@@ -134,7 +134,7 @@ graph LR
     Admin --> UC1 & UC2 & UC3 & UC8 & UC9 & UC11 & UC12 & UC13 & UC14
 ```
 
-### Matriz de Permisos por Rol (Actualizado v2.4.0)
+### Matriz de Permisos por Rol (Actualizado v2.5.0)
 
 | Acción | Usuario | Técnico | Admin |
 |--------|:-------:|:-------:|:-----:|
@@ -147,6 +147,7 @@ graph LR
 | Ver repuestos/inventario | ❌ | ✅ | ✅ |
 | Crear usuarios | ❌ | ❌ | ✅ |
 | Ver auditoría | ❌ | ❌ | ✅ |
+| Ver billing (reportes) | ❌ | ❌ | ✅ |
 | Exportar Excel/PDF | ❌ | ✅ | ✅ |
 
 ---
@@ -356,15 +357,17 @@ cyrcetech/
 │   ├── interface_adapter/         # Controllers
 │   └── usecase/                   # Business Logic
 │
-└── Front-end/                     # React Web App
-    ├── src/components/
-    ├── src/views/
+└── Frontend/                       # React Web App
+    ├── components/
+    ├── services/                  # API (incluyendo billingApi)
+    ├── views/                     # Dashboard, Billing, Audit, etc.
+    ├── index.css                  # Variables CSS sincronizadas
     └── package.json
 ```
 
 ---
 
-## 8. Nuevas Funcionalidades v2.4.0
+## 8. Nuevas Funcionalidades v2.5.0
 
 ### ✅ Autenticación Mejorada
 - Migración de login por **Username** en lugar de Email.
@@ -382,6 +385,21 @@ cyrcetech/
 ### ✅ Integración de IA Híbrida
 - **Desktop**: Uso de **Ollama** con modelo **Phi4-mini** para diagnósticos locales offline.
 - **Web**: Integración con **Google Gemini API** para asistencia en la nube.
+
+### ✅ Módulo de Billing (Nuevo v2.5.0)
+- **API Billing**: Reportes por día/mes/año (`/api/billing/daily|monthly|yearly`).
+- **BillingView (Web)**: Vista con filtros y resúmenes de facturación.
+- **BillingView (JavaFX)**: Vista compatible con selector de fecha.
+- Acceso restringido solo a rol **ADMIN**.
+
+### ✅ Estilos Sincronizados (Nuevo v2.5.0)
+- **Frontend React**: Colores y estilos idénticos al JavaFX Desktop.
+- Variables CSS en `index.css` con paleta unificada:
+  - Fondo: `#0f0f1a`
+  - Sidebar: `#161625`
+  - Cards: `#1e1e2e`
+  - Neon Blue: `#00d4ff`
+  - Neon Purple: `#bc13fe`
 
 ---
 

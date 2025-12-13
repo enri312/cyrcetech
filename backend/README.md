@@ -322,7 +322,7 @@ Proyecto privado - Todos los derechos reservados
 
 ---
 
-**Versión**: 2.4.0  
+**Versión**: 2.5.0  
 **Puerto**: 8080  
 **Base de Datos**: PostgreSQL 18.1 (Docker puerto 5432)  
 **Java**: 25

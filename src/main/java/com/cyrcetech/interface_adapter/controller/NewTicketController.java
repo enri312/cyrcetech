@@ -55,6 +55,34 @@ public class NewTicketController {
     @FXML
     public void initialize() {
         deviceTypeCombo.setItems(FXCollections.observableArrayList(DeviceType.values()));
+
+        // Custom cell factory to show icons with device names
+        deviceTypeCombo.setCellFactory(lv -> new ListCell<DeviceType>() {
+            @Override
+            protected void updateItem(DeviceType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getFormattedName()); // Shows "💻 Notebook"
+                    setStyle("-fx-text-fill: white;");
+                }
+            }
+        });
+
+        // Also show icon in the button cell (when selected)
+        deviceTypeCombo.setButtonCell(new ListCell<DeviceType>() {
+            @Override
+            protected void updateItem(DeviceType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getFormattedName());
+                    setStyle("-fx-text-fill: white;");
+                }
+            }
+        });
     }
 
     @FXML

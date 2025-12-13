@@ -1,0 +1,132 @@
+/* CyrceTech Frontend - Styles Matching JavaFX Backend */
+
+:root {
+    /* Background colors */
+    --bg-primary: #0f0f1a;
+    --bg-sidebar: #161625;
+    --bg-card: #1e1e2e;
+    --bg-card-glass: rgba(30, 30, 46, 0.8);
+    --bg-input: #1a1a2e;
+
+    /* Border colors */
+    --border-default: #2a2a40;
+    --border-light: rgba(255, 255, 255, 0.1);
+
+    /* Accent colors */
+    --neon-blue: #00d4ff;
+    --neon-purple: #bc13fe;
+    --neon-green: #00ff00;
+    --neon-yellow: #ffcc00;
+
+    /* Button gradient */
+    --btn-primary-start: #007bff;
+    --btn-primary-end: #00d4ff;
+
+    /* Text colors */
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0b0;
+    --text-muted: #808090;
+
+    /* Stat card colors */
+    --stat-yellow: #ffcc00;
+    --stat-green: #00ff00;
+    --stat-blue: #007bff;
+    --stat-red: #ff4d4d;
+}
+
+/* Glass card effect matching JavaFX */
+.bg-glass {
+    background-color: var(--bg-card-glass);
+    border: 1px solid var(--border-light);
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Input fields matching JavaFX */
+.input-dark {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    padding: 10px;
+    color: var(--text-primary);
+}
+
+.input-dark:focus {
+    border-color: var(--neon-blue);
+    background-color: #202035;
+    outline: none;
+}
+
+/* Button primary with gradient matching JavaFX */
+.btn-primary-gradient {
+    background: linear-gradient(to right, var(--btn-primary-start), var(--btn-primary-end));
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary-gradient:hover {
+    background: linear-gradient(to right, #0056b3, #00a8cc);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+
+/* Sidebar button matching JavaFX */
+.sidebar-btn {
+    background-color: transparent;
+    color: var(--text-secondary);
+    padding: 12px 20px;
+    text-align: left;
+    transition: all 0.3s;
+}
+
+.sidebar-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.sidebar-btn-active {
+    background-color: rgba(0, 212, 255, 0.1);
+    color: var(--neon-blue);
+    border-left: 3px solid var(--neon-blue);
+}
+
+/* Stat cards matching JavaFX */
+.stat-card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card-yellow {
+    border-left: 4px solid var(--stat-yellow);
+}
+
+.stat-card-green {
+    border-left: 4px solid var(--stat-green);
+}
+
+.stat-card-blue {
+    border-left: 4px solid var(--stat-blue);
+}
+
+/* Custom scrollbar matching JavaFX */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 212, 255, 0.3);
+    border-radius: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 212, 255, 0.5);
+}

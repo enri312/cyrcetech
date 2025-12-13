@@ -130,6 +130,7 @@ public class TicketApiService extends ApiClient {
         ticket.setObservations(dto.getObservations());
         ticket.setStatus(dto.getStatus());
         ticket.setAmountPaid(dto.getAmountPaid());
+        ticket.setDownPayment(dto.getDownPayment());
         ticket.setEstimatedCost(dto.getEstimatedCost());
         ticket.setAiDiagnosis(dto.getAiDiagnosis());
 

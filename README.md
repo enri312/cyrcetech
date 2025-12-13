@@ -49,6 +49,7 @@ El servidor estará en `http://localhost:8080`
 | Tickets | 11 | `/api/tickets` |
 | Spare Parts | 9 | `/api/spare-parts` |
 | Invoices | 11 | `/api/invoices` |
+| Billing | 3 | `/api/billing` |
 | Audit Logs | 5 | `/api/audit` |
 
 Documentación completa: `http://localhost:8080/swagger-ui.html`
@@ -138,6 +139,8 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 | **CI/CD** | Pipelines automáticos para Backend y Frontend |
 | **IA Local (Phi4-mini)** | Diagnóstico asistido con Ollama (tiempo de respuesta ~10-30s) |
 | **Permisos por Rol** | Usuario puede ver/crear Clientes y Equipos |
+| **Billing (v2.5.0)** | Reportes de facturación por día/mes/año |
+| **Estilos Sincronizados** | Frontend React idéntico al JavaFX |
 
 ---
 
@@ -149,6 +152,6 @@ Documentación completa: `http://localhost:8080/swagger-ui.html`
 
 ---
 
-**Versión**: 2.4.0
-**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅ | Auditoría ✅ | CI/CD ✅ | IA Local ✅
-**Última actualización**: 2025-12-11
+**Versión**: 2.5.0
+**Estado**: Backend ✅ | JavaFX ✅ | React ✅ | Seguridad ✅ | Integraciones ✅ | Auditoría ✅ | CI/CD ✅ | IA Local ✅ | Billing ✅
+**Última actualización**: 2025-12-13

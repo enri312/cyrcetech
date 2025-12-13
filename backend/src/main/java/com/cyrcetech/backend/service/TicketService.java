@@ -243,6 +243,7 @@ public class TicketService {
         response.setStatusDisplayName(ticket.getStatus().getDisplayName());
         response.setStatusColorCode(ticket.getStatus().getColorCode());
         response.setAmountPaid(ticket.getAmountPaid());
+        response.setDownPayment(ticket.getDownPayment());
         response.setEstimatedCost(ticket.getEstimatedCost());
         response.setRemainingBalance(ticket.getRemainingBalance());
         response.setFullyPaid(ticket.isFullyPaid());
